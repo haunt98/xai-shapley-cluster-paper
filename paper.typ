@@ -108,6 +108,54 @@ Giới hạn của nghiên cứu:
 
 // TỔNG QUAN về vấn đề nghiên cứu: phân tích, đánh giá các công trình nghiên cứu liên quan trực tiếp đến đề tài luận văn đã được công bố ở trong và ngoài nước, chỉ ra những vấn đề mà luận văn sẽ tập trung giải quyết, xác định mục tiêu của đề tài, nội dung và phương pháp nghiên cứu;
 
+== 2.1. Các công trình nghiên cứu liên quan
+
+XAI được sinh ra để cung cấp cho người dùng và nhà phát triển các công cụ để hiểu rõ hơn về cách mà mô hình AI đưa ra dự đoán. Ví dụ như một mô hình AI quyết định cho vay tín dụng thì kết quả chỉ có thể là quyết định cho vay hoặc không, nhưng khi khách hàng hỏi lại kỹ hơn tại sao lại từ chối yêu cầy vay vốn thì lúc đó cần phải giải thích rõ hơn ví dụ như khách hàng có lịch sử tín dụng xấu, hoặc vì một tiêu chuẩn nào đó khác. XAI còn được dùng để kiểm chứng mô hình có học được đúng các đặc trưng như nhà phát triển mong muốn hay không. Ví dụ với một mô hình AI phân loại loài gấu, giữa gấu bắc cực và gấu nâu, có khả năng mô hình học đặc trưng màu sắc của tuyết để phân biệt thay vì học đặc trưng về màu sắc hay hình dáng cơ thể của hai loài gấu.
+
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    stroke: 0.5pt,
+    align: left,
+    [*Toàn cục hay cục bộ*], [*Hướng đặc trưng hay dữ liệu*], [*Phương pháp*],
+
+    table.cell(rowspan: 2)[*Toàn cục*],
+    [Đặc trưng],
+    [SAGE [TODO] \
+      Permutation feature importance [TODO] \
+      ALEPlots [TODO]
+    ],
+
+    [Dữ liệu],
+    [Data Banzhaf [TODO] \
+      Cook’s distance [TODO]
+    ],
+
+    table.cell(rowspan: 2)[*Cục bộ*],
+    [Đặc trưng],
+    [Marginal Shapley values [TODO] \
+      Conditional Shapley values [TODO] \
+      PredDiff [TODO] \
+      Anchors [TODO] \
+      Counterfactual explanations [TODO] \
+      LIME [TODO] \
+      ICE [TODO]
+    ],
+
+    [Dữ liệu],
+    [Influence functions for perturbing training data [TODO] \
+      Case-based explanations [TODO] \
+      Shapley values for cluster importance [TODO]
+    ],
+  ),
+  caption: [Phân loại các phương pháp XAI theo phạm vi và đối tượng giải thích],
+  placement: none,
+) <table-overview>
+
+@table-overview tổng hợp các phương pháp XAI được phân loại theo hai tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ một của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục tập trung vào ảnh hưởng của các đặc trưng khác nhau có thể kể đến là: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO]. Phương pháp XAI toàn cục tập trung vào dữ liệu huấn luyện ví dụ như *Data Banzhaf* [TODO].
+
+Khi muốn giải thích các dự đoán riêng lẻ bằng các phương pháp cục bộ, ta có thể phân biệt giữa các phương pháp dựa trên mức độ quan trọng của đặc trưng và các phương pháp định lượng mức độ ảnh hưởng của các quan sát trong dữ liệu huấn luyện lên một dự đoán cụ thể. Nhóm thứ nhất bao gồm, chẳng hạn, "Marginal Shapley values" (Lundberg & Lee, 2017), "Conditional Shapley values" (Aas và cộng sự, 2019) và "PredDiff" (Blücher và cộng sự, 2022), vốn được xây dựng bằng cách quan sát tác động của các đặc trưng khác nhau, cùng với "Anchors" (Ribeiro và cộng sự, 2018), "Counterfactual explanations" (Wachter và cộng sự, 2017), "LIME" (Ribeiro và cộng sự, 2016) và "ICE" (Goldstein và cộng sự, 2015), trong đó tác động của việc (thay đổi nhẹ) các đặc trưng được khai thác khi sinh giải thích. Như có thể thấy, nhóm này chứa hầu hết các phương pháp XAI phổ biến và được trích dẫn nhiều nhất. Các phương pháp trong nhóm thứ hai, tập trung vào việc dữ liệu huấn luyện tác động đến một dự đoán như thế nào, hiếm hơn nhiều. Một lựa chọn là "Influence functions for perturbing training data" (Koh & Liang, 2017) để khảo sát mức độ nhạy cảm của dự đoán đối với các nhiễu loạn nhỏ trong một quan sát hoặc một tập quan sát nhất định của dữ liệu huấn luyện. Một lựa chọn khác là các giải thích dựa trên trường hợp (case-based explanations), nhằm "trình bày các ví dụ tương tự trong quá khứ để hỗ trợ và làm căn cứ cho các khuyến nghị được đưa ra" (Nugent và cộng sự, 2009). Lựa chọn thứ ba là "Shapley values for cluster importance" (Brandsæter & Glad, 2022), một cách tiếp cận dựa trên việc định lượng mức độ ảnh hưởng của việc đưa một quan sát hoặc một tập quan sát cụ thể vào dữ liệu huấn luyện đến dự đoán.
+
 #pagebreak()
 
 = Chương 3. PHƯƠNG PHÁP NGHIÊN CỨU
