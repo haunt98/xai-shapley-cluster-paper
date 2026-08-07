@@ -80,7 +80,7 @@ Phương pháp này mới là vì chưa có công trình nghiên cứu nào gi�
 Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đóng góp của cụm dữ liệu huấn luyện trong bài toán:
 
 - Hồi quy tuyến tính với sai số MSE sử dụng mô hình AI Random Forest và KNN.
-- Phân loại với độ chính xác Accuracy và thuật toán AAKR.
+- Phân loại với độ chính xác Accuracy và mô hình AI AAKR.
 
 Tập dữ liệu thực nghiệm bao gồm:
 
@@ -94,7 +94,13 @@ Giới hạn của nghiên cứu:
 
 == 1.6. Phương pháp nghiên cứu
 
+- *Về mặt lý thuyết*: Nghiên cứu sử dụng Lý thuyết trò chơi liên minh với Giá trị Shapley để định nghĩa mô hình trò chơi cho cụm dữ liệu huấn luyện. Bao gồm các tính chất của Giá trị Shapley, đề xuất và chứng minh các công thức liên quan. Đồng thời giải thích ý nghĩa Giá trị Shapley cho từng cụm dữ liệu huấn luyện trong bối cảnh giải thích sai số dự đoán cục bộ.
+- *Về mặt ứng dụng*: Nghiên cứu sử dụng dữ liệu thực nghiệm, để kiểm chứng tính đúng đắn phương pháp, đồng thời đánh giá hiệu quả của phương pháp trong việc giải thích sai số dự đoán cục bộ. Dữ liệu thực nghiệm bao gồm dữ liệu tạo sinh và dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng. Các mô hình AI được sử dụng bao gồm Random Forest, KNN và AAKR.
+
 == 1.7. Ý nghĩa khoa học và thực tiễn
+
+- *Ý nghĩa khoa học:* Đề xuất phương pháp XAI mới giải thích sai số dự đoán cục bộ, độc lập với mô hình, tập trung vào dữ liệu thay vì đặc trưng. Phương pháp này có thể được áp dụng cho nhiều mô hình AI khác nhau, không bị giới hạn bởi mô hình cụ thể. Đồng thời nghiên cứu cung cấp một góc nhìn mới về cách giải thích đóng góp của từng cụm dữ liệu huấn luyện đối với sai số dự đoán, từ đó giúp các nhà nghiên cứu và phát triển mô hình AI hiểu rõ hơn về cách dữ liệu huấn luyện ảnh hưởng đến kết quả dự đoán.
+- *Ý nghĩa thực tiễn:* Phương pháp này có thể giúp các nhà phát triển mô hình AI xác định cụm dữ liệu huấn luyện nào là quan trọng, từ đó tối ưu hóa tập dữ liệu huấn luyện để cải thiện độ chính xác dự đoán của mô hình. Ngoài ra, việc giải thích sai số dự đoán cục bộ có thể giúp các nhà phát triển mô hình AI phát hiện và khắc phục các vấn đề trong dữ liệu huấn luyện, khi có được thêm dự liệu sau vận hành thực tế hoặc khi có sự cố xảy ra, từ đó nâng cao độ tin cậy và hiệu quả của các hệ thống AI trong các ứng dụng thực tiễn.
 
 #pagebreak()
 
