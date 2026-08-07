@@ -22,6 +22,8 @@
   [ML], [Machine Learning], [Học máy],
   [XAI], [Explainable AI], [Trí tuệ nhân tạo giải thích được],
   [MSE], [Mean Squared Error], [Sai số bình phương trung bình],
+  [KNN], [K-Nearest Neighbors], [K láng giềng gần nhất],
+  [AAKR], [Auto-Associative Kernel Regression], [Phân loại bất thường],
 )
 
 #pagebreak()
@@ -62,17 +64,33 @@ Nhằm giải quyết khoảng trống nghiên cứu về giải thích sai số
 
 == 1.4. Mục đích nghiên cứu
 
-*Mục đích tổng quát:* Xây dựng phương pháp XAI mới nhằm giải thích cục bộ cho sai số dự đoán trong bối cảnh giá trị thực tế đã biết, không phụ thuộc vào mô hình, tập trung vào dữ liệu thay vì đặc trưng, để cuối cùng có thể tối ưu hóa dữ liệu cụm dữ liệu huấn luyện cho các mô hình AI.
+*Mục đích tổng quát:* Xây dựng phương pháp XAI mới nhằm giải thích cục bộ cho sai số dự đoán trong bối cảnh giá trị thực tế đã biết, không phụ thuộc vào mô hình, tập trung vào dữ liệu thay vì đặc trưng, để cuối cùng có thể tối ưu hóa cụm dữ liệu huấn luyện cho các mô hình AI.
 
 Để đạt được mục đích trên, đề tài đề ra các mục tiêu cụ thể sau:
 
 - *Về mặt lý thuyết:* Đề xuất phương pháp tính Giá trị Shapley cho các cụm dữ liệu huấn luyện để đánh giá sự đóng góp của từng cụm dữ liệu huấn luyện đến sai số dự đoán cục bộ trong bài toán hồi quy và bài toán phân loại. Đồng thời chứng minh các tính chất của Giá trị Shapley vẫn còn đúng đối với phương pháp này.
 - *Về mặt ứng dụng:* Thử nghiệm phương pháp mới trên dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng, từ đó đề xuất chiến lược thu thập dữ liệu huấn luyện để tối ưu độ sai sót dự đoán của mô hình AI.
 
-Phương pháp này mới là vì chưa có công trình nào nghiên cứu về giải thích sự sai số trong nhánh cục bộ, và cũng rất ít công trình đi theo hướng nghiên cứu dựa trên tập dữ liệu huấn luyện - một hướng đi ít được nghiên cứu so với hướng nghiên cứu dựa trên feature vốn đã được khai thác rộng rãi.
-
+Phương pháp này mới là vì chưa có công trình nghiên cứu nào giải thích sai số trong dự đoán cục bộ, và cũng không nhiều công trình tiếp cận theo hướng dữ liệu cụ thể là nghiên cứu tập dữ liệu huấn luyện thay cho hướng nghiên cứu dựa trên đặc trưng vốn đã được nghiên cứu rộng rãi.
 
 == 1.5. Đối tượng và Phạm vi nghiên cứu
+
+Đối tượng nghiên cứu chính: Phương pháp XAI độc lập với mô hình dựa trên Lý thuyết trò chơi liên minh với Giá trị Shapley. Trong đó bao gồm mức độ đóng góp của các cụm dữ liệu huấn luyện đối với sai số dự đoán cục bộ, cụ thể là MSE trong bài toán hồi quy tuyến tính (Linear Regression) và độ chính xác (Accuracy) trong bài toán phân loại (Classification), với bối cảnh là biết trước giá trị thực tế.
+
+Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đóng góp của cụm dữ liệu huấn luyện trong bài toán:
+
+- Hồi quy tuyến tính với sai số MSE sử dụng mô hình AI Random Forest và KNN.
+- Phân loại với độ chính xác Accuracy và thuật toán AAKR.
+
+Tập dữ liệu thực nghiệm bao gồm:
+
+- Dữ liệu tạo sinh (synthetic data) để kiểm chứng tính đúng đắn về mặt toán học của phương pháp.
+- Dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng tại thành phố [TODO].
+
+Giới hạn của nghiên cứu:
+
+- Nghiên cứu không đề xuất cách phân cụm mới cho tập dữ liệu huấn luyện, mà sử dụng các phương pháp phân cụm tự nhiên hoặc có sẵn của dữ liệu
+- Nghiên cứu không đề xuất công thức đánh giá sai số dự đoán mới mà sử dụng lại sai số có sẵn như MSE.
 
 == 1.6. Phương pháp nghiên cứu
 
