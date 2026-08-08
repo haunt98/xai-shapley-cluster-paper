@@ -152,9 +152,161 @@ XAI được sinh ra để cung cấp cho người dùng và nhà phát triển 
   placement: none,
 ) <table-overview>
 
-@table-overview tổng hợp các phương pháp XAI được phân loại theo hai tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ một của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục tập trung vào ảnh hưởng của các đặc trưng khác nhau có thể kể đến là: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO]. Phương pháp XAI toàn cục tập trung vào dữ liệu huấn luyện ví dụ như *Data Banzhaf* [TODO].
+@table-overview tổng hợp các phương pháp XAI được phân loại theo hai tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ một của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục có thể chia làm 2 nhóm là phân tích ảnh hưởng của các đặc trưng khác nhau ví dụ như: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO] hoặc đánh giá sử dụng dữ liệu huấn luyện ví dụ như: *Data Banzhaf* [TODO].
 
-Khi muốn giải thích các dự đoán riêng lẻ bằng các phương pháp cục bộ, ta có thể phân biệt giữa các phương pháp dựa trên mức độ quan trọng của đặc trưng và các phương pháp định lượng mức độ ảnh hưởng của các quan sát trong dữ liệu huấn luyện lên một dự đoán cụ thể. Nhóm thứ nhất bao gồm, chẳng hạn, "Marginal Shapley values" (Lundberg & Lee, 2017), "Conditional Shapley values" (Aas và cộng sự, 2019) và "PredDiff" (Blücher và cộng sự, 2022), vốn được xây dựng bằng cách quan sát tác động của các đặc trưng khác nhau, cùng với "Anchors" (Ribeiro và cộng sự, 2018), "Counterfactual explanations" (Wachter và cộng sự, 2017), "LIME" (Ribeiro và cộng sự, 2016) và "ICE" (Goldstein và cộng sự, 2015), trong đó tác động của việc (thay đổi nhẹ) các đặc trưng được khai thác khi sinh giải thích. Như có thể thấy, nhóm này chứa hầu hết các phương pháp XAI phổ biến và được trích dẫn nhiều nhất. Các phương pháp trong nhóm thứ hai, tập trung vào việc dữ liệu huấn luyện tác động đến một dự đoán như thế nào, hiếm hơn nhiều. Một lựa chọn là "Influence functions for perturbing training data" (Koh & Liang, 2017) để khảo sát mức độ nhạy cảm của dự đoán đối với các nhiễu loạn nhỏ trong một quan sát hoặc một tập quan sát nhất định của dữ liệu huấn luyện. Một lựa chọn khác là các giải thích dựa trên trường hợp (case-based explanations), nhằm "trình bày các ví dụ tương tự trong quá khứ để hỗ trợ và làm căn cứ cho các khuyến nghị được đưa ra" (Nugent và cộng sự, 2009). Lựa chọn thứ ba là "Shapley values for cluster importance" (Brandsæter & Glad, 2022), một cách tiếp cận dựa trên việc định lượng mức độ ảnh hưởng của việc đưa một quan sát hoặc một tập quan sát cụ thể vào dữ liệu huấn luyện đến dự đoán.
+Bên cạnh hướng giải thích toàn cục là hướng cục bộ, để giải thích từng dự đoán đơn lẻ tại từng thời điểm cục bộ, ta cũng có thể chia thành 2 nhóm phương pháp XAI dựa trên mức độ quan trọng của đặc trưng hoặc dựa trên mức độ ảnh hưởng của cụm dữ liệu huấn luyện đến dự đoán. Nhóm thứ nhất có thể kể đến như Marginal Shapley values [TODO], Conditional Shapley values [TODO], PredDiff [TODO], Anchors [TODO], Counterfactual explanations [TODO], LIME [TODO] và ICE [TODO]. Nhóm thứ hai có thể kể đến như Influence functions for perturbing training data [TODO], Case-based explanations [TODO] và Shapley values for cluster importance [TODO]. Nhóm thứ nhất chứa các phương pháp XAI phổ biến và được trích dẫn nhiều nhất trong các công trình nghiên cứu khác. Nhóm thứ hai, tập trung vào dữ liệu, thì lại ít phương pháp hơn. Có 3 phương pháp có thể kể đến là:
+
+- *Influence functions for perturbing training data* [TODO] để khảo sát mức độ nhạy cảm của dự đoán đối với các nhiễu loạn nhỏ trong tập dữ liệu huấn luyện.
+- *Case-based explanations* [TODO] mục đích là để dùng các ví dụ dự đoán trong quá khứ để kiểm tra và giải thích cho các ví dụ trong tương lai.
+- *Shapley values for cluster importance* [TODO] là một cách tiếp cận đánh giá mức độ ảnh hưởng của từng cụm dữ liệu huấn luyện nhỏ trong tập dữ liệu huấn luyện đến dự đoán của mô hình AI.
+
+Bài nghiên cứu này sẽ dựa trên phương pháp *Shapley values for cluster importance* [TODO] làm nền tảng để phát triển thành phương pháp XAI mới giải thích sai số dự đoán cục bộ, độc lập với mô hình, tập trung vào dữ liệu thay vì đặc trưng.
+
+== 2.2. Giá trị Shapley trong Trò chơi liên minh
+
+Giá trị Shapley được phát triển bởi [TODO] trong lĩnh vực Lý thuyết trò chơi liên minh để giải quyết bài toán chia lợi ích công bằng giữa các người chơi trong một trò chơi liên minh. Giả sử có một trò chơi với liên minh $N$ người chơi. Sau khi chơi xong, liên minh sẽ được nhận phần thường là $v(N)$. Lấy ví dụ trò chơi câu cá, người chơi là những người đi câu cá, và phần thưởng là số cá câu được.
+
+Bài toàn đặt ra là làm thể nào để chia phần thưởng công bằng cho từng người chơi. Nếu toàn bộ người chơi cùng tham gia thì tổng phần thưởng là $v(N)$, nếu mỗi lần chơi chỉ có một tập con $S subset N$ người chơi tham gia, thì phần thưởng nhận được là $v(S)$. Ta định nghĩa hàm tính phần thưởng $v$ là một ánh xạ từ liên minh $S$ và ra phần thưởng là số thực $v : 2^(|N|) arrow.r RR$. Một người chơi $i$, có thể tham gia nhiều liên minh $S$ khác nhau. Dựa vào đóng góp của người chơi trong toàn bộ các liên minh mà tính ra được phần thưởng mà người chơi xứng đáng được nhận.
+
+Có nhiều cách để tính phần thưởng cho người chơi, trong nội dung bài nghiên cứu này sẽ sử dụng Giá trị Shapley, công thức được tham khảo từ [TODO] như sau:
+
+#figure(
+  $
+    phi_i = sum_(S subset.eq N backslash {i}) (|S|!(|N| - |S| - 1)!) / (|N|!) dot [v(S union {i}) - v(S)]
+  $,
+) <math-shapley-value-1>
+
+@math-shapley-value-1 chính là giá trị trung bình toàn bộ phần chênh lệch giữa phần thưởng tất cả các liên minh có người chơi $i$ tham gia $S union {i})$ và phần thưởng tất cả các liên minh còn lại không có người chơi $i$. Với trò chơi câu cá, chúng ta so sánh toàn bộ số cá câu được khi có người chơi $i$ tham gia và không có người chơi $i$ tham gia trong toàn bộ liên minh có thể lập ra để tính ra phần thưởng của người chơi.
+
+Từ công thức @math-shapley-value-1, có thể hiểu Giá trị Shapley của người chơi $i$ là trung bình giá trị đóng góp (marginal contribution) theo hoán vị tương ứnng của các liên minh. Do đó có thể viết lại công thức Giá trị Shapley tương đương như sau:
+
+#figure(
+  $
+    phi_i = 1 / (|N|!) sum_(cal(O) in pi(|N|)) [v("Pre"^i (cal(O)) union {i}) - v("Pre"^i (cal(O)))]
+  $,
+) <math-shapley-value-2>
+
+Trong đó:
+
+- $pi(|N|)$ là tập hợp tất cả các hoán vị của $N$ người chơi.
+- $"Pre"^i (cal(O))$ là tập hợp tất cả người chơi có vị trí ở trước người chơi $i$ khi sắp xếp trong hoán vị $cal(O) in pi(|N|)$.
+
+Giá trị Shapley có 4 tính chất cơ bản sau:
+
+- Tính *hiệu quả* (Efficiency): Toàn bộ phần thưởng đều được chia hết cho từng người chơi (sau khi chia xong thì không còn phần thưởng nào).
+
+#figure(
+  $
+    sum_(i in N) phi_i = v(N)
+  $,
+) <math-shapley-value-efficiency>
+
+- Tính *đối xứng* (Symmetry): Nếu chúng ta có
+
+#figure(
+  $
+    v(S union {i}) = v(S union {j})
+  $,
+) <math-shapley-value-symmetry>
+
+mà mọi liên minh $S subset.eq N$ đều không chứa $i$ và $j$, thì phần thưởng của hai người chơi này phải bằng nhau $phi_i = phi_j$.
+
+
+- Tính *tuyến tính* (Linearity): Nếu chúng ta có hai trò chơi với hai hàm phần thưởng khác nhau $v$ và $w$, thì phần thưởng của người chơi trong trò chơi tổng hợp sẽ bằng tổng phần thưởng của người chơi trong từng trò chơi riêng lẻ.
+
+#figure(
+  $
+    phi_i(v + w) = phi_i(v) + phi_i(w)
+  $,
+) <math-shapley-value-linearity-1>
+
+cho mọi $i in N$. Bên cạnh đó, với mọi số thực $a$, ta cũng có
+
+#figure(
+  $
+    phi_i(a v) = a phi_i(v)
+  $,
+) <math-shapley-value-linearity-2>
+
+cho mọi $i in N$.
+
+- *Người chơi zero* (Null player): Người chơi zero là người chơi có đóng góp bằng 0 $phi_i = v(zero.slashed)$, nghĩa là
+$v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường ta ngầm hiểu rằng $v(zero.slashed) = 0$.
+
+#figure(
+  table(
+    columns: (auto, auto),
+    align: (left, right),
+
+    [*Liên minh*], [*Số cá câu được*],
+
+    [$A, B, C$], [100],
+    [$A, B$], [70],
+    [$A, C$], [70],
+    [$B, C$], [20],
+    [$A$], [30],
+    [$B$], [20],
+    [$C$], [20],
+    [$emptyset$], [0],
+  ),
+  caption: [
+    Phần thưởng (số lượng cá) cho từng liên minh của người chơi câu cá.
+  ],
+)<demo-fish-1>
+
+#figure(
+  table(
+    columns: 6,
+    align: (left, left, left, right, right, right),
+
+    [*$cal(O)$*],
+    [*$S union {k}$*],
+    [*$S$*],
+    [*$f_(cal(O) union {i})$*],
+    [*$f_cal(O)$*],
+    [*$f_(cal(O) union {k}) - f_cal(O)$*],
+
+    [${A, B, C}$], [${A}$], [$emptyset$], [30], [0], [30],
+    [${A, C, B}$], [${A}$], [$emptyset$], [30], [0], [30],
+    [${B, A, C}$], [${A, B}$], [$\{B\}$], [70], [20], [50],
+    [${B, C, A}$], [${A, B, C}$], [$\{B, C\}$], [100], [20], [80],
+    [${C, A, B}$], [${A, C}$], [$\{C\}$], [70], [20], [50],
+    [${C, B, A}$], [${A, B, C}$], [$\{B, C\}$], [100], [20], [80],
+  ),
+  caption: [
+    Bảng phục vụ tính Giá trị Shapley cho người chơi $A$
+  ],
+) <demo-fish-2>
+
+#figure(
+  table(
+    columns: 6,
+    align: (left, left, left, right, right, right),
+
+    [*$cal(O)$*],
+    [*$S union {k}$*],
+    [*$S$*],
+    [*$f_(cal(O) union {i})$*],
+    [*$f_cal(O)$*],
+    [*$f_(cal(O) union {k}) - f_cal(O)$*],
+
+    [${A, B, C}$], [$\{A, B\}$], [$\{A\}$], [70], [30], [40],
+    [${A, C, B}$], [$\{A, B, C\}$], [$\{A, C\}$], [100], [70], [30],
+    [${B, A, C}$], [$\{B\}$], [$\{emptyset\}$], [20], [0], [20],
+    [${B, C, A}$], [$\{B\}$], [$\{emptyset\}$], [20], [0], [20],
+    [${C, A, B}$], [$\{A, B, C\}$], [$\{A, C\}$], [100], [70], [30],
+    [${C, B, A}$], [$\{B, C\}$], [$\{C\}$], [20], [20], [0],
+  ),
+  caption: [
+    Bảng phục vụ tính Giá trị Shapley cho người chơi $B$
+  ],
+) <demo-fish-3>
+
+== 2.3. Giá trị Shapley đối với sự quan trọng của đặc trưng
+
+== 2.4. Đánh giá nghiên cứu Shapley values for cluster importance
+
+Phương pháp XAI *Shapley values for cluster importance* [TODO] là một bước tiến lớn trong nhánh XAI hướng dữ liệu. Nghiên cứu này giải quyết được rào cản lớn của các phương pháp hướng dữ liệu truyền thống Cook's distance hay Influence functions) vốn chỉ đánh giá tác động của từng điểm dữ liệu đơn lẻ mà bỏ qua mối quan hệ tương tác phức tạp giữa từng cụm dữ liệu.
 
 #pagebreak()
 
