@@ -233,6 +233,9 @@ cho mọi $i in N$.
 - *Người chơi zero* (Null player): Người chơi zero là người chơi có đóng góp bằng 0 $phi_i = v(zero.slashed)$, nghĩa là
 $v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường ta ngầm hiểu rằng $v(zero.slashed) = 0$.
 
+Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A$, $B$, $C$. @demo-fish-1 thể hiện phần thưởng cho toàn bộ liên minh có thể xảy ra. Có thể thấy nếu cả 3 người chơi đều tham gia thì phần thưởng là lớn nhất. Bên cạnh đó người chơi $B$ và người chơi $C$ đều có đóng góp như nhau vì $v({A, B}) = v({A, C})$, nên theo tính đối xứng thì Giá trị Shapley của $B$ và $C$ là giống nhau.
+
+
 #figure(
   table(
     columns: (auto, auto),
@@ -254,6 +257,9 @@ $v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh 
   ],
 )<demo-fish-1>
 
+Để tính Giá trị Shapley, chúng ta cần tính toàn bộ phần chênh lệch đóng góp theo toàn bộ hoán vị có thể có cho từng người chơi. @demo-fish-2 tính cho người chơi $A$, @demo-fish-3 tính cho người chơi $B$ và nguời chơi $C$ vì $B$ và $C$ có Giá trị Shapley giống nhau.
+
+
 #figure(
   table(
     columns: 6,
@@ -268,10 +274,10 @@ $v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh 
 
     [${A, B, C}$], [${A}$], [$emptyset$], [30], [0], [30],
     [${A, C, B}$], [${A}$], [$emptyset$], [30], [0], [30],
-    [${B, A, C}$], [${A, B}$], [$\{B\}$], [70], [20], [50],
-    [${B, C, A}$], [${A, B, C}$], [$\{B, C\}$], [100], [20], [80],
-    [${C, A, B}$], [${A, C}$], [$\{C\}$], [70], [20], [50],
-    [${C, B, A}$], [${A, B, C}$], [$\{B, C\}$], [100], [20], [80],
+    [${B, A, C}$], [${A, B}$], [${B}$], [70], [20], [50],
+    [${B, C, A}$], [${A, B, C}$], [${B, C}$], [100], [20], [80],
+    [${C, A, B}$], [${A, C}$], [${C}$], [70], [20], [50],
+    [${C, B, A}$], [${A, B, C}$], [${B, C}$], [100], [20], [80],
   ),
   caption: [
     Bảng phục vụ tính Giá trị Shapley cho người chơi $A$
@@ -301,6 +307,18 @@ $v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh 
     Bảng phục vụ tính Giá trị Shapley cho người chơi $B$
   ],
 ) <demo-fish-3>
+
+Cuối cùng, Giá trị Shapley của từng người chơi chính là trung bình của toàn bộ phần chênh lệch đóng góp của toàn bộ hoán vị.
+
+$
+  phi_A = (30 + 30 + 50 + 80 + 50 + 80) / 6 approx 53.3
+$
+
+$
+  phi_B = phi_C = (40 + 30 + 20 + 20 + 30 + 0)∕6 approx 23.3
+$
+
+Kiểm tra lại tính hiệu quả $phi_A + phi_B + phi_C = 100$ đúng với @demo-fish-1.
 
 == 2.3. Giá trị Shapley đối với sự quan trọng của đặc trưng
 
