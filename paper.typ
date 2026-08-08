@@ -322,9 +322,9 @@ Kiểm tra lại tính hiệu quả $phi_A + phi_B + phi_C = 100$ đúng với @
 
 == 2.3. Giá trị Shapley đối với sự quan trọng của đặc trưng
 
-== 2.4. Đánh giá nghiên cứu Shapley values for cluster importance
+== 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
 
-Phương pháp XAI *Shapley values for cluster importance* [TODO] là một bước tiến lớn trong nhánh XAI hướng dữ liệu. Nghiên cứu này giải quyết được rào cản lớn của các phương pháp hướng dữ liệu truyền thống Cook's distance hay Influence functions) vốn chỉ đánh giá tác động của từng điểm dữ liệu đơn lẻ mà bỏ qua mối quan hệ tương tác phức tạp giữa từng cụm dữ liệu.
+Phương pháp XAI trong bài báo *Shapley values for cluster importance* [TODO] là một bước tiến lớn trong nhánh XAI hướng dữ liệu. Nghiên cứu này giải quyết được rào cản lớn của các phương pháp hướng dữ liệu truyền thống Cook's distance hay Influence functions) vốn chỉ đánh giá tác động của từng điểm dữ liệu đơn lẻ mà bỏ qua mối quan hệ tương tác phức tạp giữa từng cụm dữ liệu.
 
 #pagebreak()
 
@@ -332,9 +332,21 @@ Phương pháp XAI *Shapley values for cluster importance* [TODO] là một bư�
 
 // PHƯƠNG PHÁP NGHIÊN CỨU: cơ sở lý thuyết, lý luận, cách tiếp cận vấn đề nghiên cứu;
 
+Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng đổi lại TODO thay vì TODO
+
+== 3.1. Giải thích cục bộ
+
+== 3.2. Giải thích toàn cục
+
+== 3.3. Bài toán phân loại
+
 #pagebreak()
 
 = Chương 4. KẾT QUẢ NGHIÊN CỨU VÀ PHÂN TÍCH, ĐÁNH GIÁ, THẢO LUẬN
+
+== 4.1. Dữ liệu tạo sinh
+
+== 4.2. Dữ liệu Bikeshare
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
