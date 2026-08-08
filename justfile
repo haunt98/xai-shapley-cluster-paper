@@ -1,7 +1,7 @@
 all: format build
 
 format:
-    typstyle -i .
+    typstyle -l=120 -i .
 
 build:
     typst compile ./paper.typ ./paper.pdf
