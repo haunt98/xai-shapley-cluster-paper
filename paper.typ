@@ -3,6 +3,7 @@
 #set text(size: 11pt)
 
 #set page(numbering: "1")
+#set math.equation(numbering: "(1)")
 
 // Giá trị Shapley để giải thích độ chính xác của dự đoán
 
@@ -321,6 +322,33 @@ $
 Kiểm tra lại tính hiệu quả $phi_A + phi_B + phi_C = 100$ đúng với @demo-fish-1.
 
 == 2.3. Giá trị Shapley đối với sự quan trọng của đặc trưng
+
+Nếu thay đổi trò chơi thành bài toán hồi quy, cụ thể là dự đoán kết quả các đặc trưng, ta vẫn có thể áp dụng Giá trị Shapley để giải thích. Xét một bài toán máy học tiêu chuẩn: có tập huấn luyện $cal(D)^("train")$ với $J$ đặc trưng $x_1, ..., x_J$ và giá trị $y$ là kết quả cần dự đoán, dùng để huấn luyện mô hình $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Các đặc trưng đóng vai như người chơi trong trò chơi dự đoán kết quả này, mục đích là để tìm mức độ đóng góp của từng đặc trưng ảnh hưởng đến kết quả dự đoán tại một điểm dữ liệu cụ thể $x$.
+
+Công thức tính phần thưởng cũng như là mức độ đóng góp của đặc trưng được định nghĩa như sau:
+
+$
+  v(S)(x) = sum_(z in cal(A)) p(z)(f(tau(x, z, S)) - f(z))
+$ <math-shapley-value-feature-reward>
+
+với $tau(x, z, S) = (u_1, ..., u_J)$ với điều kiện $u_j = x_j$ nếu $j in S$ và $u_j = z_j$ nếu $j in.not S$. $z$ là điểm dữ liệu ngẫu nhiên (random data points) vẫn lấy từ không gian $cal(A)$, $p(z)$ là phân phối của các điểm dữ liệu ngẫu nhiên $z$ trong không gian $cal(A)$.
+
+Do đó công thức tính Giá trị Shapley cho đặc trưng $j$ là:
+
+$
+  phi_j(x) = frac(1, J!) sum_(cal(O) in pi(J)) sum_(z in A) p(z) [f(tau(x, z, "Pre"^j (cal(O) union {j}))) - f(tau(x, z, "Pre"^j (cal(O))))]
+$ <math-shapley-value-feature-1>
+
+với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc trưng, $"Pre"^j (cal(O))$ là tập hợp tất cả các đặc trưng có vị trí ở trước đặc trưng $j$ khi sắp xếp trong hoán vị $cal(O) in pi(J)$. Và vì $f(z)$ đều xuất hiện trong công thức $v("Pre"^j (cal(O) union {j}))$ và $v("Pre"^j (cal(O)))$, nên chúng bị triệt tiêu, không xuất hiện trong @math-shapley-value-feature-1. Để đơn giản chúng ta giả sử tập $cal(A)$ là rời rạc.
+
+Tuy nhiên thông thường chúng ta không biết được phân phối $p(z)$, và số các liên minh của $N$ đặc trưng là $2^(|N|)$ khi số đặc trưng tăng lên thì số các liên minh cũng tăng lên rất nhanh, nên việc tính chính xác $v(S)$ gần như là không thể. Để đơn giản hơn, [TODO] đề xuất sử dụng phân phối mẫu ngẫu nhiên (random sampling) và thuật toán xấp xỉ đề viết lại Giá trị Shapley xấp xỉ như sau:
+
+$
+  hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m union {j}))) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
+$ <math-shapley-value-feature-2>
+
+@math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$.
+
 
 == 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
 
