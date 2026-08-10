@@ -347,7 +347,7 @@ $
   hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m union {j}))) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
 $ <math-shapley-value-feature-2>
 
-@math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$.
+@math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$.$p$. Vì $p$ không biết nên khi tính toàn ta lấy mẫu theo tập dữ liệu [TODO].
 
 
 == 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
