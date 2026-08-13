@@ -352,7 +352,10 @@ $ <math-shapley-value-feature-2>
 
 == 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
 
-Phương pháp XAI trong bài báo *Shapley values for cluster importance* [TODO] là một bước tiến lớn trong nhánh XAI hướng dữ liệu. Nghiên cứu này giải quyết được rào cản lớn của các phương pháp hướng dữ liệu truyền thống Cook's distance hay Influence functions) vốn chỉ đánh giá tác động của từng điểm dữ liệu đơn lẻ mà bỏ qua mối quan hệ tương tác phức tạp giữa từng cụm dữ liệu.
+Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, bài báo *Shapley values for cluster importance* [TODO] đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện. Mong muốn là giải thích được dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
+
+Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán.
+
 
 #pagebreak()
 
