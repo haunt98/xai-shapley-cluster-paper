@@ -352,10 +352,35 @@ $ <math-shapley-value-feature-2>
 
 == 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
 
-Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, bài báo *Shapley values for cluster importance* [TODO] đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện. Mong muốn là giải thích được dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
+Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, bài báo *Shapley values for cluster importance* [TODO] đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện, để nhằm giải thích dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
 
-Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán.
+Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán. Ví dụ có thể chia thành các cụm theo thời gian, cụ thể là 12 tháng trong năm. Hoặc lấy riêng từng điểm dữ liệu làm từng cụm cụ thể, lúc này thay vì trả lời cho câu hỏi cụm dữ liệu nào ảnh hưởng đến kết quả dự đoán thì sẽ trả lời cho câu hỏi điểm dữ liệu cụ thể nào ảnh hưởng đến kết quả dự đoán nhất.
 
+Trò lại với trò chơi liên minh, các cụm $cal(Q)_k$ là người chơi và hàm phần thường được định nghĩa như sau:
+
+$
+  v(S)(x) = f_S (x)
+$ <math-shapley-value-cluster-reward>
+
+trong đó $f_S (x)$ là hàm dự đoán được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$.
+
+Giá trị Shapley cho cụm dữ liệu $k$ được định nghĩa như sau:
+
+$
+  phi_k(x) = frac(1, K!) sum_(cal(O) in pi(K)) (f_("Pre"^k (cal(O) union {k}))(x) - f_("Pre"^k (cal(O)))(x))
+$ <math-shapley-value-cluster-1>
+
+trong đó $pi(K)$ là tập hợp tất cả các hoán vị của tập $K$ cụm dữ liệu, $"Pre"^k (cal(O))$ là tập hợp tất cả các cụm dữ liệu có vị trí ở trước cụm dữ liệu $k$ khi sắp xếp trong hoán vị $cal(O) in pi(K)$.
+
+Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
+
+$
+  hat(phi)_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m union {k}))(x) - f_("Pre"^k (cal(O)^m))(x))
+$
+
+Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
+
+Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = zero.slashed$, ta định nghĩa dự đoán bằng $0$, tương đương với $f_zero.slashed (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi zero trong Giá trị Shapley $v(zero.slashed) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
 
 #pagebreak()
 
