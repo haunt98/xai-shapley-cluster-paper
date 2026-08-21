@@ -393,7 +393,7 @@ Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K
 Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng thay vì giải thích dự đoán, nghiên cứu này sẽ giải thích sai số dự đoán. Đối với bài toán hồi quy, chỉ số đánh giá cho sai số dự đoán thường là sai số tuyệt đối (absolute error) hoặc sai số bình phương (squared error). @math-shapley-value-feature-reward và @math-shapley-value-cluster-reward đều có thể chỉnh sửa để sử dụng các loại chỉ số này để đánh giá. Nghiên cứu này chọn sai số bình phương để đánh giá sai số dự đoán.
 
 #diagram(
-  spacing: (10mm, 7mm),
+  spacing: (10mm, 6mm),
   node-stroke: 1pt,
   edge-stroke: 0.8pt,
 
@@ -455,7 +455,7 @@ Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối vớ
   // Black box
   node(
     (2.5, 3.5),
-    [Black box],
+    [Hộp đen],
     shape: "rect",
     fill: luma(80%),
     stroke: black + 1.2pt,
@@ -477,13 +477,13 @@ Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối vớ
     (2.5, 6.5),
     align(center)[
       #v(2mm)
-      value function
+      Hàm phần thưởng $v$
       #v(3mm)
       #text(fill: green.darken(20%), weight: "bold")[
-        COALITIONAL\ GAME
+        TRÒ CHƠI\ LIÊN MINH
       ]
       #v(3mm)
-      K players
+      K người chơi
       #v(2mm)
     ],
     shape: "rect",
@@ -496,8 +496,8 @@ Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối vớ
   node(
     (2.5, 8.5),
     align(center)[
-      The Shapley values\
-      $phi_1(x), phi_2(x), ..., phi_K(x)$
+      Giá trị Shapley\
+      $phi_1 (x), phi_2 (x), ..., phi_K (x)$
     ],
     stroke: none,
     name: <shapley>,
@@ -518,11 +518,13 @@ Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối vớ
   )),
   edge(<bbox>, <loss>, "->", label: [$f(x)$], stroke: (dash: "dashed")),
 
-  edge(<q1>, <cgame>, "->", label: [player], corner: left, stroke: (
+  edge(<q1>, <cgame>, "->", label: [người chơi], corner: left, stroke: (
     dash: "dashed",
   )),
   edge(<cgame>, <shapley>, "->", stroke: (dash: "dashed")),
-)
+) <diagram-idea-individual>
+
+== 3.1. Giải thích cục bộ
 
 == 3.1. Giải thích cục bộ
 
