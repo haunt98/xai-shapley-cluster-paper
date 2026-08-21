@@ -1,3 +1,5 @@
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node, shapes
+
 #set text(lang: "vi")
 #set text(font: "New Computer Modern")
 #set text(size: 11pt)
@@ -388,7 +390,139 @@ Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K
 
 // PHƯƠNG PHÁP NGHIÊN CỨU: cơ sở lý thuyết, lý luận, cách tiếp cận vấn đề nghiên cứu;
 
-Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng đổi lại TODO thay vì TODO
+Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng thay vì giải thích dự đoán, nghiên cứu này sẽ giải thích sai số dự đoán. Đối với bài toán hồi quy, chỉ số đánh giá cho sai số dự đoán thường là sai số tuyệt đối (absolute error) hoặc sai số bình phương (squared error). @math-shapley-value-feature-reward và @math-shapley-value-cluster-reward đều có thể chỉnh sửa để sử dụng các loại chỉ số này để đánh giá. Nghiên cứu này chọn sai số bình phương để đánh giá sai số dự đoán.
+
+#diagram(
+  spacing: (10mm, 7mm),
+  node-stroke: 1pt,
+  edge-stroke: 0.8pt,
+
+  // Q_1, Q_2, ..., Q_K
+  node(
+    (1.0, 0),
+    text(fill: white)[$Q_1$],
+    shape: "circle",
+    fill: blue.darken(30%),
+    stroke: black + 1pt,
+    width: 10mm,
+    height: 10mm,
+    name: <q1>,
+  ),
+  node(
+    (2.0, 0),
+    text(fill: white)[$Q_2$],
+    shape: "circle",
+    fill: blue.darken(30%),
+    stroke: black + 1pt,
+    width: 10mm,
+    height: 10mm,
+    name: <q2>,
+  ),
+  node((2.5, 0), $[dots]$, stroke: none, name: <q-dots>),
+  node(
+    (3.5, 0),
+    text(fill: white)[$Q_K$],
+    shape: "circle",
+    fill: blue.darken(30%),
+    stroke: black + 1pt,
+    width: 10mm,
+    height: 10mm,
+    name: <qk>,
+  ),
+
+  // D_train
+  node(
+    (2.5, 1.5),
+    $cal(D)^"train"$,
+    shape: shapes.ellipse,
+    stroke: black + 1pt,
+    width: 20mm,
+    height: 15mm,
+    name: <dtrain>,
+  ),
+
+  // D_test
+  node(
+    (4.0, 2.5),
+    align(center)[$cal(D)^"test"$\ #v(0.5mm) $x$ \& $y$],
+    shape: shapes.ellipse,
+    stroke: black + 1pt,
+    width: 20mm,
+    height: 15mm,
+    name: <dtest>,
+  ),
+
+  // Black box
+  node(
+    (2.5, 3.5),
+    [Black box],
+    shape: "rect",
+    fill: luma(80%),
+    stroke: black + 1.2pt,
+    corner-radius: 4pt,
+    width: 30mm,
+    height: 15mm,
+    name: <bbox>,
+  ),
+
+  // Loss formula
+  node(
+    (2.5, 5.0),
+    $(f(x) - y)^2$,
+    stroke: none,
+    name: <loss>,
+  ),
+
+  node(
+    (2.5, 6.5),
+    align(center)[
+      #v(2mm)
+      value function
+      #v(3mm)
+      #text(fill: green.darken(20%), weight: "bold")[
+        COALITIONAL\ GAME
+      ]
+      #v(3mm)
+      K players
+      #v(2mm)
+    ],
+    shape: "rect",
+    stroke: green.darken(20%) + 1.2pt,
+    corner-radius: 12pt,
+    width: 45mm,
+    name: <cgame>,
+  ),
+
+  node(
+    (2.5, 8.5),
+    align(center)[
+      The Shapley values\
+      $phi_1(x), phi_2(x), ..., phi_K(x)$
+    ],
+    stroke: none,
+    name: <shapley>,
+  ),
+
+  edge(<dtrain>, <q1>, "->", stroke: (dash: "dashed")),
+  edge(<dtrain>, <q2>, "->", stroke: (dash: "dashed")),
+  edge(<dtrain>, <q-dots>, "->", stroke: (dash: "dashed")),
+  edge(<dtrain>, <qk>, "->", stroke: (dash: "dashed")),
+
+  edge(<dtrain>, <bbox>, "->", stroke: (dash: "dashed")),
+
+  edge(<dtest>, <bbox>, "->", label: [$x$], corner: right, stroke: (
+    dash: "dashed",
+  )),
+  edge(<dtest>, <loss>, "->", label: [$y$], corner: right, stroke: (
+    dash: "dashed",
+  )),
+  edge(<bbox>, <loss>, "->", label: [$f(x)$], stroke: (dash: "dashed")),
+
+  edge(<q1>, <cgame>, "->", label: [player], corner: left, stroke: (
+    dash: "dashed",
+  )),
+  edge(<cgame>, <shapley>, "->", stroke: (dash: "dashed")),
+)
 
 == 3.1. Giải thích cục bộ
 
