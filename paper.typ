@@ -392,141 +392,169 @@ Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K
 
 Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng thay vì giải thích dự đoán, nghiên cứu này sẽ giải thích sai số dự đoán. Đối với bài toán hồi quy, chỉ số đánh giá cho sai số dự đoán thường là sai số tuyệt đối (absolute error) hoặc sai số bình phương (squared error). @math-shapley-value-feature-reward và @math-shapley-value-cluster-reward đều có thể chỉnh sửa để sử dụng các loại chỉ số này để đánh giá. Nghiên cứu này chọn sai số bình phương để đánh giá sai số dự đoán.
 
-#diagram(
-  spacing: (10mm, 6mm),
-  node-stroke: 1pt,
-  edge-stroke: 0.8pt,
 
-  // Q_1, Q_2, ..., Q_K
-  node(
-    (1.0, 0),
-    text(fill: white)[$Q_1$],
-    shape: "circle",
-    fill: blue.darken(30%),
-    stroke: black + 1pt,
-    width: 10mm,
-    height: 10mm,
-    name: <q1>,
+== 3.1. Giải thích cục bộ
+
+Chúng ta tiếp tục sử dụng hàm hồi quy $f : cal(A) arrow.r RR$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Lúc này chúng ta sửa hàm phần thưởng $v$ trong @math-shapley-value-cluster-reward cho người chơi $Q_k$ như sau:
+
+$
+  v(S)(x) = (y - f_S (x))^2
+$ <math-shapley-value-hindsight-reward-1>
+
+trong đó $f_S$ là hàm dự đoán được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$. Hàm phần thưởng này dùng để tính sai số bình phương của dự đoán $f_S (x)$ so với giá trị thực tế $y$. Tương tự như @math-shapley-value-cluster-1, Giá trị Shapley cho cụm dữ liệu $k$ được định nghĩa như sau:
+
+$
+  phi_k (x) = frac(1, K!) sum_(cal(O) in pi(K)) [(y - f_("Pre"^k (cal(O) union {k}))(x))^2 - (y - f_("Pre"^k (cal(O)))(x))^2]
+$ <math-shapley-value-hindsight-1>
+
+trong đó $pi(K)$ là tập tất cả các hoán vị của $K$ cụm dữ liệu, $"Pre"^k (cal(O))$ là tập hợp tất cả các cụm dữ liệu có vị trí ở trước cụm dữ liệu $k$ khi sắp xếp trong hoán vị $cal(O) in pi(K)$.
+
+#figure(
+  diagram(
+    spacing: (10mm, 6mm),
+    node-stroke: 1pt,
+    edge-stroke: 0.8pt,
+
+    // Q_1, Q_2, ..., Q_K
+    node(
+      (1.0, 0),
+      text(fill: white)[$Q_1$],
+      shape: "circle",
+      fill: blue.darken(30%),
+      stroke: black + 1pt,
+      width: 10mm,
+      height: 10mm,
+      name: <q1>,
+    ),
+    node(
+      (2.0, 0),
+      text(fill: white)[$Q_2$],
+      shape: "circle",
+      fill: blue.darken(30%),
+      stroke: black + 1pt,
+      width: 10mm,
+      height: 10mm,
+      name: <q2>,
+    ),
+    node((2.5, 0), $[dots]$, stroke: none, name: <q-dots>),
+    node(
+      (3.5, 0),
+      text(fill: white)[$Q_K$],
+      shape: "circle",
+      fill: blue.darken(30%),
+      stroke: black + 1pt,
+      width: 10mm,
+      height: 10mm,
+      name: <qk>,
+    ),
+
+    // D_train
+    node(
+      (2.5, 1.5),
+      $cal(D)^"train"$,
+      shape: shapes.ellipse,
+      stroke: black + 1pt,
+      width: 20mm,
+      height: 15mm,
+      name: <dtrain>,
+    ),
+
+    // D_test
+    node(
+      (4.0, 2.5),
+      align(center)[$cal(D)^"test"$\ #v(0.5mm) $x$ \& $y$],
+      shape: shapes.ellipse,
+      stroke: black + 1pt,
+      width: 20mm,
+      height: 15mm,
+      name: <dtest>,
+    ),
+
+    // Black box
+    node(
+      (2.5, 3.5),
+      [Hộp đen],
+      shape: "rect",
+      fill: luma(80%),
+      stroke: black + 1.2pt,
+      corner-radius: 4pt,
+      width: 30mm,
+      height: 15mm,
+      name: <bbox>,
+    ),
+
+    // Loss formula
+    node(
+      (2.5, 5.0),
+      $(f(x) - y)^2$,
+      stroke: none,
+      name: <loss>,
+    ),
+
+    node(
+      (2.5, 6.5),
+      align(center)[
+        #v(2mm)
+        Hàm phần thưởng $v$
+        #v(3mm)
+        #text(fill: green.darken(20%), weight: "bold")[
+          TRÒ CHƠI\ LIÊN MINH
+        ]
+        #v(3mm)
+        K người chơi
+        #v(2mm)
+      ],
+      shape: "rect",
+      stroke: green.darken(20%) + 1.2pt,
+      corner-radius: 12pt,
+      width: 45mm,
+      name: <cgame>,
+    ),
+
+    node(
+      (2.5, 8.5),
+      align(center)[
+        Giá trị Shapley\
+        $phi_1 (x), phi_2 (x), ..., phi_K (x)$
+      ],
+      stroke: none,
+      name: <shapley>,
+    ),
+
+    edge(<dtrain>, <q1>, "->", stroke: (dash: "dashed")),
+    edge(<dtrain>, <q2>, "->", stroke: (dash: "dashed")),
+    edge(<dtrain>, <q-dots>, "->", stroke: (dash: "dashed")),
+    edge(<dtrain>, <qk>, "->", stroke: (dash: "dashed")),
+
+    edge(<dtrain>, <bbox>, "->", stroke: (dash: "dashed")),
+
+    edge(<dtest>, <bbox>, "->", label: [$x$], corner: right, stroke: (
+      dash: "dashed",
+    )),
+    edge(<dtest>, <loss>, "->", label: [$y$], corner: right, stroke: (
+      dash: "dashed",
+    )),
+    edge(<bbox>, <loss>, "->", label: [$f(x)$], stroke: (dash: "dashed")),
+
+    edge(<q1>, <cgame>, "->", label: [người chơi], corner: left, stroke: (
+      dash: "dashed",
+    )),
+    edge(<cgame>, <shapley>, "->", stroke: (dash: "dashed")),
   ),
-  node(
-    (2.0, 0),
-    text(fill: white)[$Q_2$],
-    shape: "circle",
-    fill: blue.darken(30%),
-    stroke: black + 1pt,
-    width: 10mm,
-    height: 10mm,
-    name: <q2>,
-  ),
-  node((2.5, 0), $[dots]$, stroke: none, name: <q-dots>),
-  node(
-    (3.5, 0),
-    text(fill: white)[$Q_K$],
-    shape: "circle",
-    fill: blue.darken(30%),
-    stroke: black + 1pt,
-    width: 10mm,
-    height: 10mm,
-    name: <qk>,
-  ),
-
-  // D_train
-  node(
-    (2.5, 1.5),
-    $cal(D)^"train"$,
-    shape: shapes.ellipse,
-    stroke: black + 1pt,
-    width: 20mm,
-    height: 15mm,
-    name: <dtrain>,
-  ),
-
-  // D_test
-  node(
-    (4.0, 2.5),
-    align(center)[$cal(D)^"test"$\ #v(0.5mm) $x$ \& $y$],
-    shape: shapes.ellipse,
-    stroke: black + 1pt,
-    width: 20mm,
-    height: 15mm,
-    name: <dtest>,
-  ),
-
-  // Black box
-  node(
-    (2.5, 3.5),
-    [Hộp đen],
-    shape: "rect",
-    fill: luma(80%),
-    stroke: black + 1.2pt,
-    corner-radius: 4pt,
-    width: 30mm,
-    height: 15mm,
-    name: <bbox>,
-  ),
-
-  // Loss formula
-  node(
-    (2.5, 5.0),
-    $(f(x) - y)^2$,
-    stroke: none,
-    name: <loss>,
-  ),
-
-  node(
-    (2.5, 6.5),
-    align(center)[
-      #v(2mm)
-      Hàm phần thưởng $v$
-      #v(3mm)
-      #text(fill: green.darken(20%), weight: "bold")[
-        TRÒ CHƠI\ LIÊN MINH
-      ]
-      #v(3mm)
-      K người chơi
-      #v(2mm)
-    ],
-    shape: "rect",
-    stroke: green.darken(20%) + 1.2pt,
-    corner-radius: 12pt,
-    width: 45mm,
-    name: <cgame>,
-  ),
-
-  node(
-    (2.5, 8.5),
-    align(center)[
-      Giá trị Shapley\
-      $phi_1 (x), phi_2 (x), ..., phi_K (x)$
-    ],
-    stroke: none,
-    name: <shapley>,
-  ),
-
-  edge(<dtrain>, <q1>, "->", stroke: (dash: "dashed")),
-  edge(<dtrain>, <q2>, "->", stroke: (dash: "dashed")),
-  edge(<dtrain>, <q-dots>, "->", stroke: (dash: "dashed")),
-  edge(<dtrain>, <qk>, "->", stroke: (dash: "dashed")),
-
-  edge(<dtrain>, <bbox>, "->", stroke: (dash: "dashed")),
-
-  edge(<dtest>, <bbox>, "->", label: [$x$], corner: right, stroke: (
-    dash: "dashed",
-  )),
-  edge(<dtest>, <loss>, "->", label: [$y$], corner: right, stroke: (
-    dash: "dashed",
-  )),
-  edge(<bbox>, <loss>, "->", label: [$f(x)$], stroke: (dash: "dashed")),
-
-  edge(<q1>, <cgame>, "->", label: [người chơi], corner: left, stroke: (
-    dash: "dashed",
-  )),
-  edge(<cgame>, <shapley>, "->", stroke: (dash: "dashed")),
+  caption: [Minh hoạ ý tưởng giải thích cục bộ],
 ) <diagram-idea-individual>
 
-== 3.1. Giải thích cục bộ
+@diagram-idea-individual minh hoạ cách giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể. Từ đó, chúng ta có thể xác định được cụm dữ liệu huấn luyện nào đóng góp nhiều nhất vào sai số dự đoán tại điểm dữ liệu $x$.
 
-== 3.1. Giải thích cục bộ
+Có một vấn đề là tính chất *Người chơi zero* không còn đúng nữa vì với $f_zero.slashed (x) = 0$ thì $v(zero.slashed) = (y - 0)^2 = y^2$ chứ không phải bằng 0 theo @math-shapley-value-hindsight-reward-1.
+
+Để giải quyết vấn đề này, chúng ta có thể định nghĩa lại hàm phần thưởng $v$ như sau:
+
+$
+  v(S)(x) = (y - f_S (x))^2 - y^2
+$ <math-shapley-value-hindsight-reward-2>
+
+khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả hai hàm phần thưởng $v("Pre"^k (cal(O) union {k}))$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của hai hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
 
 == 3.2. Giải thích toàn cục
 
