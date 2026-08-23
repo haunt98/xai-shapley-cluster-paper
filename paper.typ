@@ -1,4 +1,5 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node, shapes
+#import "@preview/lovelace:0.3.1": *
 
 #set text(lang: "vi")
 #set text(font: "New Computer Modern")
@@ -555,6 +556,36 @@ $
 $ <math-shapley-value-hindsight-reward-2>
 
 khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả hai hàm phần thưởng $v("Pre"^k (cal(O) union {k}))$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của hai hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
+
+Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
+
+$
+  hat(phi)_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m union {k}))(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
+$
+
+Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
+
+Thuật toán để tính được xấp xỉ Giá trị Shapley cho từng cụm dữ liệu $k$ được trình bày như sau:
+
+#pseudocode-list(
+  booktabs: true,
+  line-numbering: none,
+)[
+  - *Khởi tạo:*
+  - Số lần lặp $M$;
+  - Chia dữ liệu huấn luyện thành các cụm: $Q_1, Q_2, ..., Q_k$;
+  - $phi_k (x) := 0$;
+  + *for* $m = 1, ..., M$ *do*
+    + Lấy mẫu một hoán vị ngẫu nhiên $cal(O) in pi(K)$;
+    + Tạo tập dữ liệu $cal(D)^+$ gồm $Q_k$ và các $Q_i$ với $i$ đứng trước $k$ trong $cal(O)$;
+    + Dùng tập dữ liệu $cal(D)^+$ để huấn luyện một hàm $f_(cal(D)^+)$;
+    + Tạo tập dữ liệu $cal(D)^-$ gồm các $Q_i$ với $i$ đứng trước $k$ trong $cal(O)$;
+    + Dùng tập dữ liệu $cal(D)^-$ để huấn luyện một hàm $f_(cal(D)^-)$;
+    + Cập nhật giá trị Shapley: \
+      $phi_k (x) := phi_k (x) + (y - f_(cal(D)^+)(x))^2 - (y - f_(cal(D)^-)(x))^2$
+  + *end*
+  + $phi_k (x) := frac(phi_k (x), M)$;
+] <algorithm-shapley-value-hindsight>
 
 == 3.2. Giải thích toàn cục
 
