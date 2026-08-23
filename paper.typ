@@ -635,7 +635,9 @@ $
   frac("TP" + "TN", "TP" + "TN" + "FP" + "FN")
 $ <math-accuracy>
 
-
+$
+  hat(phi)_k = 1/M sum_(m=1)^M [h_("Pre"^k (cal(O)^m union {k})) - h_("Pre"^k (cal(O)^m))]
+$
 
 #pagebreak()
 
