@@ -28,6 +28,10 @@
   [MSE], [Mean Squared Error], [Sai số bình phương trung bình],
   [KNN], [K-Nearest Neighbors], [K láng giềng gần nhất],
   [AAKR], [Auto-Associative Kernel Regression], [Phân loại bất thường],
+  [TP], [True Positive], [Dương tính thật],
+  [FP], [False Positive], [Dương tính giả],
+  [TN], [True Negative], [Âm tính thật],
+  [FN], [False Negative], [Âm tính giả],
 )
 
 #pagebreak()
@@ -608,6 +612,30 @@ $
 $
 
 == 3.3. Bài toán phân loại
+
+Ở các mục trước, chúng ta đã xem xét các hàm hồi quy $f : cal(A) arrow.r RR$ để sử dụng Giá trị Shapley. Chúng ta cũng có thể áp dụng phương pháp tương tự cho các bài toán *phân loại*, xét một hàm phân loại $g : cal(A) arrow.r cal(B)$, với $cal(A)$ là không gian đặc trưng, và $cal(B)$ là không gian các lớp được phân loại. Khi chúng ta biết chính xác phân loại lớp thực tế $c$, chúng ta có thể so sánh ngược lại với các lớp được dự đoán $g(x)$ và tính được độ đo hiệu suất khác nhau để đánh giá.
+
+Lấy ví dụ bài toán phát hiện lỗi trong hệ thống máy móc. Dựa trên dữ liệu từ một tập hợp gồm $J$ cảm biến đang theo dõi thiết bị, $cal(A)_1 times dots.c times cal(A)_J$, hàm $g$ sẽ dự đoán xem thiết bị đang có lỗi hay không. Trong ví dụ này, $cal(B)$ chỉ bao gồm hai lớp: lớp bình thường và lớp bị lỗi.
+
+Khi so sánh các giá trị dự đoán và giá trị thực tế trên toàn bộ tập dữ liệu kiểm thử (cho tất cả các bước thời gian $t = 1, dots, T$), chúng ta đếm số lượng TP (dự đoán có lỗi, thực tế có lỗi), FP (dự đoán có lỗi, thực tế bình thường), FN (dự đoán bình thường, thực tế có lỗi), và TN (dự đoán bình thường, thực tế bình thường). Dựa trên các giá trị này, chúng ta có thể tính toán các độ đo hiệu suất khác nhau, ví dụ như *độ nhạy* (sensitivity) thể hiện tỷ lệ dương tính thật:
+
+$
+  frac("TP", "TP" + "FN")
+$ <math-sensitivity>
+
+*độ đặc hiệu* (specificity) thể hiện tỷ lệ âm tính thật:
+
+$
+  frac("TN", "TN" + "FP")
+$ <math-specificity>
+
+và *độ chính xác* (accuracy) thể hiện tỷ lệ dự đoán đúng:
+
+$
+  frac("TP" + "TN", "TP" + "TN" + "FP" + "FN")
+$ <math-accuracy>
+
+
 
 #pagebreak()
 
