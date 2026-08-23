@@ -565,7 +565,7 @@ $
 
 Với từng mẫu ngẫu nhiên $m$, ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
 
-Thuật toán để tính được xấp xỉ Giá trị Shapley cho từng cụm dữ liệu $k$ được trình bày như sau:
+Thuật toán để tính được xấp xỉ Giá trị Shapley cho từng cụm dữ liệu $k$ tại điểm dữ liệu $x$ cục bộ được trình bày như sau:
 
 #pseudocode-list(
   booktabs: true,
@@ -588,6 +588,24 @@ Thuật toán để tính được xấp xỉ Giá trị Shapley cho từng cụ
 ] <algorithm-shapley-value-hindsight>
 
 == 3.2. Giải thích toàn cục
+
+Nếu như Mục 3.1 giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể, chúng ta có thể định nghĩa lại hàm phần thưởng cho việc đánh giá hiệu quả toàn cục (global performance, đó là hiệu quả của toàn bộ tập dữ liệu kểm thử $cal(D)^"test"$ thay vì từng dự đoán riêng lẻ. Ví dụ chúng ta định nghĩa hàm phần thưởng $v$ sử dụng MSE như sau:
+
+$
+  macron(v)(S) = 1/T sum_(t=1)^T (y_t - f_S (x_t))^2
+$ <math-shapley-value-hindsight-reward-3>
+
+trong đó $T$ là toàn bộ điểm dữ liệu trong tập kiểm thử $cal(D)^"test"$.
+
+*Mệnh đề 1.* Giá trị Shapley toàn cục đối với trò chơi sử dụng MSE @math-shapley-value-hindsight-reward-3 bằng trung bình cộng của toàn bộ giá trị Shapley riêng lẻ sử dụng sai số bình phương @math-shapley-value-hindsight-reward-1.
+
+*Chứng minh.* Giá trị Shapley toàn cục $macron(phi)_k$ của cụm dữ liệu $k$ được định nghĩa như sau:
+
+$
+  macron(phi)_k = 1/(K!) sum_(cal(O) in pi(K)) [ 1/T sum_(t=1)^T (y_t - f_("Pre"^k (cal(O)) union {k}) (x_t))^2 - 1/T sum_(t=1)^T (y_t - f_("Pre"^k (cal(O))) (x_t))^2 ] \
+  = 1/T sum_(t=1)^T 1/(K!) sum_(cal(O) in pi(K)) [ (y_t - f_("Pre"^k (cal(O)) union {k}) (x_t))^2 - (y_t - f_("Pre"^k (cal(O))) (x_t))^2 ] \
+  = 1/T sum_(t=1)^T phi_k (x_t).
+$
 
 == 3.3. Bài toán phân loại
 
