@@ -645,6 +645,24 @@ $
 
 == 4.1. Dữ liệu tạo sinh
 
+Trước khi sử dụng dữ liệu thực tế, chúng ta sẽ thử nghiệm phương pháp đề xuất ở Chương 3 trên tập dữ liệu tạo sinh (synthetic data) để thể hiện rõ nét cách mà Giá trị Shapley cho cụm dữ liệu thể hiện sự ảnh hưởng của từng cụm dữ liệu đối với dự đoán và sai số dự đoán.
+
+Chúng ta đề xuất một bài toán hồi quy mô phỏng theo chuỗi thời gian đơn giản:
+
+$
+  x_j(t) = sin(omega_j t) + eta_j(t), quad j = 1, dots, 4
+$ <math-synthetic-x>
+
+trong đó $t = 1, dots, T$, $eta_j(t) tilde cal(N)(0, 0.1)$, và $omega_j$ được lấy mẫu đều (uniform) từ $[0, 2pi]$.
+
+Dựa vào đó, định nghĩa hàm sinh dữ liệu:
+
+$
+  y(t) = x_1(t) dot x_2(t) + x_3(t) dot x_4(t) + epsilon(t)
+$ <math-synthetic-y>
+
+trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (iid) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng gói thư viện `randomForest` (TODO) trong ngôn ngữ R, với $100$ cây và số lượng nút lá (terminal nodes) tối đa là $30$.
+
 == 4.2. Dữ liệu Bikeshare
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
