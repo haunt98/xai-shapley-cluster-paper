@@ -661,7 +661,9 @@ $
   y(t) = x_1(t) dot x_2(t) + x_3(t) dot x_4(t) + epsilon(t)
 $ <math-synthetic-y>
 
-trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (iid) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng gói thư viện `randomForest` (TODO) trong ngôn ngữ R, với $100$ cây và số lượng nút lá (terminal nodes) tối đa là $30$.
+trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng gói thư viện `randomForest` (TODO) trong ngôn ngữ R, với 100 cây và số lượng nút lá (terminal nodes) tối đa là 30.
+
+Khi giải thích các dự đoán, chúng ta giả định rằng chúng tôi không có hiểu biết gì về thuật toán được dùng để tạo ra các dự đoán đó (mô hình hộp đen / black-box). Để tính toán các giá trị Shapley nhằm xác định độ quan trọng của các cụm dữ liệu huấn luyện, chúng tôi cần quyền truy cập để huấn luyện lại (retrain) mô hình, nhưng không can thiệp hay kiểm tra thuật toán cũng như dữ liệu huấn luyện. Chúng tôi giả định rằng quy trình huấn luyện lại là hoàn toàn tự động, bao gồm cả việc tối ưu hóa siêu tham số (hyper-parameter optimization) nếu bước này được thực hiện cho mô hình đang triển khai.
 
 == 4.2. Dữ liệu Bikeshare
 
