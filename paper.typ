@@ -645,7 +645,7 @@ $
 
 == 4.1. Dữ liệu tạo sinh
 
-Trước khi sử dụng dữ liệu thực tế, chúng ta sẽ thử nghiệm phương pháp đề xuất ở Chương 3 trên tập dữ liệu tạo sinh (synthetic data) để thể hiện rõ nét cách mà Giá trị Shapley cho cụm dữ liệu thể hiện sự ảnh hưởng của từng cụm dữ liệu đối với dự đoán và sai số dự đoán.
+Trước khi sử dụng dữ liệu thực tế, chúng ta sẽ thử nghiệm phương pháp đề xuất ở Chương 3 trên tập dữ liệu tạo sinh (synthetic data) để thể hiện rõ cách mà Giá trị Shapley cho cụm dữ liệu thể hiện sự ảnh hưởng của từng cụm dữ liệu đối với dự đoán và sai số dự đoán.
 
 Chúng ta đề xuất một bài toán hồi quy mô phỏng theo chuỗi thời gian đơn giản:
 
@@ -661,11 +661,86 @@ $
   y(t) = x_1(t) dot x_2(t) + x_3(t) dot x_4(t) + epsilon(t)
 $ <math-synthetic-y>
 
-trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng gói thư viện `randomForest` (TODO) trong ngôn ngữ R, với 100 cây và số lượng nút lá (terminal nodes) tối đa là 30.
+trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng thư viện `randomForest` (TODO) trong ngôn ngữ R, với 100 cây và số lượng nút lá (terminal nodes) tối đa là 30.
 
-Khi giải thích các dự đoán, chúng ta giả định rằng chúng tôi không có hiểu biết gì về thuật toán được dùng để tạo ra các dự đoán đó (mô hình hộp đen / black-box). Để tính toán các giá trị Shapley nhằm xác định độ quan trọng của các cụm dữ liệu huấn luyện, chúng tôi cần quyền truy cập để huấn luyện lại (retrain) mô hình, nhưng không can thiệp hay kiểm tra thuật toán cũng như dữ liệu huấn luyện. Chúng tôi giả định rằng quy trình huấn luyện lại là hoàn toàn tự động, bao gồm cả việc tối ưu hóa siêu tham số (hyper-parameter optimization) nếu bước này được thực hiện cho mô hình đang triển khai.
+Khi giải thích các dự đoán, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó (mô hình hộp đen) mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
 
 == 4.2. Dữ liệu Bikeshare
+
+Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở Mục 4.1, đây là dữ liệu thực tế chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, do đó phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế.
+
+Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe đạp $y$ dựa trên các đặc trưng đầu vào. Chúng ta sử dụng các đặc trưng có sẵn và có ý nghĩa thực tế của tập dữ liệu, được liệt kê trong @table-bikeshare-variables.
+
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, left, left),
+    [*Ký hiệu*], [*Đặc trưng*], [*Mô tả*],
+
+    [$y$], [bikers], [Số lượt thuê xe đạp],
+    [$x_1$], [hr], [Giờ trong ngày],
+    [$x_2$], [holiday], [Ngày lễ],
+    [$x_3$], [weekday], [Thứ trong tuần],
+    [$x_4$], [workingday], [Ngày làm việc],
+    [$x_5$], [weathersit], [Tình trạng thời tiết],
+    [$x_6$], [temp], [Nhiệt độ],
+    [$x_7$], [hum], [Độ ẩm],
+    [$x_8$], [windspeed], [Tốc độ gió],
+    [$x_S$], [mnth], [Tháng (dùng để phân cụm)],
+  ),
+  caption: [Các biến được sử dụng trong tập dữ liệu Bikeshare],
+) <table-bikeshare-variables>
+
+Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu, ở đây là yếu tố thời gian theo tháng, nhằm thể hiện rõ tính mùa vụ của nhu cầu sử dụng xe đạp. Số quan sát trong mỗi cụm khá cân bằng, dao động từ 649 quan sát (tháng 2) đến 744 quan sát (tháng 5 và tháng 7).
+
+Để phục vụ huấn luyện và đánh giá, các quan sát trong mỗi cụm $cal(Q)_k$ được chia ngẫu nhiên và không giao nhau thành ba tập với tỷ lệ được trình bày trong @table-bikeshare-split.
+
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (left, right, right),
+    [*Tập dữ liệu*], [*Số mẫu mỗi cụm*], [*Tổng số mẫu*],
+
+    [$cal(D)^"shapley train"$], [400], [4800],
+    [$cal(D)^"shapley test"$], [200], [2400],
+    [$cal(D)^"eval"$], [30], [360],
+  ),
+  caption: [Phân chia dữ liệu Bikeshare cho từng cụm],
+) <table-bikeshare-split>
+
+Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở Mục 3.1. Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
+
+Mô hình hộp đen được sử dụng là Rừng Ngẫu Nhiên (Random Forest). Tương tự như Mục 4.1, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả hai chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-1; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
+
+Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho ta Giá trị Shapley toàn cục:
+
+$
+  macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
+$
+
+theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra bốn tháng đại diện cho bốn mùa trong năm, tương ứng với bốn điểm dữ liệu $x$, và biểu diễn Giá trị Shapley riêng lẻ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $M$.
+
+Từ kết quả Giá trị Shapley toàn cục $macron(phi)_k$, chúng ta xây dựng hai chiến lược thu thập dữ liệu huấn luyện nhằm so sánh hiệu quả. Chiến lược thứ nhất là *equal* (cơ sở): lấy mẫu một số lượng bằng nhau cho mỗi cụm, cụ thể với tổng số $N^"strategy" = 4800$ điểm thì mỗi cụm được lấy $N^"strategy" \/ K = 400$ điểm. Chiến lược thứ hai là *max* (đề xuất): lấy mẫu nhiều hơn ở những cụm có đóng góp làm giảm sai số dự đoán. Gán trọng số cho từng cụm:
+
+$
+  w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
+$
+
+trong đó $tau$ tỷ lệ với độ lệch chuẩn của toàn bộ Giá trị Shapley toàn cục. Hạn ngạch (quota) cho mỗi cụm được tính theo tỷ lệ trọng số:
+
+$
+  "quota"_k = N^"strategy" w_k / sum_(j=1)^K w_j
+$
+
+Việc phân bổ được thực hiện sao cho tổng số điểm đúng bằng $N^"strategy"$, đồng thời đảm bảo mỗi cụm nhận tối thiểu $floor(N^"strategy" \/ (2K))$ điểm và không vượt quá số điểm hiện có của cụm. Với chiến lược *equal*, số điểm được chia đều; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
+
+Cuối cùng, chúng ta huấn luyện hai mô hình trên hai tập dữ liệu tương ứng với hai chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
+
+$
+  "MSE"_k = 1/(n_k) sum_(t: x_t in cal(Q)_k) (y_t - f(x_t))^2
+$
+
+trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của hai chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
