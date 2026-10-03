@@ -56,7 +56,7 @@ Nghiên cứu này tập trung vào một cách tiếp cận mới trong XAI đ�
 
 == 1.2. Lý do lựa chọn đề tài
 
-Lý do lựa chọn đề tài xuất phát từ ba nội dung chính sau:
+Lý do lựa chọn đề tài xuất phát từ 3 nội dung chính sau:
 
 - *Khoảng trống nghiên cứu về phương pháp XAI giải thích cục bộ (local) cho sai số của dự đoán*: Sự phát triển của mô hình AI đi kèm với sự phát triển các phương pháp XAI giải thích cục bộ như LIME [TODO], ICE [TODO], PredDiff [TODO]. Tuy nhiên điểm chung của các phương pháp này là đều giải thích giá trị dự đoán khi chưa biết trước kết quả thực tế. Bên cạnh đó các phương pháp XAI giải thích cho sai số dự đoán hầu hết đều mang tính toàn cục (global), thể hiện dự đoán trên toàn bộ tập dữ liệu, chứ không dự đoán cho từng điểm dữ liệu riêng biệt. Cho nên hiện tại chưa có một phương pháp XAI nào giải thích cục bộ cho sai số dự đoán dựa trên tập dữ liệu mà không phụ thuộc vào mô hình (model agnostic).
 - *Tiếp cận hướng dữ liệu:*: Nhiều phương pháp XAI tập trung vào đo lường mức độ quan trọng của các đặc trưng (feature) trong dự đoán, nhưng lại bỏ qua tầm quan trọng của tập dữ liệu huấn luyện. Trong thực tế, tập dữ liệu huấn luyện có thể đóng vai trò quyết định đến kết quả dự đoán của mô hình. Nếu tập dữ liệu huấn luyện bị thiên lệch (bias) thì kết quả đầu ra của mô hình cũng sẽ bị thiên lệch theo. Một ví dụ tương tự có thể thấy trong môn bóng rổ: Chiều cao là một đặc trưng rất quan trọng ảnh hưởng đến hiệu suất thi đấu bóng rổ. Tuy nhiên, nếu xét riêng trong giải đấu NBA chuyên nghiệp, nơi mà hầu hết các vận động viên đều đã sở hữu chiều cao vượt trội so với người bình thường, thì chiều cao lại không còn là yếu tố quan trọng có thể giải thích được sự chênh lệch về hiệu suất giữa các cầu thủ nữa. Điều này cho thấy vai trò của một đặc trưng có được coi là *quan trọng* hay không phụ thuộc hoàn toàn vào tập dữ liệu huấn luyện mà mô hình được học. Do đó, việc giải thích mô hình dưới góc nhìn hướng dữ liệu, cụ thể trong nghiên cứu này là đánh giá ảnh hưởng của từng cụm dữ liệu huấn luyện, là cần thiết để hiểu rõ bản chất và cải thiện độ chính xác dự đoán.
@@ -118,7 +118,7 @@ Giới hạn của nghiên cứu:
 
 == 2.1. Các công trình nghiên cứu liên quan
 
-XAI được sinh ra để cung cấp cho người dùng và nhà phát triển các công cụ để hiểu rõ hơn về cách mà mô hình AI đưa ra dự đoán. Ví dụ như một mô hình AI quyết định cho vay tín dụng thì kết quả chỉ có thể là quyết định cho vay hoặc không, nhưng khi khách hàng hỏi lại kỹ hơn tại sao lại từ chối yêu cầy vay vốn thì lúc đó cần phải giải thích rõ hơn ví dụ như khách hàng có lịch sử tín dụng xấu, hoặc vì một tiêu chuẩn nào đó khác. XAI còn được dùng để kiểm chứng mô hình có học được đúng các đặc trưng như nhà phát triển mong muốn hay không. Ví dụ với một mô hình AI phân loại loài gấu, giữa gấu bắc cực và gấu nâu, có khả năng mô hình học đặc trưng màu sắc của tuyết để phân biệt thay vì học đặc trưng về màu sắc hay hình dáng cơ thể của hai loài gấu.
+XAI được sinh ra để cung cấp cho người dùng và nhà phát triển các công cụ để hiểu rõ hơn về cách mà mô hình AI đưa ra dự đoán. Ví dụ như một mô hình AI quyết định cho vay tín dụng thì kết quả chỉ có thể là quyết định cho vay hoặc không, nhưng khi khách hàng hỏi lại kỹ hơn tại sao lại từ chối yêu cầy vay vốn thì lúc đó cần phải giải thích rõ hơn ví dụ như khách hàng có lịch sử tín dụng xấu, hoặc vì một tiêu chuẩn nào đó khác. XAI còn được dùng để kiểm chứng mô hình có học được đúng các đặc trưng như nhà phát triển mong muốn hay không. Ví dụ với một mô hình AI phân loại loài gấu, giữa gấu bắc cực và gấu nâu, có khả năng mô hình học đặc trưng màu sắc của tuyết để phân biệt thay vì học đặc trưng về màu sắc hay hình dáng cơ thể của 2 loài gấu.
 
 #figure(
   table(
@@ -160,9 +160,9 @@ XAI được sinh ra để cung cấp cho người dùng và nhà phát triển 
   placement: none,
 ) <table-overview>
 
-@table-overview tổng hợp các phương pháp XAI được phân loại theo hai tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ một của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục có thể chia làm 2 nhóm là phân tích ảnh hưởng của các đặc trưng khác nhau ví dụ như: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO] hoặc đánh giá sử dụng dữ liệu huấn luyện ví dụ như: *Data Banzhaf* [TODO].
+@table-overview tổng hợp các phương pháp XAI được phân loại theo 2 tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ một của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục có thể chia làm 2 nhóm là phân tích ảnh hưởng của các đặc trưng khác nhau ví dụ như: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO] hoặc đánh giá sử dụng dữ liệu huấn luyện ví dụ như: *Data Banzhaf* [TODO].
 
-Bên cạnh hướng giải thích toàn cục là hướng cục bộ, để giải thích từng dự đoán đơn lẻ tại từng thời điểm cục bộ, ta cũng có thể chia thành 2 nhóm phương pháp XAI dựa trên mức độ quan trọng của đặc trưng hoặc dựa trên mức độ ảnh hưởng của cụm dữ liệu huấn luyện đến dự đoán. Nhóm thứ nhất có thể kể đến như Marginal Shapley values [TODO], Conditional Shapley values [TODO], PredDiff [TODO], Anchors [TODO], Counterfactual explanations [TODO], LIME [TODO] và ICE [TODO]. Nhóm thứ hai có thể kể đến như Influence functions for perturbing training data [TODO], Case-based explanations [TODO] và Shapley values for cluster importance [TODO]. Nhóm thứ nhất chứa các phương pháp XAI phổ biến và được trích dẫn nhiều nhất trong các công trình nghiên cứu khác. Nhóm thứ hai, tập trung vào dữ liệu, thì lại ít phương pháp hơn. Có 3 phương pháp có thể kể đến là:
+Bên cạnh hướng giải thích toàn cục là hướng cục bộ, để giải thích từng dự đoán đơn lẻ tại từng thời điểm cục bộ, ta cũng có thể chia thành 2 nhóm phương pháp XAI dựa trên mức độ quan trọng của đặc trưng hoặc dựa trên mức độ ảnh hưởng của cụm dữ liệu huấn luyện đến dự đoán. Nhóm thứ 1 có thể kể đến như Marginal Shapley values [TODO], Conditional Shapley values [TODO], PredDiff [TODO], Anchors [TODO], Counterfactual explanations [TODO], LIME [TODO] và ICE [TODO]. Nhóm thứ 2 có thể kể đến như Influence functions for perturbing training data [TODO], Case-based explanations [TODO] và Shapley values for cluster importance [TODO]. Nhóm thứ 1 chứa các phương pháp XAI phổ biến và được trích dẫn nhiều nhất trong các công trình nghiên cứu khác. Nhóm thứ 2, tập trung vào dữ liệu, thì lại ít phương pháp hơn. Có 3 phương pháp có thể kể đến là:
 
 - *Influence functions for perturbing training data* [TODO] để khảo sát mức độ nhạy cảm của dự đoán đối với các nhiễu loạn nhỏ trong tập dữ liệu huấn luyện.
 - *Case-based explanations* [TODO] mục đích là để dùng các ví dụ dự đoán trong quá khứ để kiểm tra và giải thích cho các ví dụ trong tương lai.
@@ -217,10 +217,10 @@ Giá trị Shapley có 4 tính chất cơ bản sau:
   $,
 ) <math-shapley-value-symmetry>
 
-mà mọi liên minh $S subset.eq N$ đều không chứa $i$ và $j$, thì phần thưởng của hai người chơi này phải bằng nhau $phi_i = phi_j$.
+mà mọi liên minh $S subset.eq N$ đều không chứa $i$ và $j$, thì phần thưởng của 2 người chơi này phải bằng nhau $phi_i = phi_j$.
 
 
-- Tính *tuyến tính* (Linearity): Nếu chúng ta có hai trò chơi với hai hàm phần thưởng khác nhau $v$ và $w$, thì phần thưởng của người chơi trong trò chơi tổng hợp sẽ bằng tổng phần thưởng của người chơi trong từng trò chơi riêng lẻ.
+- Tính *tuyến tính* (Linearity): Nếu chúng ta có 2 trò chơi với 2 hàm phần thưởng khác nhau $v$ và $w$, thì phần thưởng của người chơi trong trò chơi tổng hợp sẽ bằng tổng phần thưởng của người chơi trong từng trò chơi riêng lẻ.
 
 #figure(
   $
@@ -559,7 +559,7 @@ $
   v(S)(x) = (y - f_S (x))^2 - y^2
 $ <math-shapley-value-hindsight-reward-2>
 
-khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả hai hàm phần thưởng $v("Pre"^k (cal(O) union {k}))$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của hai hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
+khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả 2 hàm phần thưởng $v("Pre"^k (cal(O) union {k}))$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của 2 hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
 
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
@@ -615,7 +615,7 @@ $
 
 Ở các mục trước, chúng ta đã xem xét các hàm hồi quy $f : cal(A) arrow.r RR$ để sử dụng Giá trị Shapley. Chúng ta cũng có thể áp dụng phương pháp tương tự cho các bài toán *phân loại*, xét một hàm phân loại $g : cal(A) arrow.r cal(B)$, với $cal(A)$ là không gian đặc trưng, và $cal(B)$ là không gian các lớp được phân loại. Khi chúng ta biết chính xác phân loại lớp thực tế $c$, chúng ta có thể so sánh ngược lại với các lớp được dự đoán $g(x)$ và tính được độ đo hiệu suất khác nhau để đánh giá.
 
-Lấy ví dụ bài toán phát hiện lỗi trong hệ thống máy móc. Dựa trên dữ liệu từ một tập hợp gồm $J$ cảm biến đang theo dõi thiết bị, $cal(A)_1 times dots.c times cal(A)_J$, hàm $g$ sẽ dự đoán xem thiết bị đang có lỗi hay không. Trong ví dụ này, $cal(B)$ chỉ bao gồm hai lớp: lớp bình thường và lớp bị lỗi.
+Lấy ví dụ bài toán phát hiện lỗi trong hệ thống máy móc. Dựa trên dữ liệu từ một tập hợp gồm $J$ cảm biến đang theo dõi thiết bị, $cal(A)_1 times dots.c times cal(A)_J$, hàm $g$ sẽ dự đoán xem thiết bị đang có lỗi hay không. Trong ví dụ này, $cal(B)$ chỉ bao gồm 2 lớp: lớp bình thường và lớp bị lỗi.
 
 Khi so sánh các giá trị dự đoán và giá trị thực tế trên toàn bộ tập dữ liệu kiểm thử (cho tất cả các bước thời gian $t = 1, dots, T$), chúng ta đếm số lượng TP (dự đoán có lỗi, thực tế có lỗi), FP (dự đoán có lỗi, thực tế bình thường), FN (dự đoán bình thường, thực tế có lỗi), và TN (dự đoán bình thường, thực tế bình thường). Dựa trên các giá trị này, chúng ta có thể tính toán các độ đo hiệu suất khác nhau, ví dụ như *độ nhạy* (sensitivity) thể hiện tỷ lệ dương tính thật:
 
@@ -645,7 +645,7 @@ $
 
 == 4.1. Dữ liệu tạo sinh
 
-Trước khi sử dụng dữ liệu thực tế, chúng ta sẽ thử nghiệm phương pháp đề xuất ở Chương 3 trên tập dữ liệu tạo sinh (synthetic data) để thể hiện rõ cách mà Giá trị Shapley cho cụm dữ liệu thể hiện sự ảnh hưởng của từng cụm dữ liệu đối với dự đoán và sai số dự đoán.
+Trước khi sử dụng dữ liệu thực tế, chúng ta sẽ thử nghiệm phương pháp đề xuất ở Chương 3 trên tập dữ liệu tạo sinh (synthetic data). Ưu điểm của dữ liệu tạo sinh là chúng ta biết chính xác quy luật tạo sinh dữ liệu: hàm quyết định, phân phối nhiễu cũng như mối quan hệ giữa các cụm dữ liệu. Nhờ đó, chúng ta có thể thiết kế các cụm với những tính chất đã biết trước, rồi kiểm chứng xem Giá trị Shapley cho cụm dữ liệu có phản ánh đúng các tính chất lý thuyết đã trình bày ở Chương 2 và Chương 3 hay không, trước khi áp dụng phương pháp vào dữ liệu thực tế vốn không có thông tin sẵn có như vậy.
 
 Chúng ta đề xuất một bài toán hồi quy mô phỏng theo chuỗi thời gian đơn giản:
 
@@ -653,7 +653,7 @@ $
   x_j(t) = sin(omega_j t) + eta_j(t), quad j = 1, dots, 4
 $ <math-synthetic-x>
 
-trong đó $t = 1, dots, T$, $eta_j(t) tilde cal(N)(0, 0.1)$, và $omega_j$ được lấy mẫu đều (uniform) từ $[0, 2pi]$.
+trong đó $t = 1, dots, T$, và $eta_j(t) tilde cal(N)(0, 0.1)$ là độ nhiễu gauss cộng vào từng thời điểm. Bốn đặc trưng được thiết kế để dao động với tần số khác nhau rõ rệt, nhờ đó mỗi đặc trưng mang thông tin về chu kỳ thời gian riêng; trong thực nghiệm, để kết quả có thể tái lập được, các biến $omega_j$ được chọn cố định cho từng đặc trưng thay vì lấy mẫu ngẫu nhiên.
 
 Dựa vào đó, định nghĩa hàm sinh dữ liệu:
 
@@ -661,15 +661,24 @@ $
   y(t) = x_1(t) dot x_2(t) + x_3(t) dot x_4(t) + epsilon(t)
 $ <math-synthetic-y>
 
-trong đó các $x_j$ là các biến giải thích (explanatory variables), và số hạng nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) $cal(N)(0, 0.1)$. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Rừng Ngẫu Nhiên (Random Forest), sử dụng thư viện `randomForest` (TODO) trong ngôn ngữ R, với 100 cây và số lượng nút lá (terminal nodes) tối đa là 30.
+trong đó các $x_j$ là các biến có thể giải thích được (explanatory variables), và biến số nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) $cal(N)(0, 0.1)$. Khác với dữ liệu thực tế, ở đây ta biết chính xác rằng $y$ chỉ được sinh từ hàm phi tuyến $x_1 dot x_2 + x_3 dot x_4$ kết hợp 2 cặp đặc trưng $(x_1, x_2)$ và $(x_3, x_4)$; do đó mọi sai số dự đoán của mô hình so với $y$ đều bắt nguồn từ 2 nguồn: nhiễu $epsilon$ và những vùng dữ liệu mà mô hình chưa học tốt. Dữ liệu tạo sinh này sẽ dùng để huấn luyện mô hình Random Forest, với 100 cây và số lượng nút lá tối đa là 30.
 
-Khi giải thích các dự đoán, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó (mô hình hộp đen) mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
+Chúng ta mô phỏng 400 điểm dữ liệu từ mô hình trên để tạo thành tập huấn luyện, sau đó chia thành 4 cụm, mỗi cụm gồm 100 điểm liên tiếp. Tiếp theo, chúng ta nhân bản cụm thứ 4 để tạo thành cụm thứ 5, sao cho tập huấn luyện gồm 500 điểm và 5 cụm $cal(Q)_1, ..., cal(Q)_5$; chúng ta thực hiện tương tự cho tập kiểm thử. Thiết kế này cho phép minh hoạ tính đối xứng của Giá trị Shapley (@math-shapley-value-symmetry): khi 2 cụm dữ liệu huấn luyện giống nhau, Giá trị Shapley của chúng cũng bằng nhau $phi_4 = phi_5$.
+
+Do tính chất chủ quan và mang tính xấp xỉ của các phương pháp giải thích, việc kiểm chứng chất lượng và độ tin cậy của một lời giải thích là khó khăn. Hall and Gill [TODO] đề xuất sử dụng dữ liệu mô phỏng với hàm sinh tín hiệu đã biết trước để kiểm tra xem lời giải thích có phản ánh đúng hàm đã biết đó hay không. Vì vậy, trong thực nghiệm này, chúng ta đặt tập kiểm thử trùng với tập huấn luyện, tức là Giá trị Shapley cục bộ $hat(phi)_k (x)$ được tính ngay tại các điểm dữ liệu huấn luyện. Cách làm này phi thực tế trong ứng dụng, nhưng giúp kết quả giải thích dễ hiểu và dễ kiểm chứng. @figure-synthetic-train-data minh hoạ tập dữ liệu: 5 màu tương ứng với 5 cụm, ranh giới giữa các cụm nằm tại các vị trí 100, 200, 300 và 400; tại vị trí 400, giá trị của các đặc trưng quay lại đoạn giá trị của cụm $cal(Q)_4$ — hệ quả trực tiếp của việc nhân bản cụm thứ 4.
+
+#figure(
+  image("figures/synthetic_00_train_data.png", width: 85%),
+  caption: [Dữ liệu huấn luyện của tập dữ liệu tạo sinh: $y$ và 4 đặc trưng $x_1, x_2, x_3, x_4$ theo thời gian; màu sắc thể hiện 5 cụm dữ liệu],
+) <figure-synthetic-train-data>
+
+Khi giải thích các dự đoán, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó (mô hình hộp đen) mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình. Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 250$ hoán vị ngẫu nhiên theo phân phối uniform. Kết quả được quan sát dưới 2 dạng: Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ để kiểm tra mức độ hội tụ, và Giá trị Shapley cục bộ tại 5 điểm dữ liệu đại diện, mỗi điểm nằm ở giữa đoạn của một cụm trong tập huấn luyện.
 
 == 4.2. Dữ liệu Bikeshare
 
-Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở Mục 4.1, đây là dữ liệu thực tế chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, do đó phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế.
+Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở Mục 4.1 vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
 
-Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe đạp $y$ dựa trên các đặc trưng đầu vào. Chúng ta sử dụng các đặc trưng có sẵn và có ý nghĩa thực tế của tập dữ liệu, được liệt kê trong @table-bikeshare-variables.
+Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe đạp $y$ dựa trên các đặc trưng đầu vào. Chúng ta sử dụng các đặc trưng có sẵn và có ý nghĩa thực tế của tập dữ liệu, được liệt kê trong @table-bikeshare-variables. Trong đó, 8 đặc trưng $x_1, ..., x_8$ đóng vai trò là biến đầu vào của mô hình dự đoán, còn $x_S$ (tháng) không được đưa vào mô hình mà chỉ dùng làm khóa để phân cụm dữ liệu được trình bày ngay sau đây.
 
 #figure(
   table(
@@ -691,7 +700,7 @@ Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe
   caption: [Các biến được sử dụng trong tập dữ liệu Bikeshare],
 ) <table-bikeshare-variables>
 
-Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể, ở đây dễ thấy nhất là yếu tố thời gian theo tháng, nhằm thể hiện rõ tính thời vụ của nhu cầu sử dụng xe đạp. Số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7). @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
+Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể. Ở đây, yếu tố thời gian theo tháng là lựa chọn dễ thấy nhất: nhu cầu sử dụng xe đạp công cộng mang tính thời vụ rõ rệt, tăng vào những tháng ấm và giảm vào những tháng lạnh, nên việc phân cụm theo tháng giúp các câu hỏi giải thích trở nên có ý nghĩa thực tế, ví dụ như cụm dữ liệu của tháng nào gây ra sai số dự đoán lớn nhất. Bên cạnh đó, vì mỗi tháng có số ngày gần bằng nhau, số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7); sự cân bằng này giúp mức đóng góp của các cụm có thể so sánh trực tiếp với nhau, không bị chi phối bởi chênh lệch kích thước giữa các cụm. @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
 
 #figure(
   table(
@@ -715,7 +724,7 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
   caption: [Số quan sát của từng cụm dữ liệu theo tháng trong tập Bikeshare],
 ) <table-bikeshare-cluster-sizes>
 
-Để phục vụ huấn luyện và đánh giá, từ các quan sát trong mỗi cụm $cal(Q)_k$, chúng ta lấy ngẫu nhiên ba tập không giao nhau với tỷ lệ được trình bày trong @table-bikeshare-split; phần quan sát còn lại của cụm không được sử dụng.
+Để phục vụ huấn luyện và đánh giá, từ các quan sát trong mỗi cụm $cal(Q)_k$, chúng ta lấy ngẫu nhiên 3 tập không giao nhau với tỷ lệ được trình bày trong @table-bikeshare-split. Thứ tự lấy mẫu trong từng cụm như sau: trước tiên 30 quan sát được lấy ra làm tập đánh giá $cal(D)^"eval"$, sau đó 200 quan sát tiếp theo được lấy ra làm tập kiểm thử $cal(D)^"shapley test"$, cuối cùng 400 quan sát được lấy ra làm tập huấn luyện $cal(D)^"shapley train"$; cách lấy tuần tự, mỗi lần loại bỏ các quan sát đã chọn, đảm bảo 3 tập luôn rời nhau từng phần. Phần quan sát còn lại của cụm (từ 19 đến 114 quan sát tùy theo tháng) không tham gia vào quá trình tính Giá trị Shapley.
 
 #figure(
   table(
@@ -732,7 +741,7 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
 
 Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở Mục 3.1. Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
 
-Mô hình hộp đen được sử dụng là Rừng Ngẫu Nhiên (Random Forest). Tương tự như Mục 4.1, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả hai chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-1; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
+Mô hình hộp đen được sử dụng là Rừng Ngẫu Nhiên (Random Forest). Tương tự như Mục 4.1, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
 
 Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho ta Giá trị Shapley toàn cục:
 
@@ -740,9 +749,9 @@ $
   macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
 $
 
-theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra bốn tháng đại diện cho bốn mùa trong năm, tương ứng với bốn điểm dữ liệu $x$, và biểu diễn Giá trị Shapley riêng lẻ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $M$.
+theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra 4 tháng trong năm (tháng 1, 4, 8 và 12), tương ứng với 4 điểm dữ liệu $x$, và biểu diễn Giá trị Shapley riêng lẻ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $M$.
 
-Từ kết quả Giá trị Shapley toàn cục $macron(phi)_k$, chúng ta xây dựng hai chiến lược thu thập dữ liệu huấn luyện nhằm so sánh hiệu quả. Chiến lược thứ nhất là *equal* (cơ sở): lấy mẫu một số lượng bằng nhau cho mỗi cụm, cụ thể với tổng số $N^"strategy" = 4800$ điểm thì mỗi cụm được lấy $N^"strategy" \/ K = 400$ điểm. Chiến lược thứ hai là *max* (đề xuất): lấy mẫu nhiều hơn ở những cụm có đóng góp làm giảm sai số dự đoán. Gán trọng số cho từng cụm:
+Từ kết quả Giá trị Shapley toàn cục $macron(phi)_k$, chúng ta xây dựng 2 chiến lược thu thập dữ liệu huấn luyện nhằm so sánh hiệu quả. Chiến lược thứ 1 là *equal* (cơ sở): lấy mẫu một số lượng bằng nhau cho mỗi cụm, cụ thể với tổng số $N^"strategy" = 4800$ điểm thì mỗi cụm được lấy $N^"strategy" \/ K = 400$ điểm. Chiến lược thứ 2 là *max* (đề xuất): lấy mẫu nhiều hơn ở những cụm có đóng góp làm giảm sai số dự đoán. Gán trọng số cho từng cụm:
 
 $
   w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
@@ -756,13 +765,13 @@ $
 
 Việc phân bổ được thực hiện sao cho tổng số điểm đúng bằng $N^"strategy"$, đồng thời đảm bảo mỗi cụm nhận tối thiểu $floor(N^"strategy" \/ (2K))$ điểm và không vượt quá số điểm còn lại của cụm sau khi đã loại bỏ tập $cal(D)^"eval"$. Với chiến lược *equal*, số điểm được chia đều; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
 
-Cuối cùng, chúng ta huấn luyện hai mô hình trên hai tập dữ liệu tương ứng với hai chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
+Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
 
 $
   "MSE"_k = 1/(n_k) sum_(t: x_t in cal(Q)_k) (y_t - f(x_t))^2
 $
 
-trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của hai chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
+trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của 2 chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
