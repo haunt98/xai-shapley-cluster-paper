@@ -679,21 +679,43 @@ Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe
 
     [$y$], [bikers], [Số lượt thuê xe đạp],
     [$x_1$], [hr], [Giờ trong ngày],
-    [$x_2$], [holiday], [Ngày lễ],
-    [$x_3$], [weekday], [Thứ trong tuần],
-    [$x_4$], [workingday], [Ngày làm việc],
+    [$x_2$], [holiday], [Ngày lễ hay không],
+    [$x_3$], [weekday], [Thứ mấy trong tuần],
+    [$x_4$], [workingday], [Ngày làm việc hay không],
     [$x_5$], [weathersit], [Tình trạng thời tiết],
     [$x_6$], [temp], [Nhiệt độ],
     [$x_7$], [hum], [Độ ẩm],
     [$x_8$], [windspeed], [Tốc độ gió],
-    [$x_S$], [mnth], [Tháng (dùng để phân cụm)],
+    [$x_S$], [mnth], [Tháng],
   ),
   caption: [Các biến được sử dụng trong tập dữ liệu Bikeshare],
 ) <table-bikeshare-variables>
 
-Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu, ở đây là yếu tố thời gian theo tháng, nhằm thể hiện rõ tính mùa vụ của nhu cầu sử dụng xe đạp. Số quan sát trong mỗi cụm khá cân bằng, dao động từ 649 quan sát (tháng 2) đến 744 quan sát (tháng 5 và tháng 7).
+Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể, ở đây dễ thấy nhất là yếu tố thời gian theo tháng, nhằm thể hiện rõ tính thời vụ của nhu cầu sử dụng xe đạp. Số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7). @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
 
-Để phục vụ huấn luyện và đánh giá, các quan sát trong mỗi cụm $cal(Q)_k$ được chia ngẫu nhiên và không giao nhau thành ba tập với tỷ lệ được trình bày trong @table-bikeshare-split.
+#figure(
+  table(
+    columns: (auto, auto),
+    align: (center, right),
+    [*Tháng*], [*Số quan sát*],
+
+    [$cal(Q)_1$], [688],
+    [$cal(Q)_2$], [649],
+    [$cal(Q)_3$], [730],
+    [$cal(Q)_4$], [719],
+    [$cal(Q)_5$], [744],
+    [$cal(Q)_6$], [720],
+    [$cal(Q)_7$], [744],
+    [$cal(Q)_8$], [731],
+    [$cal(Q)_9$], [717],
+    [$cal(Q)_10$], [743],
+    [$cal(Q)_11$], [719],
+    [$cal(Q)_12$], [741],
+  ),
+  caption: [Số quan sát của từng cụm dữ liệu theo tháng trong tập Bikeshare],
+) <table-bikeshare-cluster-sizes>
+
+Để phục vụ huấn luyện và đánh giá, từ các quan sát trong mỗi cụm $cal(Q)_k$, chúng ta lấy ngẫu nhiên ba tập không giao nhau với tỷ lệ được trình bày trong @table-bikeshare-split; phần quan sát còn lại của cụm không được sử dụng.
 
 #figure(
   table(
@@ -732,7 +754,7 @@ $
   "quota"_k = N^"strategy" w_k / sum_(j=1)^K w_j
 $
 
-Việc phân bổ được thực hiện sao cho tổng số điểm đúng bằng $N^"strategy"$, đồng thời đảm bảo mỗi cụm nhận tối thiểu $floor(N^"strategy" \/ (2K))$ điểm và không vượt quá số điểm hiện có của cụm. Với chiến lược *equal*, số điểm được chia đều; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
+Việc phân bổ được thực hiện sao cho tổng số điểm đúng bằng $N^"strategy"$, đồng thời đảm bảo mỗi cụm nhận tối thiểu $floor(N^"strategy" \/ (2K))$ điểm và không vượt quá số điểm còn lại của cụm sau khi đã loại bỏ tập $cal(D)^"eval"$. Với chiến lược *equal*, số điểm được chia đều; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
 
 Cuối cùng, chúng ta huấn luyện hai mô hình trên hai tập dữ liệu tương ứng với hai chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
 
