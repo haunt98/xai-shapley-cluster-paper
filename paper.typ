@@ -673,7 +673,9 @@ trong đó:
 Khác với dữ liệu thực tế, ở đây ta biết chính xác rằng $y$ chỉ được sinh từ hàm phi tuyến $x_1 dot x_2 + x_3 dot x_4$ kết hợp 2 cặp đặc trưng $(x_1, x_2)$ và $(x_3, x_4)$; do đó mọi sai số dự đoán của mô hình so với $y$ đều bắt nguồn từ 2 nguồn: nhiễu $epsilon$ và những vùng dữ liệu mà mô hình học chưa tốt. Dữ liệu tạo sinh này sẽ dùng để huấn luyện 2 mô hình:
 
 - Mô hình Random Forest, với 100 cây và số lượng nút tối đa mỗi cây là 30.
-- Mô hình k-Nearest Neighbors (kNN) với $k = 10$.
+- Mô hình KNN với $k = 10$.
+
+Khi giải thích các dự đoán, chúng ta sẽ không đưa mô hình huấn luyện vào trong lời giải thích (Random Forest hay KNN) vì chúng ta xem các mô hình huấn luyện này là những hộp đen. Bên cạnh đó, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
 
 === 4.1.1. Khởi tạo dữ liệu
 
@@ -688,7 +690,7 @@ Bởi vì về bản chất mỗi phương pháp giải thích đều mang tính
   caption: [Dữ liệu huấn luyện của tập dữ liệu tạo sinh],
 ) <figure-synthetic-train-data>
 
-Khi giải thích các dự đoán, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó (mô hình hộp đen) mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình. Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 250$ hoán vị ngẫu nhiên theo phân phối uniform. Kết quả được quan sát dưới 2 dạng: Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ để kiểm tra mức độ hội tụ, và Giá trị Shapley cục bộ tại 5 điểm dữ liệu đại diện, mỗi điểm nằm ở giữa đoạn của một cụm trong tập huấn luyện. Bên cạnh đó, để làm mốc so sánh về chất lượng dự đoán, chúng ta tính sai số bình phương trung bình của mô hình đầy đủ $f_N$ — mô hình Random Forest được huấn luyện trên toàn bộ 500 điểm của tập huấn luyện, sau đó dự đoán trên toàn bộ 500 điểm của tập kiểm thử:
+Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 250$ hoán vị ngẫu nhiên theo phân phối uniform. Kết quả được quan sát dưới 2 dạng: Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ để kiểm tra mức độ hội tụ, và Giá trị Shapley cục bộ tại 5 điểm dữ liệu đại diện, mỗi điểm nằm ở giữa đoạn của một cụm trong tập huấn luyện. Bên cạnh đó, để làm mốc so sánh về chất lượng dự đoán, chúng ta tính sai số bình phương trung bình của mô hình đầy đủ $f_N$ — mô hình Random Forest được huấn luyện trên toàn bộ 500 điểm của tập huấn luyện, sau đó dự đoán trên toàn bộ 500 điểm của tập kiểm thử:
 
 $ "MSE"_"full" = 1/T sum_(t=1)^T (y_t - f_N (x_t))^2 $ <math-synthetic-mse-full>
 
