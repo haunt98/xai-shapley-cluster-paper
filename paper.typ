@@ -603,7 +603,7 @@ Thuật toán để tính được xấp xỉ Giá trị Shapley cho từng cụ
 
 == 3.2. Giải thích toàn cục
 
-Nếu như Mục 3.1 giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể, chúng ta có thể định nghĩa lại hàm phần thưởng cho việc đánh giá hiệu quả toàn cục (global performance, đó là hiệu quả của toàn bộ tập dữ liệu kểm thử $cal(D)^"test"$ thay vì từng dự đoán riêng lẻ. Ví dụ chúng ta định nghĩa hàm phần thưởng $v$ sử dụng MSE như sau:
+Nếu như Mục *3.1* giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể, chúng ta có thể định nghĩa lại hàm phần thưởng cho việc đánh giá hiệu quả toàn cục (global performance, đó là hiệu quả của toàn bộ tập dữ liệu kểm thử $cal(D)^"test"$ thay vì từng dự đoán riêng lẻ. Ví dụ chúng ta định nghĩa hàm phần thưởng $v$ sử dụng MSE như sau:
 
 $
   macron(v)(S) = 1/T sum_(t=1)^T (y_t - f_S (x_t))^2
@@ -704,7 +704,7 @@ Bởi vì về bản chất mỗi phương pháp giải thích đều mang tính
 
 Trước khi chuyển sang giải thích sai số bình phương, chúng ta trình bày kết quả giải thích cho dự đoán (predictions). @figure-synthetic-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình Random Forest cho 5 điểm dữ liệu được chọn trong tập kiểm thử, cụ thể:
 
-- Biểu đồ trên cùng thể hiện giá trị dự đoán được vẽ cho toàn bộ 500 điểm của tập kiểm thử, trùng với tập huấn luyện được minh hoạ trong @figure-synthetic-train-data, đồng thời chọn ra 5 điểm dữ liệu với $t = 50, 150, 250, 350, 450$ được đánh dấu màu đỏ để minh hoạ Giá trị Shapley. Dự đoán được tạo ra bởi mô hình $f_N$ Random Forest được huấn luyện trên toàn bộ tập huấn luyện.
+- Biểu đồ trên cùng thể hiện giá trị dự đoán được vẽ cho toàn bộ 500 điểm của tập kiểm thử, trùng với tập huấn luyện được minh hoạ trong @figure-synthetic-train-data $D^("test") = D^("train")$, đồng thời chọn ra 5 điểm dữ liệu với $t = 50, 150, 250, 350, 450$ được đánh dấu màu đỏ để minh hoạ Giá trị Shapley. Dự đoán được tạo ra bởi mô hình $f_N$ Random Forest được huấn luyện trên toàn bộ tập huấn luyện.
 - Các biểu đồ ở giữa từ trái qua phải lần lượt là kết quả giải thích cho 5 điểm dữ liệu được chọn. Mỗi biểu đồ vẽ Giá trị Shapley ước lượng cho mức độ quan trọng của 5 cụm dữ liệu được minh hoạ dưới dạng biểu đồ cột với màu tương ứng của từng cụm.
 - Các biểu đồ ở hàng dưới cùng cho thấy Giá trị Shapley của từng cụm dữ liệu thay đổi khi số mẫu $m$ tăng từ 1 đến $M = 250$, mỗi lần lặp $m$ được thể hiện trong @algorithm-shapley-value-hindsight.
 
@@ -713,7 +713,7 @@ Trước khi chuyển sang giải thích sai số bình phương, chúng ta trì
   caption: [Giải thích dự đoán cho các điểm dữ liệu $t= 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest*. 5 Giá trị Shapley tính bởi 5 cụm dữ liệu là 5 màu khác nhau],
 ) <figure-synthetic-predictions-selected-rf>
 
-Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Ví dụ, xét điểm dữ liệu đầu tiên tại thời điểm $t = 50$, Giá trị Shapley cho thấy đóng góp của cụm thứ 1 đóng góp làm tăng dự đoán, trong khi đóng góp của 4 cụm còn lại làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu tiếp theo, $t = 150$ và $t = 250$, đóng góp của cụm 2 và cụm 3 lần lượt làm giảm đáng kể, kết quả giá trị dự đoán cả 2 điểm này cũng đều $< 0$. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở  @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-rf.
+Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Ví dụ, xét điểm dữ liệu đầu tiên tại thời điểm $t = 50$, Giá trị Shapley cho thấy đóng góp của cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán, trong khi đóng góp của 4 cụm còn lại làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu tiếp theo, $t = 150$ và $t = 250$, đóng góp của cụm dữ liệu $Q_2$ và $Q_3$ lần lượt làm giảm đáng kể, kết quả giá trị dự đoán cả 2 điểm này cũng đều $< 0$. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở  @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-rf.
 
 #figure(
   table(
@@ -735,10 +735,10 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   ],
 ) <table-synthetic-predictions-selected-rf>
 
-Áp dụng Mục 3.2 để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-synthetic-predictions-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Nhận thấy giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi. Bên cạnh đó, đường biểu diễn giá trị của cụm 4 gần như trùng với đường biểu diễn giá trị của cụm 5, phù hợp với tính chất đối xứng của Giá trị Shapley ở  @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-rf.
+Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-synthetic-predictions-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Nhận thấy giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi. Bên cạnh đó, đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở  @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-rf.
 
 #figure(
-  image("figures/synthetic_01_predictions_number_iterations.png", width: 85%),
+  image("figures/synthetic_01_predictions_number_iterations.png"),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu theo số lần lặp $m$ từ 1 đến 250 trên tập dữ liệu tạo sinh với mô hình huấn luyện *Random Forest*],
 ) <figure-synthetic-predictions-number-iterations-rf>
 
@@ -758,10 +758,10 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
 Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích dự đoán ở trên với một mô hình hộp đen hoàn toàn khác là KNN-10. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên.
 
-@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn. Tương tự như với Random Forest, cụm thứ 1 đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên, trong khi các cụm còn lại đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm 2 và cụm 3 tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
+@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn. Tương tự như với Random Forest, cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên, trong khi các cụm còn lại đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm dữ liệu $Q_2$ và $Q_3$ tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
 
 #figure(
-  image("figures/synthetic_04_predictions_selected_knn10.png", width: 100%),
+  image("figures/synthetic_04_predictions_selected_knn10.png"),
   caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *KNN-10*],
 ) <figure-synthetic-predictions-selected-knn10>
 
@@ -785,10 +785,10 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   ],
 ) <table-synthetic-predictions-selected-knn10>
 
-Áp dụng Mục 3.2 để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu với mô hình KNN-10. @figure-synthetic-predictions-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với Random Forest, giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi, và đường biểu diễn giá trị của cụm 4 gần như trùng với đường biểu diễn giá trị của cụm 5, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-knn10.
+Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu với mô hình KNN-10. @figure-synthetic-predictions-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với Random Forest, giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi, và đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-knn10.
 
 #figure(
-  image("figures/synthetic_03_predictions_number_iterations_knn10.png", width: 85%),
+  image("figures/synthetic_03_predictions_number_iterations_knn10.png"),
   caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ với mô hình KNN-10 trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-predictions-number-iterations-knn10>
 
@@ -808,81 +808,111 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
 === 4.1.3. Giải thích sai số bình phương (squared error)
 
-@figure-synthetic-explain-squared-error trình bày các lời giải thích liên quan đến sai số bình phương của dự đoán, theo trò chơi đã trình bày ở Mục 3.1 (@math-shapley-value-hindsight-reward-1). Các Giá trị Shapley này cho thấy từng cụm dữ liệu đóng góp như thế nào để giảm hoặc tăng sai số bình phương tại 5 điểm dữ liệu được chọn. Lưu ý rằng trò chơi này đòi hỏi biết trước giá trị thực tế $y$ tương ứng của mỗi điểm.
-
-Nhắc lại rằng trong thí nghiệm này, chúng ta chọn tập kiểm thử trùng với tập huấn luyện. Đối với mô hình Rừng Ngẫu Nhiên, dự đoán thường tốt hơn khi dữ liệu cần dự đoán giống với dữ liệu huấn luyện. Vì vậy, với bất kỳ điểm dữ liệu $x$ thuộc cụm $k$ nào đó, việc đưa cụm $k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, và do đó Giá trị Shapley của cụm $k$, $phi_k$, sẽ âm. Ví dụ, trong tập huấn luyện, điểm dữ liệu 150 thuộc cụm thứ 2. Khi tính sai số bình phương của điểm 150 trong tập kiểm thử — trùng với điểm 150 trong tập huấn luyện — Giá trị Shapley của cụm 2 là âm. Điều này nghĩa là, như kỳ vọng, cụm 2 đóng góp làm giảm sai số bình phương.
-
-Chúng ta cũng quan sát thấy Giá trị Shapley của cụm 4 và cụm 5 rất giống nhau, cũng như kỳ vọng vì 2 cụm này là giống hệt nhau (Mục 4.1). Lời giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm thứ 3 của tập huấn luyện đóng góp đáng kể làm tăng sai số bình phương, và do đó làm giảm hiệu suất dự đoán.
+Tương tự với mục *4.1.2*, @figure-synthetic-squared-error-selected-rf trình bày các kết quả giải thích sai số bình phương (squared error) của dự đoán, theo công thức đã trình bày ở Mục *3.1*, cho 5 điểm dữ liệu $t = 50, 150, 250, 350, 450$. Các Giá trị Shapley này cho thấy từng cụm dữ liệu đóng góp như thế nào đến sai số bình phương tại 5 điểm dữ liệu được chọn. Lưu ý rằng kết quả này đòi hỏi biết trước giá trị thực tế $y$ (hindsight) tương ứng của mỗi điểm.
 
 #figure(
-  image("figures/synthetic_06_squared_error_selected.png", width: 100%),
-  caption: [Giải thích sai số bình phương của tập dữ liệu tạo sinh: (hàng trên) sai số bình phương trên 500 điểm của tập kiểm thử cùng 5 điểm được chọn; (hàng giữa) Giá trị Shapley của 5 cụm cho từng điểm được chọn; (hàng dưới) sự hội tụ của Giá trị Shapley theo số lần lặp $M$],
-) <figure-synthetic-explain-squared-error>
+  image("figures/synthetic_06_squared_error_selected.png"),
+  caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest*],
+) <figure-synthetic-squared-error-selected-rf>
 
-@figure-synthetic-squared-error-convergence trình bày sự hội tụ của Giá trị Shapley toàn cục theo số lần lặp $M$ cho trò chơi sai số bình phương. Các đường ổn định sau một số lượng lặp nhất định, xác nhận $M = 250$ là đủ lớn; bên cạnh đó, đường của cụm 4 gần như trùng với đường của cụm 5 — một lần nữa nhất quán với tính đối xứng $phi_4 = phi_5$ đã trình bày ở Mục 4.1.
-
-#figure(
-  image("figures/synthetic_05_squared_error_number_iterations.png", width: 85%),
-  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
-) <figure-synthetic-squared-error-convergence>
-
-Tương tự như Mục 4.1.1, chúng ta lặp lại thí nghiệm giải thích sai số bình phương với mô hình KNN-10 để minh chứng tính độc lập với mô hình của phương pháp. @figure-synthetic-knn10-squared-error-convergence và @figure-synthetic-knn10-squared-error trình bày lần lượt sự hội tụ của Giá trị Shapley toàn cục theo số lần lặp $M$ và lời giải thích sai số bình phương tại 5 điểm dữ liệu đại diện. Vì mô hình dự đoán thay đổi so với Rừng Ngẫu Nhiên, mức đóng góp của từng cụm dữ liệu cũng thay đổi theo; điều này là hợp lý, vì mỗi mô hình khai thác các cụm dữ liệu theo cách khác nhau. Điều quan trọng là quy trình giải thích vẫn hoạt động không thay đổi, một lần nữa khẳng định tính độc lập với mô hình của phương pháp.
-
-#figure(
-  image("figures/synthetic_07_squared_error_number_iterations_knn10.png", width: 85%),
-  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ với mô hình KNN-10 cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
-) <figure-synthetic-knn10-squared-error-convergence>
-
-#figure(
-  image("figures/synthetic_08_squared_error_selected_knn10.png", width: 100%),
-  caption: [Giải thích sai số bình phương với mô hình KNN-10 trên tập dữ liệu tạo sinh: (hàng trên) sai số bình phương trên 500 điểm của tập kiểm thử cùng 5 điểm được chọn; (hàng giữa) Giá trị Shapley của 5 cụm cho từng điểm được chọn; (hàng dưới) sự hội tụ của Giá trị Shapley theo số lần lặp $M$],
-) <figure-synthetic-knn10-squared-error>
-
-@table-synthetic-phi-global-squared-error và @table-synthetic-phi-local-squared-error tổng hợp Giá trị Shapley toàn cục và cục bộ của trò chơi sai số bình phương tại lần lặp cuối $M = 250$, được đọc trực tiếp từ các tệp kết quả `results/synthetic_06_squared_error_phi_global.csv`, `results/synthetic_07_squared_error_phi_selected.csv`, `results/synthetic_09_squared_error_phi_global_knn10.csv` và `results/synthetic_10_squared_error_phi_selected_knn10.csv`. Toàn bộ Giá trị Shapley toàn cục đều âm: vì tập kiểm thử trùng với tập huấn luyện, việc bổ sung bất kỳ cụm nào vào tập huấn luyện đều làm giảm sai số bình phương trung bình, trong đó cụm 2 và cụm 3 có đóng góp giảm sai số mạnh nhất. Ở mức cục bộ, cụm 2 tại $t = 150$ và cụm 3 tại $t = 250$ có Giá trị Shapley âm mạnh, ngược lại cụm 3 tại $t = 350$ và $t = 450$ có Giá trị Shapley dương — nhất quán với các quan sát đã trình bày ở trên. Hai hàng $t = 350$ và $t = 450$ cũng giống hệt nhau vì 2 điểm dữ liệu này là bản sao của nhau, như đã giải thích ở Mục 4.1.1.
-
-#let phi-global-se = csv("results/synthetic_06_squared_error_phi_global.csv").slice(1)
-#let phi-global-se-knn10 = csv("results/synthetic_09_squared_error_phi_global_knn10.csv").slice(1)
+Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $D^("test") = D^("train")$. Đối với mô hình Random Forest, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử tương đương với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*. Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, điểm dữ liệu $t = 150$ thuộc cụm $Q_2$. Khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử — trùng với điểm $t = 150$ trong tập huấn luyện — Giá trị Shapley của cụm dữ liệu $Q_2$ là âm. Điều này nghĩa là, như kỳ vọng, cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Chúng ta cũng quan sát thấy Giá trị Shapley của cụm dữ liệu $Q_4$ và $Q_5$ rất giống nhau, cũng như kỳ vọng vì 2 cụm này là giống hệt nhau (Mục *4.1*). Lời giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp đáng kể làm tăng sai số bình phương, và do đó làm giảm hiệu suất dự đoán. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
 
 #figure(
   table(
     columns: 6,
-    align: (left, center, center, center, center, center),
-    [*Mô hình*], [*Cụm 1*], [*Cụm 2*], [*Cụm 3*], [*Cụm 4*], [*Cụm 5*],
-    [Random Forest], ..phi-global-se.map(row => round_3(float(row.at(1)))),
-    [KNN-10], ..phi-global-se-knn10.map(row => round_3(float(row.at(1)))),
-  ),
-  caption: [Giá trị Shapley toàn cục của từng cụm cho trò chơi giải thích sai số bình phương tại $M = 250$ trên tập dữ liệu tạo sinh],
-) <table-synthetic-phi-global-squared-error>
+    align: center,
+    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
 
-#let phi-selected-se = csv("results/synthetic_07_squared_error_phi_selected.csv").slice(1)
-#let phi-selected-se-knn10 = csv("results/synthetic_10_squared_error_phi_selected_knn10.csv").slice(1)
-
-#figure(
-  table(
-    columns: 7,
-    align: (left, center, center, center, center, center, center),
-    [*Mô hình*], [*Điểm*], [*Cụm 1*], [*Cụm 2*], [*Cụm 3*], [*Cụm 4*], [*Cụm 5*],
-    ..(
-      phi-selected-se.map(row => (
-        [Random Forest],
+    ..csv("results/synthetic_07_squared_error_phi_selected.csv")
+      .slice(1)
+      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+      .map(row => (
         [#int(row.first())],
         ..range(1, 6).map(k => round_3(float(row.at(k)))),
       ))
-        + phi-selected-se-knn10.map(row => (
-          [KNN-10],
-          [#int(row.first())],
-          ..range(1, 6).map(k => round_3(float(row.at(k)))),
-        ))
-    ).flatten(),
+      .flatten(),
   ),
-  caption: [Giá trị Shapley cục bộ tại 5 điểm dữ liệu đại diện cho trò chơi giải thích sai số bình phương tại $M = 250$ trên tập dữ liệu tạo sinh],
-) <table-synthetic-phi-local-squared-error>
+  caption: [
+    Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest*
+  ],
+) <table-synthetic-squared-error-selected-rf>
+
+Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương. @figure-synthetic-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Các đường ổn định sau một số lượng lặp nhất định, xác nhận $M = 250$ là đủ lớn; bên cạnh đó, đường của cụm dữ liệu $Q_4$ gần như trùng với đường của cụm dữ liệu $Q_5$ — một lần nữa nhất quán với tính đối xứng $phi_4 = phi_5$ đã trình bày ở Mục *4.1.* Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-rf.
+
+#figure(
+  image("figures/synthetic_05_squared_error_number_iterations.png"),
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
+) <figure-synthetic-squared-error-number-iterations-rf>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $macron(phi)_k$*],
+
+    ..csv("results/synthetic_06_squared_error_phi_global.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* tại lần lặp cuối $m = 250$],
+) <table-synthetic-squared-error-phi-global-rf>
+
+Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích sai số bình phương ở trên với mô hình KNN-10. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên. @figure-synthetic-squared-error-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với sai số bình phương của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn.
+
+#figure(
+  image("figures/synthetic_08_squared_error_selected_knn10.png"),
+  caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *KNN-10*],
+) <figure-synthetic-squared-error-selected-knn10>
+
+Tương tự như với Random Forest, Giá trị Shapley của các cụm chứa điểm dữ liệu được giải thích đều âm — cụm dữ liệu $Q_2$ tại $t = 150$ và cụm dữ liệu $Q_3$ tại $t = 250$ có Giá trị Shapley âm mạnh — vì việc bổ sung các cụm này vào tập huấn luyện giúp giảm sai số bình phương. Giá trị Shapley của cụm dữ liệu $Q_4$ và $Q_5$ vẫn gần bằng nhau theo tính đối xứng, và cụm dữ liệu $Q_3$ tiếp tục đóng góp làm tăng sai số bình phương tại $t = 350$ và $t = 450$. Khác biệt so với Random Forest nằm ở mức độ đóng góp của từng cụm: vì mỗi mô hình khai thác các cụm dữ liệu theo cách khác nhau, nên Giá trị Shapley của cùng một cụm cũng thay đổi theo mô hình. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-knn10.
+
+#figure(
+  table(
+    columns: 6,
+    align: center,
+    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
+
+    ..csv("results/synthetic_10_squared_error_phi_selected_knn10.csv")
+      .slice(1)
+      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+      .map(row => (
+        [#int(row.first())],
+        ..range(1, 6).map(k => round_3(float(row.at(k)))),
+      ))
+      .flatten(),
+  ),
+  caption: [
+    Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10*
+  ],
+) <table-synthetic-squared-error-selected-knn10>
+
+Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình KNN-10. @figure-synthetic-squared-error-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với Random Forest, giá trị bắt đầu ổn định từ lần lặp $m = 100$ trở đi, và đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-knn10.
+
+#figure(
+  image("figures/synthetic_07_squared_error_number_iterations_knn10.png"),
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ với mô hình KNN-10 cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
+) <figure-synthetic-squared-error-number-iterations-knn10>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $macron(phi)_k$*],
+
+    ..csv("results/synthetic_09_squared_error_phi_global_knn10.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* tại lần lặp cuối $m = 250$],
+) <table-synthetic-squared-error-phi-global-knn10>
 
 Một kiểm chứng thêm: việc đổi trò chơi giải thích (từ dự đoán sang sai số bình phương) không làm thay đổi mô hình đầy đủ $f_N$, do đó không làm thay đổi MSE. MSE đọc từ `results/synthetic_08_squared_error_mse_full.csv` và `results/synthetic_11_squared_error_mse_full_knn10.csv` lần lượt là #round_3(float(csv("results/synthetic_08_squared_error_mse_full.csv").slice(1).first().first())) và #round_3(float(csv("results/synthetic_11_squared_error_mse_full_knn10.csv").slice(1).first().first())), trùng khớp với nhau.
 
 === 4.1.4. Phân loại
 
-Tiếp tục với chuỗi dữ liệu thời gian tạo sinh từ @math-synthetic-x và @math-synthetic-y, với tập kiểm thử trùng với tập huấn luyện, chúng ta xét bài toán phân loại. Để minh hoạ Giá trị Shapley cho độ chính xác phân loại — độ đo đã trình bày ở Mục 3.3 — chúng ta tạo ra một tập các điểm bất thường bằng cách thay đổi một phần của tập kiểm thử. Cụ thể, tín hiệu $x_1$ được thay bằng $x_1^*$:
+Tiếp tục với chuỗi dữ liệu thời gian tạo sinh từ @math-synthetic-x và @math-synthetic-y, với tập kiểm thử trùng với tập huấn luyện, chúng ta xét bài toán phân loại. Để minh hoạ Giá trị Shapley cho độ chính xác phân loại — độ đo đã trình bày ở Mục *3.3* — chúng ta tạo ra một tập các điểm bất thường bằng cách thay đổi một phần của tập kiểm thử. Cụ thể, tín hiệu $x_1$ được thay bằng $x_1^*$:
 
 $
   x_1^*(t) = x_1(t) + eta^*(t), quad t in [200, 250)
@@ -897,28 +927,28 @@ $ <math-anomaly-x4>
 trong đó $eta^*(t) tilde cal(N)(-0.5, 0.5)$. Như vậy, tổng cộng có 100 điểm dữ liệu bị thay đổi (với $t in [200, 250) union [300, 350)$), và 400 điểm còn lại được giữ nguyên. Tập kiểm thử mới được minh hoạ trong @figure-synthetic-test-anomalies, các điểm bị thay đổi được tô màu đỏ. 100 điểm bị thay đổi được coi là bất thường, 400 điểm còn lại được coi là bình thường. Ví dụ, nếu cả 100 điểm bất thường đều được phát hiện, số lượng dương tính thật (TP) sẽ bằng 100, và 400 điểm còn lại nên được phân loại là bình thường, khi đó số lượng âm tính thật (TN) bằng 400. Nếu một điểm bị thay đổi nhưng được phân loại là bình thường, đây là một báo động bị bỏ sót, làm tăng số lượng âm tính giả (FN); tương tự, nếu một điểm không bị thay đổi nhưng được phân loại là bất thường, đây được xem là báo động giả, làm tăng số lượng dương tính giả (FP).
 
 #figure(
-  image("figures/synthetic_09_classification_test_data_anomalies.png", width: 85%),
+  image("figures/synthetic_09_classification_test_data_anomalies.png"),
   caption: [Tập kiểm thử của tập dữ liệu tạo sinh với các điểm bất thường được tô màu đỏ: $x_1$ bị thay đổi với $t in [200, 250)$ và $x_4$ bị thay đổi với $t in [300, 350)$],
 ) <figure-synthetic-test-anomalies>
 
 Mục tiêu của bộ phân loại $g(t)$ là dự đoán có hay không xuất hiện điểm bất thường tại thời điểm $t$ trong tập kiểm thử. Để làm điều đó, chúng ta áp dụng một phương pháp tái tạo tín hiệu đa biến kết hợp với phân tích phần dư [TODO]. Cách tiếp cận là so sánh tín hiệu gốc với một bản tái tạo của chính nó: nếu bản tái tạo khác tín hiệu gốc đủ lớn (vượt quá một ngưỡng $L$ nào đó), điểm dữ liệu được phân loại là bất thường; ngược lại, nếu khác biệt nhỏ, điểm dữ liệu được phân loại là bình thường. Tín hiệu được tái tạo bằng hồi quy hạt nhân tự kết hợp (Auto Associative Kernel Regression, AAKR) do Xu, Hines và Uhrig đề xuất [TODO] — phương pháp so sánh độ tương tự giữa dữ liệu huấn luyện được lưu trong bộ nhớ và vectơ truy vấn (dữ liệu kiểm thử), rồi gán trọng số cao cho các vectơ có độ tương tự cao để tính ra vectơ ước lượng. Một tham số băng thông $sigma$ được sử dụng để điều khiển hàm trọng số tính các trọng số này. Có nhiều kỹ thuật có thể dùng để tinh chỉnh/tối ưu tham số này; vì mục tiêu ở đây là minh hoạ, chúng ta không tinh chỉnh mà đơn giản đặt $sigma = 0.2$; tương tự, chúng ta chọn ngưỡng $L = 0.5$ làm ranh giới giữa lớp bình thường và lớp bất thường. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ quá trình tái tạo: lần lượt so sánh tập huấn luyện và tập kiểm thử với các tín hiệu ước lượng được tái tạo bởi AAKR (điểm màu đỏ).
 
 #figure(
-  image("figures/synthetic_10_classification_compare_train_aakr.png", width: 85%),
+  image("figures/synthetic_10_classification_compare_train_aakr.png"),
   caption: [So sánh tập huấn luyện với tín hiệu ước lượng được tái tạo bởi AAKR trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-compare-train-aakr>
 
 #figure(
-  image("figures/synthetic_11_classification_compare_test_aakr.png", width: 85%),
+  image("figures/synthetic_11_classification_compare_test_aakr.png"),
   caption: [So sánh tập kiểm thử với tín hiệu ước lượng được tái tạo bởi AAKR trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-compare-test-aakr>
 
 Sau khi tất cả các điểm dữ liệu trong tập kiểm thử được phân loại là bình thường hoặc bất thường, các lớp được dự đoán được so sánh với phân loại thực tế. Ví dụ, nếu $g$ phân loại điểm dữ liệu tại $t = 225$ là bất thường, đây là một dương tính thật (TP), vì điểm này đã bị thay đổi nên trạng thái thực của nó thực sự là bất thường. Dựa trên số lượng TP, TN, FP và FN, chúng ta tính độ chính xác $h$ theo @math-accuracy.
 
-Để định lượng mức đóng góp của 5 cụm dữ liệu vào độ chính xác, chúng ta xấp xỉ Giá trị Shapley cho độ đo độ chính xác như đã trình bày ở Mục 3.3; kết quả được trình bày trong @figure-synthetic-shapley-accuracy. Như đã giải thích ở trên, khi sử dụng mô hình Rừng Ngẫu Nhiên để dự đoán, dữ liệu huấn luyện giống với dữ liệu kiểm thử sẽ đảm bảo độ chính xác dự đoán cao. Vì tập kiểm thử và tập huấn luyện giống hệt nhau — ngoại trừ 100 điểm bất thường, phần lớn nằm trong cụm 3 và cụm 4 — chúng ta kỳ vọng cụm 1 và cụm 2 đóng góp nhiều nhất vào việc tăng độ chính xác, trong khi cụm 3 đóng góp thấp nhất. Bên cạnh đó, vì cụm 4 và cụm 5 là giống hệt nhau, tính đối xứng @math-shapley-value-symmetry cho thấy 2 cụm này phải có Giá trị Shapley bằng nhau bất kể vị trí tạo bất thường. Kết quả nhất quán với kỳ vọng: cụm dữ liệu huấn luyện 1 và 2 có Giá trị Shapley cao nhất ($phi_1 = 0.235$ và $phi_2 = 0.223$), tiếp theo là cụm 4 và cụm 5 với Giá trị Shapley gần như bằng nhau ($phi_4 = 0.165$ và $phi_5 = 0.159$), và cuối cùng cụm dữ liệu huấn luyện 3 có Giá trị Shapley thấp nhất ($phi_3 = 0.099$). @table-synthetic-phi-global-classification trích dẫn đầy đủ các giá trị này, được đọc trực tiếp từ tệp kết quả `results/synthetic_12_classification_phi_global.csv` — trung bình cộng của toàn bộ Giá trị Shapley cục bộ cho độ chính xác phân loại trên $T = 500$ điểm của tập kiểm thử tại lần lặp cuối $M = 250$, theo @math-synthetic-global-phi.
+Để định lượng mức đóng góp của 5 cụm dữ liệu vào độ chính xác, chúng ta xấp xỉ Giá trị Shapley cho độ đo độ chính xác như đã trình bày ở Mục *3.3*; kết quả được trình bày trong @figure-synthetic-shapley-accuracy. Như đã giải thích ở trên, khi sử dụng mô hình Random Forest để dự đoán, dữ liệu huấn luyện giống với dữ liệu kiểm thử sẽ đảm bảo độ chính xác dự đoán cao. Vì tập kiểm thử và tập huấn luyện giống hệt nhau — ngoại trừ 100 điểm bất thường, phần lớn nằm trong cụm dữ liệu $Q_3$ và $Q_4$ — chúng ta kỳ vọng cụm dữ liệu $Q_1$ và $Q_2$ đóng góp nhiều nhất vào việc tăng độ chính xác, trong khi cụm dữ liệu $Q_3$ đóng góp thấp nhất. Bên cạnh đó, vì cụm dữ liệu $Q_4$ và $Q_5$ là giống hệt nhau, tính đối xứng @math-shapley-value-symmetry cho thấy 2 cụm này phải có Giá trị Shapley bằng nhau bất kể vị trí tạo bất thường. Kết quả nhất quán với kỳ vọng: cụm dữ liệu $Q_1$ và $Q_2$ có Giá trị Shapley cao nhất ($phi_1 = 0.235$ và $phi_2 = 0.223$), tiếp theo là cụm dữ liệu $Q_4$ và $Q_5$ với Giá trị Shapley gần như bằng nhau ($phi_4 = 0.165$ và $phi_5 = 0.159$), và cuối cùng cụm dữ liệu $Q_3$ có Giá trị Shapley thấp nhất ($phi_3 = 0.099$). @table-synthetic-phi-global-classification trích dẫn đầy đủ các giá trị này, được đọc trực tiếp từ tệp kết quả `results/synthetic_12_classification_phi_global.csv` — trung bình cộng của toàn bộ Giá trị Shapley cục bộ cho độ chính xác phân loại trên $T = 500$ điểm của tập kiểm thử tại lần lặp cuối $M = 250$, theo @math-synthetic-global-phi.
 
 #figure(
-  image("figures/synthetic_12_classification_number_iterations.png", width: 85%),
+  image("figures/synthetic_12_classification_number_iterations.png"),
   caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho độ chính xác phân loại trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-shapley-accuracy>
 
@@ -938,7 +968,7 @@ Cuối cùng, MSE của mô hình đầy đủ trong thực nghiệm phân loạ
 
 == 4.5. Dữ liệu Bikeshare
 
-Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở Mục 4.1 vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
+Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở Mục *4.1* vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
 
 Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe đạp $y$ dựa trên các đặc trưng đầu vào. Chúng ta sử dụng các đặc trưng có sẵn và có ý nghĩa thực tế của tập dữ liệu, được liệt kê trong @table-bikeshare-variables. Trong đó, 8 đặc trưng $x_1, ..., x_8$ đóng vai trò là biến đầu vào của mô hình dự đoán, còn $x_S$ (tháng) không được đưa vào mô hình mà chỉ dùng làm khóa để phân cụm dữ liệu được trình bày ngay sau đây.
 
@@ -962,7 +992,7 @@ Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe
   caption: [Các biến được sử dụng trong tập dữ liệu Bikeshare],
 ) <table-bikeshare-variables>
 
-Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục 1.5, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể. Ở đây, yếu tố thời gian theo tháng là lựa chọn dễ thấy nhất: nhu cầu sử dụng xe đạp công cộng mang tính thời vụ rõ rệt, tăng vào những tháng ấm và giảm vào những tháng lạnh, nên việc phân cụm theo tháng giúp các câu hỏi giải thích trở nên có ý nghĩa thực tế, ví dụ như cụm dữ liệu của tháng nào gây ra sai số dự đoán lớn nhất. Bên cạnh đó, vì mỗi tháng có số ngày gần bằng nhau, số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7); sự cân bằng này giúp mức đóng góp của các cụm có thể so sánh trực tiếp với nhau, không bị chi phối bởi chênh lệch kích thước giữa các cụm. @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
+Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở Mục *1.5*, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể. Ở đây, yếu tố thời gian theo tháng là lựa chọn dễ thấy nhất: nhu cầu sử dụng xe đạp công cộng mang tính thời vụ rõ rệt, tăng vào những tháng ấm và giảm vào những tháng lạnh, nên việc phân cụm theo tháng giúp các câu hỏi giải thích trở nên có ý nghĩa thực tế, ví dụ như cụm dữ liệu của tháng nào gây ra sai số dự đoán lớn nhất. Bên cạnh đó, vì mỗi tháng có số ngày gần bằng nhau, số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7); sự cân bằng này giúp mức đóng góp của các cụm có thể so sánh trực tiếp với nhau, không bị chi phối bởi chênh lệch kích thước giữa các cụm. @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
 
 #figure(
   table(
@@ -1001,9 +1031,9 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
   caption: [Phân chia dữ liệu Bikeshare cho từng cụm],
 ) <table-bikeshare-split>
 
-Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở Mục 3.1. Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
+Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở Mục *3.1.* Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
 
-Mô hình hộp đen được sử dụng là Rừng Ngẫu Nhiên (Random Forest). Tương tự như Mục 4.1, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
+Mô hình hộp đen được sử dụng là Random Forest. Tương tự như Mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
 
 Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho ta Giá trị Shapley toàn cục:
 
@@ -1045,4 +1075,4 @@ trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả 
 
 = PHỤ LỤC
 
-Phụ lục này trích dẫn Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn trong Mục 4.1.1, được trình bày trong @table-synthetic-predictions-selected-rf. Số liệu được đọc trực tiếp từ tệp kết quả thí nghiệm `results/synthetic_01_predictions_phi_selected.csv` — bản sao kết quả của mô hình Random Forest tại lần lặp cuối cùng $M = 250$ — đảm bảo bảng luôn đồng bộ với dữ liệu thực nghiệm.
+Phụ lục này trích dẫn Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn trong Mục *4.1.1*, được trình bày trong @table-synthetic-predictions-selected-rf. Số liệu được đọc trực tiếp từ tệp kết quả thí nghiệm `results/synthetic_01_predictions_phi_selected.csv` — bản sao kết quả của mô hình Random Forest tại lần lặp cuối cùng $M = 250$ — đảm bảo bảng luôn đồng bộ với dữ liệu thực nghiệm.
