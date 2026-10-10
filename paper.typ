@@ -815,7 +815,9 @@ Tương tự với mục *4.1.2*, @figure-synthetic-squared-error-selected-rf tr
   caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest*],
 ) <figure-synthetic-squared-error-selected-rf>
 
-Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $D^("test") = D^("train")$. Đối với mô hình Random Forest, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử tương đương với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*. Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, điểm dữ liệu $t = 150$ thuộc cụm $Q_2$. Khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử — trùng với điểm $t = 150$ trong tập huấn luyện — Giá trị Shapley của cụm dữ liệu $Q_2$ là âm. Điều này nghĩa là, như kỳ vọng, cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Chúng ta cũng quan sát thấy Giá trị Shapley của cụm dữ liệu $Q_4$ và $Q_5$ rất giống nhau, cũng như kỳ vọng vì 2 cụm này là giống hệt nhau (Mục *4.1*). Lời giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp đáng kể làm tăng sai số bình phương, và do đó làm giảm hiệu suất dự đoán. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
+Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $D^("test") = D^("train")$. Đối với mô hình Random Forest, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử tương đương với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*.
+
+Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với điểm dữ liệu $t = 150$ thuộc cụm $Q_2$, khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử, Giá trị Shapley của cụm dữ liệu $Q_2$ là số âm. Điều này đúng như kỳ vọng vì cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Tiếp theo có thể thấy kết quả giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp làm tăng sai số bình phương, và do đó làm giảm khả năng dự đoán. Điều này là đúng với kỳ vọng tại vì $t = 350$ và $t = 450$ thuộc cụm dữ liệu $Q_4$ và $Q_5$ không hề liên quan đến cụm dữ liệu $Q_3$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Cụ thể Giá trị Shapley của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
 
 #figure(
   table(
@@ -833,15 +835,15 @@ Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng v�
       .flatten(),
   ),
   caption: [
-    Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest*
+    Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn cho bài toán giải thích sai số bình phương với mô hình huấn luyện *Random Forest*
   ],
 ) <table-synthetic-squared-error-selected-rf>
 
-Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương. @figure-synthetic-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Các đường ổn định sau một số lượng lặp nhất định, xác nhận $M = 250$ là đủ lớn; bên cạnh đó, đường của cụm dữ liệu $Q_4$ gần như trùng với đường của cụm dữ liệu $Q_5$ — một lần nữa nhất quán với tính đối xứng $phi_4 = phi_5$ đã trình bày ở Mục *4.1.* Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-rf.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho bài toán sai số bình phương. @figure-synthetic-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$. phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-rf.
 
 #figure(
   image("figures/synthetic_05_squared_error_number_iterations.png"),
-  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho bài toán sai số bình phương trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-squared-error-number-iterations-rf>
 
 #figure(
@@ -860,12 +862,12 @@ Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng v�
 
 Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích sai số bình phương ở trên với mô hình KNN-10. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên. @figure-synthetic-squared-error-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với sai số bình phương của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn.
 
+Tương tự với Random Forest, Giá trị Shapley của từng cụm dữ liệu ứng với vị trí của từng điểm dữ liệu đều là số âm: Giá trị Shapley của cụm dữ liệu $Q_1$ tại điểm dữ liệu $t = 50$ thuộc cụm dữ liệu $Q_1$ là số âm, tương tự cho 4 điểm dữ liệu còn lại $t = 150, 250, 350, 450$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-knn10.
+
 #figure(
   image("figures/synthetic_08_squared_error_selected_knn10.png"),
   caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *KNN-10*],
 ) <figure-synthetic-squared-error-selected-knn10>
-
-Tương tự như với Random Forest, Giá trị Shapley của các cụm chứa điểm dữ liệu được giải thích đều âm — cụm dữ liệu $Q_2$ tại $t = 150$ và cụm dữ liệu $Q_3$ tại $t = 250$ có Giá trị Shapley âm mạnh — vì việc bổ sung các cụm này vào tập huấn luyện giúp giảm sai số bình phương. Giá trị Shapley của cụm dữ liệu $Q_4$ và $Q_5$ vẫn gần bằng nhau theo tính đối xứng, và cụm dữ liệu $Q_3$ tiếp tục đóng góp làm tăng sai số bình phương tại $t = 350$ và $t = 450$. Khác biệt so với Random Forest nằm ở mức độ đóng góp của từng cụm: vì mỗi mô hình khai thác các cụm dữ liệu theo cách khác nhau, nên Giá trị Shapley của cùng một cụm cũng thay đổi theo mô hình. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-knn10.
 
 #figure(
   table(
@@ -887,11 +889,11 @@ Tương tự như với Random Forest, Giá trị Shapley của các cụm chứ
   ],
 ) <table-synthetic-squared-error-selected-knn10>
 
-Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình KNN-10. @figure-synthetic-squared-error-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với Random Forest, giá trị bắt đầu ổn định từ lần lặp $m = 100$ trở đi, và đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-knn10.
+Áp dụng Mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình KNN-10. @figure-synthetic-squared-error-number-iterations-knn10 trình bày diễn biến của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự với Random Forest, đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-knn10.
 
 #figure(
   image("figures/synthetic_07_squared_error_number_iterations_knn10.png"),
-  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ với mô hình KNN-10 cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ với mô hình *KNN-10* cho trò chơi sai số bình phương trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-squared-error-number-iterations-knn10>
 
 #figure(
@@ -907,8 +909,6 @@ Tương tự như với Random Forest, Giá trị Shapley của các cụm chứ
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* tại lần lặp cuối $m = 250$],
 ) <table-synthetic-squared-error-phi-global-knn10>
-
-Một kiểm chứng thêm: việc đổi trò chơi giải thích (từ dự đoán sang sai số bình phương) không làm thay đổi mô hình đầy đủ $f_N$, do đó không làm thay đổi MSE. MSE đọc từ `results/synthetic_08_squared_error_mse_full.csv` và `results/synthetic_11_squared_error_mse_full_knn10.csv` lần lượt là #round_3(float(csv("results/synthetic_08_squared_error_mse_full.csv").slice(1).first().first())) và #round_3(float(csv("results/synthetic_11_squared_error_mse_full_knn10.csv").slice(1).first().first())), trùng khớp với nhau.
 
 === 4.1.4. Phân loại
 
