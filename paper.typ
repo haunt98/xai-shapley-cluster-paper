@@ -912,26 +912,41 @@ Tương tự với Random Forest, Giá trị Shapley của từng cụm dữ li�
 
 === 4.1.4. Phân loại
 
-Tiếp tục với chuỗi dữ liệu thời gian tạo sinh từ @math-synthetic-x và @math-synthetic-y, với tập kiểm thử trùng với tập huấn luyện, chúng ta xét bài toán phân loại. Để minh hoạ Giá trị Shapley cho độ chính xác phân loại — độ đo đã trình bày ở mục *3.3* — chúng ta tạo ra một tập các điểm bất thường bằng cách thay đổi một phần của tập kiểm thử. Cụ thể, tín hiệu $x_1$ được thay bằng $x_1^*$:
+Để minh hoạ mục *3.3*, Giá trị Shapley của cụm dữ liệu trong bài toán phân loại, chúng ta vẫn sử dụng lại tập dữ liệu tạo sinh nhưng sẽ thay đổi một vài điểm dữ liệu của $D^("test")$ bằng các điểm dữ liệu bất thường (anomaly).
+
+Cụ thể, một vài điểm dữ liệu thuộc đặc trưng $x_1$ được thay bằng $x_1^*$:
 
 $
-  x_1^*(t) = x_1(t) + eta^*(t), quad t in [200, 250)
+  x_1^* = x_1 + eta^*, quad t in [200, 250)
 $ <math-anomaly-x1>
 
-và tín hiệu $x_4$ được thay bằng $x_4^*$:
+và một vài điểm dữ liệu thuộc đặc trưng $x_4$ được thay bằng $x_4^*$:
 
 $
-  x_4^*(t) = x_4(t) + eta^*(t), quad t in [300, 350)
+  x_4^* = x_4 + eta^*, quad t in [300, 350)
 $ <math-anomaly-x4>
 
-trong đó $eta^*(t) tilde cal(N)(-0.5, 0.5)$. Như vậy, tổng cộng có 100 điểm dữ liệu bị thay đổi (với $t in [200, 250) union [300, 350)$), và 400 điểm còn lại được giữ nguyên. Tập kiểm thử mới được minh hoạ trong @figure-synthetic-test-anomalies, các điểm bị thay đổi được tô màu đỏ. 100 điểm bị thay đổi được coi là bất thường, 400 điểm còn lại được coi là bình thường. Ví dụ, nếu cả 100 điểm bất thường đều được phát hiện, số lượng dương tính thật (TP) sẽ bằng 100, và 400 điểm còn lại nên được phân loại là bình thường, khi đó số lượng âm tính thật (TN) bằng 400. Nếu một điểm bị thay đổi nhưng được phân loại là bình thường, đây là một báo động bị bỏ sót, làm tăng số lượng âm tính giả (FN); tương tự, nếu một điểm không bị thay đổi nhưng được phân loại là bất thường, đây được xem là báo động giả, làm tăng số lượng dương tính giả (FP).
+trong đó $eta^* tilde cal(N)(-0.5, 0.5)$.
+
+Như vậy, tổng cộng có 100 điểm dữ liệu bị thay đổi (với $t in [200, 250) union [300, 350)$), và 400 điểm còn lại được giữ nguyên. Tập kiểm thử mới được minh hoạ trong @figure-synthetic-test-anomalies, các điểm bị thay đổi được tô màu đỏ. 100 điểm bị thay đổi được coi là bất thường, 400 điểm còn lại được coi là bình thường.
 
 #figure(
   image("figures/synthetic_09_classification_test_data_anomalies.png"),
   caption: [Tập kiểm thử của tập dữ liệu tạo sinh với các điểm bất thường được tô màu đỏ: $x_1$ bị thay đổi với $t in [200, 250)$ và $x_4$ bị thay đổi với $t in [300, 350)$],
 ) <figure-synthetic-test-anomalies>
 
-Mục tiêu của bộ phân loại $g(t)$ là dự đoán có hay không xuất hiện điểm bất thường tại thời điểm $t$ trong tập kiểm thử. Để làm điều đó, chúng ta áp dụng một phương pháp tái tạo tín hiệu đa biến kết hợp với phân tích phần dư [TODO]. Cách tiếp cận là so sánh tín hiệu gốc với một bản tái tạo của chính nó: nếu bản tái tạo khác tín hiệu gốc đủ lớn (vượt quá một ngưỡng $L$ nào đó), điểm dữ liệu được phân loại là bất thường; ngược lại, nếu khác biệt nhỏ, điểm dữ liệu được phân loại là bình thường. Tín hiệu được tái tạo bằng hồi quy hạt nhân tự kết hợp (Auto Associative Kernel Regression, AAKR) do Xu, Hines và Uhrig đề xuất [TODO] — phương pháp so sánh độ tương tự giữa dữ liệu huấn luyện được lưu trong bộ nhớ và vectơ truy vấn (dữ liệu kiểm thử), rồi gán trọng số cao cho các vectơ có độ tương tự cao để tính ra vectơ ước lượng. Một tham số băng thông $sigma$ được sử dụng để điều khiển hàm trọng số tính các trọng số này. Có nhiều kỹ thuật có thể dùng để tinh chỉnh/tối ưu tham số này; vì mục tiêu ở đây là minh hoạ, chúng ta không tinh chỉnh mà đơn giản đặt $sigma = 0.2$; tương tự, chúng ta chọn ngưỡng $L = 0.5$ làm ranh giới giữa lớp bình thường và lớp bất thường. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ quá trình tái tạo: lần lượt so sánh tập huấn luyện và tập kiểm thử với các tín hiệu ước lượng được tái tạo bởi AAKR (điểm màu đỏ).
+Định nghĩa phân loại:
+
+- TP: Điểm bất thường được phát hiện là điểm bất thường.
+- TN: Điểm bình thường được phát hiện là điểm bình thường.
+- FN: Điểm bất thường được phát hiện là điểm bình thường.
+- FP: Điểm bình thường được phát hiện là điểm bất thường.
+
+
+Định nghĩa hàm phân loại $g(t)$ là dự đoán có hay không điểm bất thường tại thời điểm $t$ trong tập kiểm thử. Để làm điều đó, chúng ta áp dụng một phương pháp thuộc loại tái tạo tín hiệu đa biến kết hợp với phân tích phần dư [multivariate signal reconstruction followed by residuals
+analysis] có tên là AAKR [TODO]. Tổng quan thì phương pháp này so sánh tín hiệu gốc với một bản tái tạo (recontrusction): nếu bản tái tạo có sự khác biệt với tín hiệu gốc, và giá trị khác biệt đủ lớn (vượt quá một ngưỡng $L$ cho trước), điểm dữ liệu được phân loại là bất thường; ngược lại nếu nhỏ hơn ngưỡng thì điểm dữ liệu được phân loại là bình thường.
+
+Cụ thể cách hoạt động của AAKR là so sánh độ tương đồng giữa dữ liệu kiểm thử với dữ liệu huấn luyện, dữ liệu mẫu nào càng giống thì càng được gán trọng số cao để tính ra giá trị ước lượng [TODO explain more]. AAKR có tham số băng thông (bandwidth) $h$ dùng để kiểm soát trọng số. Có nhiều kỹ thuật để tinh chỉnh và tối ưu hóa tham số này, nhưng vì mục tiêu của nghiên cứu là thử nghiệm minh họa Giá trị Shapley chứ không đào sâu vào thuật toán của mô hình nên chúng ta chọn $h = 0.2$ và ngưỡng giới hạn $L = 0.5$ làm ranh giới để phân loại giữa trạng thái bình thường và bất thường [TODO explain more]. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ tín hiệu ước lượng được tái tạo bởi AAKR trên tập huấn luyện và tập kiểm thử, tín hiệu tái tạo bởi AAKR được vẽ bằng màu vàng.
 
 #figure(
   image("figures/synthetic_10_classification_compare_train_aakr.png"),
