@@ -1272,18 +1272,21 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
 
 === 4.2.3. Chiến lược thu thập dữ liệu huấn luyện
 
-Mục tiêu của giai đoạn này là xây dựng một tập dữ liệu huấn luyện $X^"train"$ sao cho độ chính xác dự đoán của mô hình được cải thiện trên một tập dữ liệu kiểm thử chưa từng thấy $X^"test"$, với giả định rằng số lượng quan sát trong $X^"train"$ bị giới hạn ở $N^"strategy"$. Điều này có nghĩa là tập huấn luyện không được tăng kích thước: nếu muốn đưa thêm dữ liệu của một cụm vào, chúng ta phải bớt đi một lượng dữ liệu tương ứng ở cụm khác. Nói cách khác, bài toán là bài toán *phân bổ ngân sách dữ liệu* giữa các cụm. Với bài toán này, có thể sử dụng nhiều chiến lược thu thập dữ liệu khác nhau. Chúng ta trình bày 2 chiến lược, trong đó chiến lược *max* là chiến lược đề xuất dựa trên Giá trị Shapley, còn chiến lược *equal* được dùng làm cơ sở so sánh:
+Sau khi tính được Giá trị Shapley cho từng cụm dữ liệu, chúng ta đề xuất thêm một cách ứng dựng thực tế của phương pháp, cụ thể là sử dụng Giá trị Shapley đã tính được để đề xuất chiến lực thu thập lại dữ liệu huấn luyện để huấn luyện mô hình nhằm mục đích cải thiện độ chính xác dự đoán.
 
-- *equal*: lấy ngẫu nhiên một số lượng điểm dữ liệu bằng nhau từ mỗi cụm dữ liệu,
-- *max*: lấy ngẫu nhiên điểm dữ liệu từ nhiều cụm khác nhau, với số lượng giữa các cụm được xác định bởi Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương: những cụm có Giá trị Shapley nhỏ hơn (đóng góp mạnh hơn vào việc làm giảm sai số) được lấy nhiều dữ liệu hơn.
+Mục tiêu của việc này là xây dựng một tập dữ liệu huấn luyện $D^"train"$ mới sao cho độ chính xác dự đoán của mô hình sau khi được huấn luyện trên tập dữ liệu $D^"train"$ sẽ cho kết quả tốt hơn khi kiểm thử trên tập $D^"eval"$ không trùng với tập $D^"train"$. Chúng ta cố định cố định kích thước $D^"train"$, cho mọi chiến lược. Điều này có nghĩa là ta chỉ có thể cân đối từng cụm dữ liệu: nếu muốn đưa thêm dữ liệu của một cụm vào, chúng ta phải bớt đi một lượng dữ liệu tương ứng ở cụm khác. Với yêu cầu này, chúng ta có thể sử dụng nhiều chiến lược thu thập dữ liệu khác nhau. Ở đây chúng ta đề xuất 2 chiến lược, trong đó chiến lược *tối đa (max)* là chiến lược đề xuất dựa trên Giá trị Shapley, còn chiến lược *đều (equal)* được dùng làm cơ sở so sánh:
 
-Cả 2 chiến lược đều sinh ra tập huấn luyện gồm $N^"strategy" = 4800$ điểm, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều. Các điểm dữ liệu được lấy ngẫu nhiên từ phần quan sát còn lại của mỗi cụm sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập đánh giá hoàn toàn chưa từng thấy đối với cả 2 mô hình. Điều đáng chú ý là điểm khác biệt duy nhất giữa 2 chiến lược nằm ở *cách phân bổ số điểm giữa các cụm*, chứ không phải ở nguồn dữ liệu hay mô hình, nhờ đó mọi chênh lệch về hiệu năng có thể quy trực tiếp về chất lượng của chiến lược phân bổ.
+- Chiến lược *đều*: lấy ngẫu nhiên một số lượng điểm dữ liệu bằng nhau từ mỗi cụm dữ liệu,
+- Chiến lược *tối đa*: lấy ngẫu nhiên điểm dữ liệu từ nhiều cụm khác nhau, với số lượng giữa các cụm được xác định bởi Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương. Cụ thể những cụm có Giá trị Shapley nhỏ hơn, đóng góp mạnh hơn vào việc làm giảm sai số sẽ được lấy nhiều điểm dữ liệu hơn.
 
-Để thực hiện chiến lược *max*, chúng ta cần biết trước Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương, đại lượng mà trong thực tế không có sẵn. Tương tự cách tiếp cận của nghiên cứu gốc, vốn giả định tồn tại một tập dữ liệu ban đầu $cal(Z)$ dùng để quyết định chiến lược thu thập dữ liệu trước khi bắt đầu, ở đây chúng ta sử dụng chính kết quả của thí nghiệm ở mục *4.2.2*: các Giá trị Shapley toàn cục $macron(phi)_k$ tính trên tập $cal(D)^"shapley train"$ và $cal(D)^"shapley test"$ đóng vai trò là tri thức tiên nghiệm (prior knowledge) về mức độ hữu ích của từng cụm dữ liệu. Gán trọng số cho từng cụm:
+Cả 2 chiến lược đều sinh ra tập huấn luyện chứa $N^"strategy" = 4800$ điểm dữ liệu, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều với $K = 12$. Các điểm dữ liệu được lấy ngẫu nhiên sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập kiểm thử và tập huấn luyện không trùng nhau.
+
+Để thực hiện chiến lược *tối đa*, chúng ta sẽ tái sử dụng Giá trị Shapley toàn cục của trò chơi giải thích sai số bình phương với mô hình *Random Forest* đã tính ở mục *4.2.2*.
+Sau đó chúng ta sẽ tính trọng số $w_k$ cho từng cụm theo Giá trị Shapley này với công thức như sau:
 
 $
   w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
-$
+$ <math-bikeshare-weight-strategy-max>
 
 trong đó $tau$ tỷ lệ với độ lệch chuẩn của toàn bộ Giá trị Shapley toàn cục. Hạn ngạch (quota) cho mỗi cụm được tính theo tỷ lệ trọng số:
 
@@ -1291,7 +1294,7 @@ $
   "quota"_k = N^"strategy" w_k / sum_(j=1)^K w_j
 $
 
-Do mỗi cụm chỉ có một số hữu hạn quan sát còn lại sau khi loại bỏ tập $cal(D)^"eval"$, hạn ngạch $"quota"_k$ được cắt trên (capped) tại kích thước phần còn lại đó: $n_k = min(max(floor("quota"_k), floor(N^"strategy" \/ (2K))), "pool"_k)$, trong đó $"pool"_k$ là số quan sát còn lại của cụm $k$. Ràng buộc dưới $floor(N^"strategy" \/ (2K)) = 200$ đảm bảo không có cụm nào bị bỏ hoàn toàn, tránh trường hợp mô hình mất tri thức về một tháng trong năm; ràng buộc trên đảm bảo tính khả thi của việc lấy mẫu. Sau khi cắt trên, nếu tổng số điểm chưa đủ $N^"strategy"$, điểm còn thiếu được bổ sung lần lượt cho cụm có phần thiếu hụt so với hạn ngạch lớn nhất mà vẫn còn dư sức chứa; ngược lại nếu vượt quá, điểm thừa được cắt bớt từ cụm vượt hạn ngạch nhiều nhất, nhưng không bao giờ cắt xuống dưới mức tối thiểu. Quy trình này đảm bảo $sum_k n_k = N^"strategy"$ đúng bằng ngân sách cho phép. Tóm lại, với chiến lược *equal*, $n_k = 400$ với mọi $k$; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
+Do mỗi cụm chỉ có một số hữu hạn quan sát còn lại sau khi loại bỏ tập $cal(D)^"eval"$, hạn ngạch $"quota"_k$ được cắt trên (capped) tại kích thước phần còn lại đó: $n_k = min(max(floor("quota"_k), floor(N^"strategy" \/ (2K))), "pool"_k)$, trong đó $"pool"_k$ là số quan sát còn lại của cụm $k$. Ràng buộc dưới $floor(N^"strategy" \/ (2K)) = 200$ đảm bảo không có cụm nào bị bỏ hoàn toàn, tránh trường hợp mô hình mất tri thức về một tháng trong năm; ràng buộc trên đảm bảo tính khả thi của việc lấy mẫu. Sau khi cắt trên, nếu tổng số điểm chưa đủ $N^"strategy"$, điểm còn thiếu được bổ sung lần lượt cho cụm có phần thiếu hụt so với hạn ngạch lớn nhất mà vẫn còn dư sức chứa; ngược lại nếu vượt quá, điểm thừa được cắt bớt từ cụm vượt hạn ngạch nhiều nhất, nhưng không bao giờ cắt xuống dưới mức tối thiểu. Quy trình này đảm bảo $sum_k n_k = N^"strategy"$ đúng bằng ngân sách cho phép. Tóm lại, với chiến lược *đều (equal)*, $n_k = 400$ với mọi $k$; với chiến lược *tối đa (max)*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
 
 Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
 
@@ -1300,8 +1303,6 @@ $
 $
 
 trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của 2 chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
-
-=== 4.2.4. Kết quả và thảo luận
 
 Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình *Random Forest* và k-NN ($k = 10$), trên cả 2 trò chơi giải thích dự đoán và giải thích sai số bình phương, được trình bày trong @table-bikeshare-strategy-mse-global. Khác với nghiên cứu gốc, nơi chiến lược *max* vượt trội hơn hẳn các chiến lược cơ sở trên mọi cấu hình, kết quả của chúng ta trên tập Bikeshare cho thấy bức tranh tinh tế hơn: chiến lược *max* chỉ mang lại cải thiện khi Giá trị Shapley được tính cho trò chơi *sai số bình phương* với mô hình *Random Forest*, cụ thể MSE toàn cục giảm từ 9135.502 xuống 8824.615, tương ứng mức giảm khoảng 3.4%. Ở 3 cấu hình còn lại, gồm mô hình *Random Forest* với trò chơi dự đoán (+4.6%), k-NN với trò chơi dự đoán (+3.0%) và k-NN với trò chơi sai số bình phương (+5.7%), chiến lược *max* lại cho kết quả kém hơn chiến lược *equal*.
 
