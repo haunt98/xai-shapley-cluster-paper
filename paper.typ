@@ -32,7 +32,7 @@
   [XAI], [Explainable AI], [Trí tuệ nhân tạo giải thích được],
   [MSE], [Mean Squared Error], [Sai số bình phương trung bình],
   [KNN], [K-Nearest Neighbors], [K láng giềng gần nhất],
-  [AAKR], [Auto-Associative Kernel Regression], [Phân loại bất thường],
+  [*AAKR*], [Auto-Associative Kernel Regression], [Phân loại bất thường],
   [TP], [True Positive], [Dương tính thật],
   [FP], [False Positive], [Dương tính giả],
   [TN], [True Negative], [Âm tính thật],
@@ -92,8 +92,8 @@ Phương pháp này mới là vì chưa có công trình nghiên cứu nào gi�
 
 Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đóng góp của cụm dữ liệu huấn luyện trong bài toán:
 
-- Hồi quy tuyến tính với sai số MSE sử dụng mô hình AI Random Forest và KNN.
-- Phân loại với độ chính xác Accuracy và mô hình AI AAKR.
+- Hồi quy tuyến tính với sai số MSE sử dụng mô hình *Random Forest* và *KNN-10*.
+- Phân loại với độ chính xác (accuracy) sử dụng mô hình *AAKR*.
 
 Tập dữ liệu thực nghiệm bao gồm:
 
@@ -108,7 +108,7 @@ Giới hạn của nghiên cứu:
 == 1.6. Phương pháp nghiên cứu
 
 - *Về mặt lý thuyết*: Nghiên cứu sử dụng Lý thuyết trò chơi liên minh với Giá trị Shapley để định nghĩa mô hình trò chơi cho cụm dữ liệu huấn luyện. Bao gồm các tính chất của Giá trị Shapley, đề xuất và chứng minh các công thức liên quan. Đồng thời giải thích ý nghĩa Giá trị Shapley cho từng cụm dữ liệu huấn luyện trong bối cảnh giải thích sai số dự đoán cục bộ.
-- *Về mặt ứng dụng*: Nghiên cứu sử dụng dữ liệu thực nghiệm, để kiểm chứng tính đúng đắn phương pháp, đồng thời đánh giá hiệu quả của phương pháp trong việc giải thích sai số dự đoán cục bộ. Dữ liệu thực nghiệm bao gồm dữ liệu tạo sinh và dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng. Các mô hình AI được sử dụng bao gồm Random Forest, KNN và AAKR.
+- *Về mặt ứng dụng*: Nghiên cứu sử dụng dữ liệu thực nghiệm, để kiểm chứng tính đúng đắn phương pháp, đồng thời đánh giá hiệu quả của phương pháp trong việc giải thích sai số dự đoán cục bộ. Dữ liệu thực nghiệm bao gồm dữ liệu tạo sinh và dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng. Các mô hình được sử dụng bao gồm mô hình *Random Forest*, KNN và *AAKR*.
 
 == 1.7. Ý nghĩa khoa học và thực tiễn
 
@@ -682,10 +682,10 @@ trong đó:
 
 Khác với dữ liệu thực tế, ở đây ta biết chính xác rằng $y$ chỉ được sinh từ hàm phi tuyến $x_1 dot x_2 + x_3 dot x_4$ kết hợp 2 cặp đặc trưng $(x_1, x_2)$ và $(x_3, x_4)$; do đó mọi sai số dự đoán của mô hình so với $y$ đều bắt nguồn từ 2 nguồn: nhiễu $epsilon$ và những vùng dữ liệu mà mô hình học chưa tốt. Dữ liệu tạo sinh này sẽ dùng để huấn luyện 2 mô hình:
 
-- Mô hình Random Forest, với 100 cây và số lượng nút tối đa mỗi cây là 30.
-- Mô hình KNN với $k = 10$ (KNN-10).
+- Mô hình *Random Forest*, với 100 cây và số lượng nút tối đa mỗi cây là 30.
+- Mô hình KNN với $k = 10$ (*KNN-10*).
 
-Khi giải thích các dự đoán, chúng ta sẽ không đưa mô hình huấn luyện vào trong lời giải thích (Random Forest hay KNN) vì chúng ta xem các mô hình huấn luyện này là những hộp đen. Bên cạnh đó, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
+Khi giải thích các dự đoán, chúng ta sẽ không đưa mô hình huấn luyện vào trong lời giải thích (mô hình *Random Forest* hay KNN) vì chúng ta xem các mô hình huấn luyện này là những hộp đen. Bên cạnh đó, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
 
 === 4.1.1. Khởi tạo dữ liệu
 
@@ -702,9 +702,9 @@ Bởi vì về bản chất mỗi phương pháp giải thích đều mang tính
 
 === 4.1.2. Giải thích dự đoán (predictions)
 
-Trước khi chuyển sang giải thích sai số bình phương, chúng ta trình bày kết quả giải thích cho dự đoán (predictions). @figure-synthetic-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình Random Forest cho 5 điểm dữ liệu được chọn trong tập kiểm thử, cụ thể:
+Trước khi chuyển sang giải thích sai số bình phương, chúng ta trình bày kết quả giải thích cho dự đoán (predictions). @figure-synthetic-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *Random Forest* cho 5 điểm dữ liệu được chọn trong tập kiểm thử, cụ thể:
 
-- Biểu đồ trên cùng thể hiện giá trị dự đoán được vẽ cho toàn bộ 500 điểm của tập kiểm thử, trùng với tập huấn luyện được minh hoạ trong @figure-synthetic-train-data $D^("test") = D^("train")$, đồng thời chọn ra 5 điểm dữ liệu với $t = 50, 150, 250, 350, 450$ được đánh dấu màu đỏ để minh hoạ Giá trị Shapley. Dự đoán được tạo ra bởi mô hình $f_N$ Random Forest được huấn luyện trên toàn bộ tập huấn luyện.
+- Biểu đồ trên cùng thể hiện giá trị dự đoán được vẽ cho toàn bộ 500 điểm của tập kiểm thử, trùng với tập huấn luyện được minh hoạ trong @figure-synthetic-train-data $D^("test") = D^("train")$, đồng thời chọn ra 5 điểm dữ liệu với $t = 50, 150, 250, 350, 450$ được đánh dấu màu đỏ để minh hoạ Giá trị Shapley. Dự đoán được tạo ra bởi mô hình $f_N$ (*Random Forest*) được huấn luyện trên toàn bộ tập huấn luyện.
 - Các biểu đồ ở giữa từ trái qua phải lần lượt là kết quả giải thích cho 5 điểm dữ liệu được chọn. Mỗi biểu đồ vẽ Giá trị Shapley ước lượng cho mức độ quan trọng của 5 cụm dữ liệu được minh hoạ dưới dạng biểu đồ cột với màu tương ứng của từng cụm.
 - Các biểu đồ ở hàng dưới cùng cho thấy Giá trị Shapley của từng cụm dữ liệu thay đổi khi số mẫu $m$ tăng từ 1 đến $M = 250$, mỗi lần lặp $m$ được thể hiện trong @algorithm-shapley-value-hindsight.
 
@@ -713,7 +713,7 @@ Trước khi chuyển sang giải thích sai số bình phương, chúng ta trì
   caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest*. 5 Giá trị Shapley tính bởi 5 cụm dữ liệu là 5 màu khác nhau],
 ) <figure-synthetic-predictions-selected-rf>
 
-Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Ví dụ, xét điểm dữ liệu đầu tiên tại thời điểm $t = 50$, Giá trị Shapley cho thấy cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán, trong khi đóng góp của 4 cụm còn lại làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu tiếp theo, $t = 150$ và $t = 250$, đóng góp của cụm dữ liệu $Q_2$ và $Q_3$ lần lượt làm giảm đáng kể, kết quả giá trị dự đoán cả 2 điểm này cũng đều $< 0$. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-rf.
+Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Ví dụ, xét điểm dữ liệu đầu tiên tại thời điểm $t = 50$, Giá trị Shapley cho thấy cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán, trong khi đóng góp của 4 cụm còn lại làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu tiếp theo, $t = 150$ và $t = 250$, đóng góp của cụm dữ liệu $Q_2$ và $Q_3$ lần lượt làm giảm đáng kể, kết quả giá trị dự đoán cả 2 điểm này cũng đều là số âm. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-rf.
 
 #figure(
   table(
@@ -757,9 +757,9 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
 ) <table-synthetic-predictions-phi-global-rf>
 
-Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích dự đoán ở trên với một mô hình hộp đen hoàn toàn khác là KNN-10. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên.
+Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích dự đoán ở trên với một mô hình hộp đen hoàn toàn khác là *KNN-10*. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên.
 
-@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn. Tương tự như với Random Forest, cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên, trong khi các cụm còn lại đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm dữ liệu $Q_2$ và $Q_3$ tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
+@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *KNN-10* cho cùng 5 điểm dữ liệu được chọn. Tương tự như với mô hình *Random Forest*, cụm dữ liệu $Q_1$ đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên, trong khi các cụm còn lại đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm dữ liệu $Q_2$ và $Q_3$ tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
 
 #figure(
   image("figures/synthetic_04_predictions_selected_knn10.png"),
@@ -787,7 +787,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   ],
 ) <table-synthetic-predictions-selected-knn10>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu với mô hình KNN-10. @figure-synthetic-predictions-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với Random Forest, giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi, và đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-knn10.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu với mô hình *KNN-10*. @figure-synthetic-predictions-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với mô hình *Random Forest*, giá trị bắt đầu ổn định từ lần lặp $m = 150$ trở đi, và đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-predictions-phi-global-knn10.
 
 #figure(
   image("figures/synthetic_03_predictions_number_iterations_knn10.png"),
@@ -817,7 +817,7 @@ Tương tự với mục *4.1.2*, @figure-synthetic-squared-error-selected-rf tr
   caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 150, 250, 350, 450$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest*],
 ) <figure-synthetic-squared-error-selected-rf>
 
-Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $D^("test") = D^("train")$. Đối với mô hình Random Forest, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử tương đương với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*.
+Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $D^("test") = D^("train")$. Đối với mô hình *Random Forest*, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử tương đương với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*.
 
 Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với điểm dữ liệu $t = 150$ thuộc cụm $Q_2$, khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử, Giá trị Shapley của cụm dữ liệu $Q_2$ là số âm. Điều này đúng như kỳ vọng vì cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Tiếp theo có thể thấy kết quả giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp làm tăng sai số bình phương, và do đó làm giảm khả năng dự đoán. Điều này là đúng với kỳ vọng bởi vì $t = 350$ và $t = 450$ thuộc cụm dữ liệu $Q_4$ và $Q_5$ không hề liên quan đến cụm dữ liệu $Q_3$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Cụ thể Giá trị Shapley của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
 
@@ -863,9 +863,9 @@ Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với đi
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
 ) <table-synthetic-squared-error-phi-global-rf>
 
-Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích sai số bình phương ở trên với mô hình KNN-10. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên. @figure-synthetic-squared-error-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với sai số bình phương của mô hình KNN-10 cho cùng 5 điểm dữ liệu được chọn.
+Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích sai số bình phương ở trên với mô hình *KNN-10*. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên. @figure-synthetic-squared-error-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với sai số bình phương của mô hình *KNN-10* cho cùng 5 điểm dữ liệu được chọn.
 
-Tương tự với Random Forest, Giá trị Shapley của từng cụm dữ liệu ứng với vị trí của từng điểm dữ liệu đều là số âm: Giá trị Shapley của cụm dữ liệu $Q_1$ tại điểm dữ liệu $t = 50$ thuộc cụm dữ liệu $Q_1$ là số âm, tương tự cho 4 điểm dữ liệu còn lại $t = 150, 250, 350, 450$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-knn10.
+Tương tự với mô hình *Random Forest*, Giá trị Shapley của từng cụm dữ liệu ứng với vị trí của từng điểm dữ liệu đều là số âm: Giá trị Shapley của cụm dữ liệu $Q_1$ tại điểm dữ liệu $t = 50$ thuộc cụm dữ liệu $Q_1$ là số âm, tương tự cho 4 điểm dữ liệu còn lại $t = 150, 250, 350, 450$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-knn10.
 
 #figure(
   image("figures/synthetic_08_squared_error_selected_knn10.png"),
@@ -893,7 +893,7 @@ Tương tự với Random Forest, Giá trị Shapley của từng cụm dữ li�
   ],
 ) <table-synthetic-squared-error-selected-knn10>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình KNN-10. @figure-synthetic-squared-error-number-iterations-knn10 trình bày diễn biến của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự với Random Forest, đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-knn10.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình *KNN-10*. @figure-synthetic-squared-error-number-iterations-knn10 trình bày diễn biến của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự với mô hình *Random Forest*, đường biểu diễn giá trị của cụm dữ liệu $Q_4$ gần như trùng với đường biểu diễn giá trị của cụm dữ liệu $Q_5$, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-synthetic-squared-error-phi-global-knn10.
 
 #figure(
   image("figures/synthetic_07_squared_error_number_iterations_knn10.png"),
@@ -947,18 +947,18 @@ Như vậy, tổng cộng có 100 điểm dữ liệu bị thay đổi (với $t
 - FP: Điểm bình thường được phát hiện là điểm bất thường.
 
 Định nghĩa hàm phân loại $g(t)$ là dự đoán có hay không điểm bất thường tại thời điểm $t$ trong tập kiểm thử. Để làm điều đó, chúng ta áp dụng một phương pháp thuộc loại tái tạo tín hiệu đa biến kết hợp với phân tích phần dư [multivariate signal reconstruction followed by residuals
-analysis] có tên là AAKR [TODO]. Tổng quan thì phương pháp này so sánh tín hiệu gốc với một bản tái tạo (reconstruction): nếu bản tái tạo có sự khác biệt với tín hiệu gốc, và giá trị khác biệt đủ lớn (vượt quá một ngưỡng $L$ cho trước), điểm dữ liệu được phân loại là bất thường; ngược lại nếu nhỏ hơn ngưỡng thì điểm dữ liệu được phân loại là bình thường.
+analysis] có tên là *AAKR* [TODO]. Tổng quan thì phương pháp này so sánh tín hiệu gốc với một bản tái tạo (reconstruction): nếu bản tái tạo có sự khác biệt với tín hiệu gốc, và giá trị khác biệt đủ lớn (vượt quá một ngưỡng $L$ cho trước), điểm dữ liệu được phân loại là bất thường; ngược lại nếu nhỏ hơn ngưỡng thì điểm dữ liệu được phân loại là bình thường.
 
-Cụ thể cách hoạt động của AAKR là so sánh độ tương đồng giữa dữ liệu kiểm thử với dữ liệu huấn luyện, dữ liệu mẫu nào càng giống thì càng được gán trọng số cao để tính ra giá trị ước lượng [TODO explain more]. AAKR có tham số băng thông (bandwidth) $h$ dùng để kiểm soát trọng số. Có nhiều kỹ thuật để tinh chỉnh và tối ưu hóa tham số này, nhưng vì mục tiêu của nghiên cứu là thử nghiệm minh họa Giá trị Shapley chứ không đào sâu vào cải tiến hay thử nghiệm thuật toán của mô hình nên chúng ta chọn $h = 0.2$ và ngưỡng giới hạn $L = 0.5$ làm ranh giới để phân loại giữa trạng thái bình thường và bất thường [TODO explain more]. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ tín hiệu ước lượng được tái tạo bởi AAKR trên tập huấn luyện và tập kiểm thử, tín hiệu tái tạo bởi AAKR được vẽ bằng màu vàng.
+Cụ thể cách hoạt động của *AAKR* là so sánh độ tương đồng giữa dữ liệu kiểm thử với dữ liệu huấn luyện, dữ liệu mẫu nào càng giống thì càng được gán trọng số cao để tính ra giá trị ước lượng [TODO explain more]. *AAKR* có tham số băng thông (bandwidth) $h$ dùng để kiểm soát trọng số. Có nhiều kỹ thuật để tinh chỉnh và tối ưu hóa tham số này, nhưng vì mục tiêu của nghiên cứu là thử nghiệm minh họa Giá trị Shapley chứ không đào sâu vào cải tiến hay thử nghiệm thuật toán của mô hình nên chúng ta chọn $h = 0.2$ và ngưỡng giới hạn $L = 0.5$ làm ranh giới để phân loại giữa trạng thái bình thường và bất thường [TODO explain more]. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập huấn luyện và tập kiểm thử, tín hiệu tái tạo bởi *AAKR* được vẽ bằng màu vàng.
 
 #figure(
   image("figures/synthetic_10_classification_compare_train_aakr.png"),
-  caption: [So sánh tập huấn luyện với tín hiệu ước lượng được tái tạo bởi AAKR trên tập dữ liệu tạo sinh],
+  caption: [So sánh tập huấn luyện với tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-compare-train-aakr>
 
 #figure(
   image("figures/synthetic_11_classification_compare_test_aakr.png"),
-  caption: [So sánh tập kiểm thử với tín hiệu ước lượng được tái tạo bởi AAKR trên tập dữ liệu tạo sinh],
+  caption: [So sánh tập kiểm thử với tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-compare-test-aakr>
 
 Sau khi tất cả các điểm dữ liệu trong tập kiểm thử được phân loại là bình thường hoặc bất thường bởi hàm phân loại $g(t)$, chúng ta sẽ so sánh với giá trị thực tế của chúng. Ví dụ, nếu $g$ phân loại điểm dữ liệu tại $t = 225$ là bất thường, đây là một TP, vì điểm này đã bị chúng ta thay đổi bởi @math-anomaly-x1 nên trạng thái thực tế của nó chính là bất thường. Dựa trên số lượng TP, TN, FP, FN, chúng ta có thể tính được độ chính xác $h$ theo @math-accuracy:
@@ -991,7 +991,7 @@ $ <math-accuracy-classification>
 
 == 4.2. Dữ liệu Bikeshare
 
-Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở mục *4.1* vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
+Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện *ISLR2* (TODO) trong thư viện ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở mục *4.1* vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
 
 Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe đạp $y$ dựa trên các đặc trưng đầu vào. Chúng ta sử dụng các đặc trưng có sẵn và có ý nghĩa thực tế của tập dữ liệu, được liệt kê trong @table-bikeshare-variables. Trong đó, 8 đặc trưng $x_1, ..., x_8$ đóng vai trò là biến đầu vào của mô hình dự đoán, còn $x_S$ (tháng) không được đưa vào mô hình mà chỉ dùng làm khóa để phân cụm dữ liệu được trình bày ngay sau đây.
 
@@ -1015,7 +1015,7 @@ Bài toán đặt ra là làm thế nào để dự đoán số lượt thuê xe
   caption: [Các biến được sử dụng trong tập dữ liệu Bikeshare],
 ) <table-bikeshare-variables>
 
-Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở mục *1.5*, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể. Ở đây, yếu tố thời gian theo tháng là lựa chọn dễ thấy nhất: nhu cầu sử dụng xe đạp công cộng mang tính thời vụ rõ rệt, tăng vào những tháng ấm và giảm vào những tháng lạnh, nên việc phân cụm theo tháng giúp các câu hỏi giải thích trở nên có ý nghĩa thực tế, ví dụ như cụm dữ liệu của tháng nào gây ra sai số dự đoán lớn nhất. Bên cạnh đó, vì mỗi tháng có số ngày gần bằng nhau, số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7); sự cân bằng này giúp mức đóng góp của các cụm có thể so sánh trực tiếp với nhau, không bị chi phối bởi chênh lệch kích thước giữa các cụm. @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
+Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo tháng trong năm $cal(Q)_1, ..., cal(Q)_K$ với $K = 12$, trong đó $cal(Q)_k$ bao gồm toàn bộ quan sát có $x_S = k$. Như đã trình bày ở mục *1.5*, nghiên cứu không đề xuất cách phân cụm mới mà cố gắng sử dụng cách phân cụm tự nhiên có sẵn của dữ liệu nếu có thể. Ở đây, yếu tố thời gian theo tháng là lựa chọn dễ thấy nhất: nhu cầu sử dụng xe đạp công cộng mang tính thời vụ rõ rệt, tăng vào những tháng mùa hè và giảm vào những tháng mùa đông, nên việc phân cụm theo tháng giúp các câu hỏi giải thích trở nên có ý nghĩa thực tế, ví dụ như cụm dữ liệu của tháng nào gây ra sai số dự đoán lớn nhất. Bên cạnh đó, vì mỗi tháng có số ngày gần bằng nhau, số quan sát trong mỗi cụm khá cân bằng, dao động từ ít nhất 649 quan sát (tháng 2) đến nhiều nhất 744 quan sát (tháng 5 và tháng 7); sự cân bằng này giúp mức đóng góp của các cụm có thể so sánh trực tiếp với nhau, không bị chi phối bởi chênh lệch kích thước giữa các cụm. @table-bikeshare-cluster-sizes trình bày số quan sát của từng cụm theo tháng.
 
 #figure(
   table(
@@ -1056,26 +1056,26 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
 
 Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở mục *3.1* Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
 
-Mô hình hộp đen được sử dụng là Random Forest. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
+Mô hình hộp đen được sử dụng là mô hình *Random Forest*. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
 
 Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho ta Giá trị Shapley toàn cục:
 
 $
   macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
-$ <math-synthetic-global-phi>
+$ <math-bikeshare-global-phi>
 
 theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra 4 tháng trong năm (tháng 1, 4, 8 và 12), tương ứng với 4 điểm dữ liệu $x$, và biểu diễn Giá trị Shapley riêng lẻ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $M$.
 
 === 4.2.1. Giải thích dự đoán (predictions)
 
-@figure-bikeshare-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình Random Forest cho 4 điểm dữ liệu được chọn trong tập kiểm thử $cal(D)^"shapley test"$, tương ứng với 4 tháng 1, 4, 8 và 12, cụ thể $t = 50, 650, 1450, 2250$. Các biểu đồ ở giữa từ trái qua phải lần lượt là kết quả giải thích cho 4 điểm dữ liệu được chọn, mỗi biểu đồ vẽ Giá trị Shapley ước lượng cho mức độ quan trọng của 12 cụm dữ liệu dưới dạng biểu đồ cột; các biểu đồ ở hàng dưới cùng cho thấy Giá trị Shapley của từng cụm dữ liệu thay đổi khi số lần lặp $m$ tăng từ 1 đến $M = 150$.
+@figure-bikeshare-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *Random Forest* cho 4 điểm dữ liệu được chọn trong tập kiểm thử $cal(D)^"shapley test"$, tương ứng với 4 tháng 1, 4, 8 và 12, cụ thể $t = 50, 650, 1450, 2250$. Các biểu đồ ở giữa từ trái qua phải lần lượt là kết quả giải thích cho 4 điểm dữ liệu được chọn, mỗi biểu đồ vẽ Giá trị Shapley ước lượng cho mức độ quan trọng của 12 cụm dữ liệu dưới dạng biểu đồ cột; các biểu đồ ở hàng dưới cùng cho thấy Giá trị Shapley của từng cụm dữ liệu thay đổi khi số lần lặp $m$ tăng từ 1 đến $M = 150$.
 
 #figure(
   image("figures/bikeshare_10_predictions_selected.png"),
   caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare],
 ) <figure-bikeshare-predictions-selected-rf>
 
-Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Kết quả cho thấy cụm dữ liệu của các tháng mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại hầu hết các điểm dữ liệu được chọn, tức là các cụm này đóng góp làm giảm dự đoán; ngược lại, các cụm dữ liệu của những tháng mùa ấm như $Q_5$, $Q_6$, $Q_9$ có Giá trị Shapley dương lớn, đóng góp làm tăng dự đoán. Kết quả này phù hợp với tính thời vụ của dữ liệu: số lượt thuê xe đạp thấp vào mùa đông và cao vào mùa ấm, nên việc bổ sung dữ liệu huấn luyện của các tháng ấm kéo dự đoán tăng lên, trong khi dữ liệu của các tháng lạnh kéo dự đoán giảm xuống. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-rf.
+Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Kết quả cho thấy cụm dữ liệu của các tháng mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại hầu hết các điểm dữ liệu được chọn, nghĩa là các cụm này làm giảm khả năng dự đoán; ngược lại, các cụm dữ liệu của những tháng mùa hè như $Q_5$, $Q_6$, $Q_9$ có Giá trị Shapley dương lớn, đóng góp làm tăng khả năng dự đoán. Kết quả này phù hợp với tính thời vụ của dữ liệu: số lượt thuê xe đạp thấp vào mùa đông và cao vào mùa hè, nên việc bổ sung dữ liệu huấn luyện của các tháng mùa hè kéo dự đoán tăng lên, trong khi dữ liệu của các tháng lạnh kéo dự đoán giảm xuống. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-rf.
 
 #figure(
   table(
@@ -1098,7 +1098,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   ],
 ) <table-bikeshare-predictions-selected-rf>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-predictions-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$; giá trị bắt đầu ổn định từ khoảng lần lặp $m = 100$ trở đi. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-predictions-phi-global-rf: các cụm dữ liệu mùa đông $Q_1$, $Q_2$, $Q_3$ là duy nhất có Giá trị Shapley âm ($phi_1 = -5.520$, $phi_2 = -3.726$, $phi_3 = -3.456$), trong khi các cụm dữ liệu mùa ấm có Giá trị Shapley dương cao nhất ($phi_5 = 25.601$, $phi_9 = 25.256$, $phi_6 = 25.031$). Thứ tự này phản ánh đúng tính thời vụ theo tháng của nhu cầu sử dụng xe đạp, một tín hiệu mà chúng ta không thể kiểm chứng trước với dữ liệu thực tế, qua đó cho thấy lời giải thích của phương pháp là hợp lý.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-predictions-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$; giá trị bắt đầu ổn định từ khoảng lần lặp $m = 100$ trở đi. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-predictions-phi-global-rf: các cụm dữ liệu mùa đông $Q_1$, $Q_2$, $Q_3$ là duy nhất có Giá trị Shapley âm ($phi_1 = -5.520$, $phi_2 = -3.726$, $phi_3 = -3.456$), trong khi các cụm dữ liệu mùa hè có Giá trị Shapley dương cao nhất ($phi_5 = 25.601$, $phi_6 = 25.031$, $phi_9 = 25.256$).
 
 #figure(
   image("figures/bikeshare_09_predictions_number_iterations.png"),
@@ -1119,16 +1119,65 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
 ) <table-bikeshare-predictions-phi-global-rf>
 
+Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích dự đoán ở trên với một mô hình hộp đen hoàn toàn khác là *KNN-10*. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 150$ được giữ nguyên. @figure-bikeshare-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *KNN-10* cho cùng 4 điểm dữ liệu được chọn. Tương tự như với mô hình *Random Forest*, các cụm dữ liệu mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại các điểm dữ liệu, trong khi các cụm dữ liệu mùa hè có Giá trị Shapley dương lớn. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-knn10.
+
+#figure(
+  image("figures/bikeshare_16_predictions_selected_knn10.png"),
+  caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare],
+) <figure-bikeshare-predictions-selected-knn10>
+
+#figure(
+  table(
+    columns: 5,
+    align: (left, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 650$*], [*$t = 1450$*], [*$t = 2250$*],
+
+    ..range(1, 13)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/bikeshare_13_predictions_phi_selected_knn10.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 650, 1450, 2250))
+          .map(row => round_3(float(row.at(k)))),
+      ))
+      .flatten(),
+  ),
+  caption: [
+    Giá trị Shapley cục bộ tại 4 điểm dữ liệu được chọn với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare
+  ],
+) <table-bikeshare-predictions-selected-knn10>
+
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu với mô hình *KNN-10*. @figure-bikeshare-predictions-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$; giá trị bắt đầu ổn định từ khoảng lần lặp $m = 100$ trở đi. Tương tự như với mô hình *Random Forest*, các cụm dữ liệu mùa đông $Q_1$, $Q_2$, $Q_3$ là duy nhất có Giá trị Shapley âm ($phi_1 = -9.733$, $phi_2 = -3.335$, $phi_3 = -5.509$), trong khi các cụm dữ liệu mùa hè có Giá trị Shapley dương cao nhất ($phi_7 = 22.425$, $phi_8 = 26.685$, $phi_9 = 22.089$). Thứ tự này phản ánh đúng tính thời vụ theo tháng của nhu cầu sử dụng xe đạp. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-predictions-phi-global-knn10.
+
+#figure(
+  image("figures/bikeshare_15_predictions_number_iterations_knn10.png"),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu theo số lần lặp $m$ từ 1 đến $M = 150$ trên tập dữ liệu Bikeshare với mô hình huấn luyện *KNN-10*],
+) <figure-bikeshare-predictions-number-iterations-knn10>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+
+    ..csv("results/bikeshare_12_predictions_phi_global_knn10.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
+) <table-bikeshare-predictions-phi-global-knn10>
+
 === 4.2.2. Giải thích sai số bình phương (squared error)
 
-Tương tự với mục *4.1.3*, @figure-bikeshare-squared-error-selected-rf trình bày các kết quả giải thích sai số bình phương (squared error) của dự đoán, theo công thức đã trình bày ở mục *3.1*, cho 4 điểm dữ liệu $t = 50, 650, 1450, 2250$. Lưu ý rằng kết quả này đòi hỏi biết trước giá trị thực tế $y$ (hindsight) tương ứng của mỗi điểm. Vì tập kiểm thử $cal(D)^"shapley test"$ là tập riêng biệt với tập huấn luyện $cal(D)^"shapley train"$, Giá trị Shapley tại đây không còn âm ở mọi cụm như dữ liệu tạo sinh, mà phản ánh mức độ hữu ích của từng cụm dữ liệu huấn luyện khi dự đoán cho các điểm dữ liệu chưa từng thấy.
+Tương tự với mục *4.1.3*, @figure-bikeshare-squared-error-selected-rf trình bày các kết quả giải thích sai số bình phương (squared error) của dự đoán, theo công thức đã trình bày ở mục *3.1*, cho 4 điểm dữ liệu $t = 50, 650, 1450, 2250$. Lưu ý rằng kết quả này đòi hỏi biết trước giá trị thực tế $y$ (hindsight) tương ứng của mỗi điểm.
 
 #figure(
   image("figures/bikeshare_13_squared_error_selected.png"),
   caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare],
 ) <figure-bikeshare-squared-error-selected-rf>
 
-Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-rf. Nhận thấy tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở xa có thể đóng góp làm tăng sai số. Ví dụ tại điểm dữ liệu $t = 2250$ (tháng 12), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$, $Q_{11}$ (các tháng mùa đông lân cận) đều có Giá trị Shapley âm, cho thấy dữ liệu của những tháng có điều kiện thời tiết tương tự giúp mô hình dự đoán tốt hơn cho tháng 12.
+Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-rf. Nhận thấy tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian với $t$ có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở thời gian xa hơn $t$ có xu hướng đóng góp làm tăng sai số. Ví dụ tại điểm dữ liệu $t = 50$ (tháng 1), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$ (các tháng mùa đông) có Giá trị Shapley âm mạnh nhất, trong khi các cụm dữ liệu mùa hè như $Q_7$, $Q_8$, $Q_9$ có Giá trị Shapley dương lớn. Tiếp theo, tại điểm dữ liệu $t = 650$ (tháng 4), cụm dữ liệu $Q_4$ (cùng tháng với điểm dữ liệu) cùng các cụm mùa đông lân cận $Q_1$, $Q_3$ đóng góp làm giảm sai số, trong khi các cụm ở xa về thời gian như $Q_5$, $Q_9$, $Q_12$ đóng góp làm tăng sai số. Ở điểm dữ liệu $t = 1450$ (tháng 8), cụm $Q_4$ và các cụm lân cận $Q_3$, $Q_6$ giúp giảm sai số bình phương, nhưng các cụm mùa thu như $Q_5$, $Q_9$, $Q_10$ lại làm tăng sai số. Cuối cùng, tại điểm dữ liệu $t = 2250$ (tháng 12), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$, $Q_11$ các tháng lân cận đều có Giá trị Shapley âm, cho thấy dữ liệu của những tháng có điều kiện thời tiết tương tự giúp mô hình dự đoán tốt hơn cho tháng 12.
 
 #figure(
   table(
@@ -1151,7 +1200,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   ],
 ) <table-bikeshare-squared-error-selected-rf>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đáng chú ý, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương: vì các cụm tương ứng với các tháng khác nhau trong năm, mỗi cụm đều mang thông tin riêng về tính thời vụ giúp dự đoán các điểm kiểm thử. Trong đó, các cụm có Giá trị Shapley âm mạnh nhất là $Q_{12}$ ($phi_{12} = -3816.853$), $Q_6$ ($phi_6 = -3734.777$) và $Q_5$ ($phi_5 = -3503.750$) — những tháng có nhu cầu thuê xe cao và biến động mạnh nên dữ liệu huấn luyện của chúng đóng góp nhiều nhất vào việc giảm sai số; ngược lại, cụm $Q_3$ có Giá trị Shapley âm yếu nhất ($phi_3 = -1386.153$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-rf.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đáng chú ý, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm lớn nhất là $Q_12$ ($phi_12 = -3816.853$), $Q_6$ ($phi_6 = -3734.777$) và $Q_5$ ($phi_5 = -3503.750$), có thể giải thích rằng những tháng có nhu cầu thuê xe cao nên dữ liệu huấn luyện của chúng đóng góp nhiều nhất vào việc làm giảm sai số. Ngược lại, cụm $Q_3$ có Giá trị Shapley âm nhỏ nhất ($phi_3 = -1386.153$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-rf.
 
 #figure(
   image("figures/bikeshare_12_squared_error_number_iterations.png"),
@@ -1172,6 +1221,55 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
 ) <table-bikeshare-squared-error-phi-global-rf>
 
+Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích sai số bình phương ở trên với mô hình *KNN-10*. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 150$ được giữ nguyên. @figure-bikeshare-squared-error-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với sai số bình phương của mô hình *KNN-10* cho cùng 4 điểm dữ liệu được chọn. Tương tự như với mô hình *Random Forest*, tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở xa có thể đóng góp làm tăng sai số. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-knn10.
+
+#figure(
+  image("figures/bikeshare_19_squared_error_selected_knn10.png"),
+  caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare],
+) <figure-bikeshare-squared-error-selected-knn10>
+
+#figure(
+  table(
+    columns: 5,
+    align: (left, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 650$*], [*$t = 1450$*], [*$t = 2250$*],
+
+    ..range(1, 13)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/bikeshare_19_squared_error_phi_selected_knn10.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 650, 1450, 2250))
+          .map(row => round_3(float(row.at(k)))),
+      ))
+      .flatten(),
+  ),
+  caption: [
+    Giá trị Shapley cục bộ tại 4 điểm dữ liệu được chọn cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare
+  ],
+) <table-bikeshare-squared-error-selected-knn10>
+
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình *KNN-10*. @figure-bikeshare-squared-error-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với mô hình *Random Forest*, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm mạnh nhất là $Q_8$ ($phi_8 = -3143.653$), $Q_11$ ($phi_11 = -2884.259$) và $Q_10$ ($phi_10 = -3280.943$). Ngược lại, cụm $Q_3$ có Giá trị Shapley âm yếu nhất ($phi_3 = -1811.782$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-knn10.
+
+#figure(
+  image("figures/bikeshare_18_squared_error_number_iterations_knn10.png"),
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $m$ từ 1 đến $M = 150$ cho trò chơi sai số bình phương trên tập dữ liệu Bikeshare với mô hình huấn luyện *KNN-10*],
+) <figure-bikeshare-squared-error-number-iterations-knn10>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+
+    ..csv("results/bikeshare_18_squared_error_phi_global_knn10.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
+) <table-bikeshare-squared-error-phi-global-knn10>
+
 === 4.2.3. Chiến lược thu thập dữ liệu huấn luyện
 
 Mục tiêu của giai đoạn này là xây dựng một tập dữ liệu huấn luyện $X^"train"$ sao cho độ chính xác dự đoán của mô hình được cải thiện trên một tập dữ liệu kiểm thử chưa từng thấy $X^"test"$, với giả định rằng số lượng quan sát trong $X^"train"$ bị giới hạn ở $N^"strategy"$. Điều này có nghĩa là tập huấn luyện không được tăng kích thước: nếu muốn đưa thêm dữ liệu của một cụm vào, chúng ta phải bớt đi một lượng dữ liệu tương ứng ở cụm khác. Nói cách khác, bài toán là bài toán *phân bổ ngân sách dữ liệu* giữa các cụm. Với bài toán này, có thể sử dụng nhiều chiến lược thu thập dữ liệu khác nhau. Chúng ta trình bày 2 chiến lược, trong đó chiến lược *max* là chiến lược đề xuất dựa trên Giá trị Shapley, còn chiến lược *equal* được dùng làm cơ sở so sánh:
@@ -1181,7 +1279,7 @@ Mục tiêu của giai đoạn này là xây dựng một tập dữ liệu hu�
 
 Cả 2 chiến lược đều sinh ra tập huấn luyện gồm $N^"strategy" = 4800$ điểm, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều. Các điểm dữ liệu được lấy ngẫu nhiên từ phần quan sát còn lại của mỗi cụm sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập đánh giá hoàn toàn chưa từng thấy đối với cả 2 mô hình. Điều đáng chú ý là điểm khác biệt duy nhất giữa 2 chiến lược nằm ở *cách phân bổ số điểm giữa các cụm*, chứ không phải ở nguồn dữ liệu hay mô hình, nhờ đó mọi chênh lệch về hiệu năng có thể quy trực tiếp về chất lượng của chiến lược phân bổ.
 
-Để thực hiện chiến lược *max*, chúng ta cần biết trước Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương — đại lượng mà trong thực tế không có sẵn. Tương tự cách tiếp cận của nghiên cứu gốc, vốn giả định tồn tại một tập dữ liệu ban đầu $cal(Z)$ dùng để quyết định chiến lược thu thập dữ liệu trước khi bắt đầu, ở đây chúng ta sử dụng chính kết quả của thí nghiệm ở mục *4.2.2*: các Giá trị Shapley toàn cục $macron(phi)_k$ tính trên tập $cal(D)^"shapley train"$ và $cal(D)^"shapley test"$ đóng vai trò là tri thức tiên nghiệm (prior knowledge) về mức độ hữu ích của từng cụm dữ liệu. Gán trọng số cho từng cụm:
+Để thực hiện chiến lược *max*, chúng ta cần biết trước Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương, đại lượng mà trong thực tế không có sẵn. Tương tự cách tiếp cận của nghiên cứu gốc, vốn giả định tồn tại một tập dữ liệu ban đầu $cal(Z)$ dùng để quyết định chiến lược thu thập dữ liệu trước khi bắt đầu, ở đây chúng ta sử dụng chính kết quả của thí nghiệm ở mục *4.2.2*: các Giá trị Shapley toàn cục $macron(phi)_k$ tính trên tập $cal(D)^"shapley train"$ và $cal(D)^"shapley test"$ đóng vai trò là tri thức tiên nghiệm (prior knowledge) về mức độ hữu ích của từng cụm dữ liệu. Gán trọng số cho từng cụm:
 
 $
   w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
@@ -1205,7 +1303,7 @@ trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả 
 
 === 4.2.4. Kết quả và thảo luận
 
-Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình Random Forest và k-NN ($k = 10$), trên cả 2 trò chơi giải thích dự đoán và giải thích sai số bình phương, được trình bày trong @table-bikeshare-strategy-mse-global. Khác với nghiên cứu gốc, nơi chiến lược *max* vượt trội hơn hẳn các chiến lược cơ sở trên mọi cấu hình, kết quả của chúng ta trên tập Bikeshare cho thấy bức tranh tinh tế hơn: chiến lược *max* chỉ mang lại cải thiện khi Giá trị Shapley được tính cho trò chơi *sai số bình phương* với mô hình *Random Forest*, cụ thể MSE toàn cục giảm từ 9135.502 xuống 8824.615, tương ứng mức giảm khoảng 3.4%. Ở 3 cấu hình còn lại — Random Forest với trò chơi dự đoán (+4.6%), k-NN với trò chơi dự đoán (+3.0%) và k-NN với trò chơi sai số bình phương (+5.7%) — chiến lược *max* lại cho kết quả kém hơn chiến lược *equal*.
+Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình *Random Forest* và k-NN ($k = 10$), trên cả 2 trò chơi giải thích dự đoán và giải thích sai số bình phương, được trình bày trong @table-bikeshare-strategy-mse-global. Khác với nghiên cứu gốc, nơi chiến lược *max* vượt trội hơn hẳn các chiến lược cơ sở trên mọi cấu hình, kết quả của chúng ta trên tập Bikeshare cho thấy bức tranh tinh tế hơn: chiến lược *max* chỉ mang lại cải thiện khi Giá trị Shapley được tính cho trò chơi *sai số bình phương* với mô hình *Random Forest*, cụ thể MSE toàn cục giảm từ 9135.502 xuống 8824.615, tương ứng mức giảm khoảng 3.4%. Ở 3 cấu hình còn lại, gồm mô hình *Random Forest* với trò chơi dự đoán (+4.6%), k-NN với trò chơi dự đoán (+3.0%) và k-NN với trò chơi sai số bình phương (+5.7%), chiến lược *max* lại cho kết quả kém hơn chiến lược *equal*.
 
 #figure(
   table(
@@ -1216,8 +1314,8 @@ Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình Random Forest v
     ..range(0, 3)
       .map(i => {
         let configs = (
-          ("results/bikeshare_03_predictions_mse_global.csv", "Random Forest", "dự đoán"),
-          ("results/bikeshare_09_squared_error_mse_global.csv", "Random Forest", "sai số bình phương"),
+          ("results/bikeshare_03_predictions_mse_global.csv", "mô hình *Random Forest*", "dự đoán"),
+          ("results/bikeshare_09_squared_error_mse_global.csv", "mô hình *Random Forest*", "sai số bình phương"),
           ("results/bikeshare_15_predictions_mse_global_knn10.csv", "k-NN ($k = 10$)", "dự đoán"),
           ("results/bikeshare_21_squared_error_mse_global_knn10.csv", "k-NN ($k = 10$)", "sai số bình phương"),
         )
@@ -1234,11 +1332,11 @@ Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình Random Forest v
   caption: [MSE theo từng tháng trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max* với mô hình *Random Forest*, trò chơi giải thích sai số bình phương],
 ) <figure-bikeshare-strategy-mse-per-cluster-rf>
 
-@figure-bikeshare-strategy-mse-per-cluster-rf trình bày MSE theo từng tháng trên tập $cal(D)^"eval"$ cho cấu hình khả quan nhất (Random Forest, trò chơi sai số bình phương). Chiến lược *max* tốt hơn *equal* ở 6 trên 12 tháng: cụ thể giảm mạnh ở tháng 1 (3723.089 xuống 2175.705, giảm khoảng 42%), tháng 2 (2767.514 xuống 2195.773) và tháng 3 (4644.523 xuống 4271.516) — đúng những cụm nhận nhiều dữ liệu hơn theo phân bổ của chiến lược *max*; ngược lại, *max* kém hơn ở các tháng 6, 8, 9, 10 và 11, đáng chú ý nhất là tháng 6 (23116.269 lên 26314.418). Kết quả này hợp lý theo cơ chế của chiến lược: việc lấy bớt dữ liệu ở một cụm để cấp thêm cho cụm khác là một sự đánh đổi, và phần dữ liệu bị cắt ở các tháng giữa năm dường như chứa thông tin có giá trị cho việc dự đoán chính các tháng đó.
+@figure-bikeshare-strategy-mse-per-cluster-rf trình bày MSE theo từng tháng trên tập $cal(D)^"eval"$ cho cấu hình khả quan nhất (mô hình *Random Forest*, trò chơi sai số bình phương). Chiến lược *max* tốt hơn *equal* ở 6 trên 12 tháng: cụ thể giảm mạnh ở tháng 1 (3723.089 xuống 2175.705, giảm khoảng 42%), tháng 2 (2767.514 xuống 2195.773) và tháng 3 (4644.523 xuống 4271.516), đúng những cụm nhận nhiều dữ liệu hơn theo phân bổ của chiến lược *max*; ngược lại, *max* kém hơn ở các tháng 6, 8, 9, 10 và 11, đáng chú ý nhất là tháng 6 (23116.269 lên 26314.418). Kết quả này hợp lý theo cơ chế của chiến lược: việc lấy bớt dữ liệu ở một cụm để cấp thêm cho cụm khác là một sự đánh đổi, và phần dữ liệu bị cắt ở các tháng giữa năm dường như chứa thông tin có giá trị cho việc dự đoán chính các tháng đó.
 
-Đáng chú ý, chiến lược *max* với trò chơi dự đoán phân bổ ngược chiều so với trò chơi sai số bình phương: các cụm mùa đông $Q_1$, $Q_2$, $Q_3$ (có Giá trị Shapley dự đoán âm) nhận nhiều nhất (658, 619, 662 điểm) trong khi các cụm mùa ấm chỉ nhận khoảng 240–250 điểm. Sự phân bổ này tối ưu cho *giá trị dự đoán* trung bình nhưng không tối ưu cho *sai số dự đoán*, vì dữ liệu mùa đông (biên độ dự đoán thấp) ít giúp giảm sai số bình phương so với dữ liệu mùa có nhu cầu cao và biến động mạnh. Điều này lý giải vì sao cùng một chiến lược *max* có thể tốt hơn hoặc tệ hơn *equal* tùy thuộc vào trò chơi Shapley được sử dụng, đồng thời khẳng định rằng lời giải thích đúng đắn cho bài toán giảm sai số phải đến từ trò chơi giải thích sai số bình phương, không phải trò chơi giải thích dự đoán.
+Đáng chú ý, chiến lược *max* với trò chơi dự đoán phân bổ ngược chiều so với trò chơi sai số bình phương: các cụm mùa đông $Q_1$, $Q_2$, $Q_3$ (có Giá trị Shapley dự đoán âm) nhận nhiều nhất (658, 619, 662 điểm) trong khi các cụm mùa hè chỉ nhận khoảng 240–250 điểm. Sự phân bổ này tối ưu cho *giá trị dự đoán* trung bình nhưng không tối ưu cho *sai số dự đoán*, vì dữ liệu mùa đông (biên độ dự đoán thấp) ít giúp giảm sai số bình phương so với dữ liệu mùa có nhu cầu cao và biến động mạnh. Điều này lý giải vì sao cùng một chiến lược *max* có thể tốt hơn hoặc tệ hơn *equal* tùy thuộc vào trò chơi Shapley được sử dụng, đồng thời khẳng định rằng lời giải thích đúng đắn cho bài toán giảm sai số phải đến từ trò chơi giải thích sai số bình phương, không phải trò chơi giải thích dự đoán.
 
-Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu — đúng hơn là Giá trị Shapley của *sai số bình phương* — có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán, nhưng hiệu quả phụ thuộc vào mô hình và trò chơi giải thích được sử dụng, và không đảm bảo cải thiện trên mọi cấu hình. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần chọn đúng trò chơi giải thích tương ứng với đại lượng cần tối ưu (sai số), và cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
+Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu, đặc biệt là Giá trị Shapley của *sai số bình phương*, có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán, nhưng hiệu quả phụ thuộc vào mô hình và trò chơi giải thích được sử dụng, và không đảm bảo cải thiện trên mọi cấu hình. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần chọn đúng trò chơi giải thích tương ứng với đại lượng cần tối ưu (sai số), và cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
@@ -1250,4 +1348,4 @@ Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng đ
 
 = PHỤ LỤC
 
-Phụ lục này trích dẫn Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn trong mục *4.1.1*, được trình bày trong @table-synthetic-predictions-selected-rf. Số liệu được đọc trực tiếp từ tệp kết quả thí nghiệm `results/synthetic_01_predictions_phi_selected.csv` — bản sao kết quả của mô hình Random Forest tại lần lặp cuối cùng $M = 250$ — đảm bảo bảng luôn đồng bộ với dữ liệu thực nghiệm.
+Phụ lục này trích dẫn Giá trị Shapley cục bộ tại 5 điểm dữ liệu được chọn trong mục *4.1.1*, được trình bày trong @table-synthetic-predictions-selected-rf. Số liệu được đọc trực tiếp từ tệp kết quả thí nghiệm `results/synthetic_01_predictions_phi_selected.csv`, bản sao kết quả của mô hình *Random Forest* tại lần lặp cuối cùng $M = 250$, đảm bảo bảng luôn đồng bộ với dữ liệu thực nghiệm.
