@@ -718,15 +718,16 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 #figure(
   table(
     columns: 6,
-    align: center,
-    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
+    align: (left, center, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 150$*], [*$t = 250$*], [*$t = 350$*], [*$t = 450$*],
 
-    ..csv("results/synthetic_01_predictions_phi_selected.csv")
-      .slice(1)
-      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
-      .map(row => (
-        [#int(row.first())],
-        ..range(1, 6).map(k => round_3(float(row.at(k)))),
+    ..range(1, 6)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/synthetic_01_predictions_phi_selected.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+          .map(row => round_3(float(row.at(k)))),
       ))
       .flatten(),
   ),
@@ -768,15 +769,16 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 #figure(
   table(
     columns: 6,
-    align: center,
-    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
+    align: (left, center, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 150$*], [*$t = 250$*], [*$t = 350$*], [*$t = 450$*],
 
-    ..csv("results/synthetic_04_predictions_phi_selected_knn10.csv")
-      .slice(1)
-      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
-      .map(row => (
-        [#int(row.first())],
-        ..range(1, 6).map(k => round_3(float(row.at(k)))),
+    ..range(1, 6)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/synthetic_04_predictions_phi_selected_knn10.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+          .map(row => round_3(float(row.at(k)))),
       ))
       .flatten(),
   ),
@@ -822,15 +824,16 @@ Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với đi
 #figure(
   table(
     columns: 6,
-    align: center,
-    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
+    align: (left, center, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 150$*], [*$t = 250$*], [*$t = 350$*], [*$t = 450$*],
 
-    ..csv("results/synthetic_07_squared_error_phi_selected.csv")
-      .slice(1)
-      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
-      .map(row => (
-        [#int(row.first())],
-        ..range(1, 6).map(k => round_3(float(row.at(k)))),
+    ..range(1, 6)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/synthetic_07_squared_error_phi_selected.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+          .map(row => round_3(float(row.at(k)))),
       ))
       .flatten(),
   ),
@@ -872,15 +875,16 @@ Tương tự với Random Forest, Giá trị Shapley của từng cụm dữ li�
 #figure(
   table(
     columns: 6,
-    align: center,
-    [*Điểm dữ liệu $t$*], [*Cụm $Q_1$*], [*Cụm $Q_2$*], [*Cụm $Q_3$*], [*Cụm $Q_4$*], [*Cụm $Q_5$*],
+    align: (left, center, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 150$*], [*$t = 250$*], [*$t = 350$*], [*$t = 450$*],
 
-    ..csv("results/synthetic_10_squared_error_phi_selected_knn10.csv")
-      .slice(1)
-      .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
-      .map(row => (
-        [#int(row.first())],
-        ..range(1, 6).map(k => round_3(float(row.at(k)))),
+    ..range(1, 6)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/synthetic_10_squared_error_phi_selected_knn10.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
+          .map(row => round_3(float(row.at(k)))),
       ))
       .flatten(),
   ),
@@ -985,7 +989,7 @@ $ <math-accuracy-classification>
   caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $M$ cho độ chính xác phân loại trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-number-iterations>
 
-== 4.5. Dữ liệu Bikeshare
+== 4.2. Dữ liệu Bikeshare
 
 Sau khi kiểm chứng phương pháp đề xuất trên dữ liệu tạo sinh, chúng ta tiếp tục thử nghiệm trên một tập dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng (Bikeshare). Tập dữ liệu Bikeshare được cung cấp sẵn trong thư viện `ISLR2` (TODO) trong ngôn ngữ R, ghi nhận số lượt thuê xe đạp theo từng giờ trong hệ thống xe đạp công cộng tại thành phố Washington D.C., Hoa Kỳ trong 2 năm 2011 và 2012; mỗi quan sát tương ứng với một giờ cụ thể, kèm theo số lượt thuê xe trong giờ đó cùng các thông tin về thời điểm và điều kiện thời tiết tại giờ đó. Sau khi loại bỏ các quan sát không đầy đủ (incomplete cases), tập dữ liệu gồm 8645 điểm dữ liệu. Khác với dữ liệu tạo sinh ở mục *4.1* vốn được sinh ra từ một hàm toán học biết trước, mối quan hệ giữa các đặc trưng và số lượt thuê xe ở đây không tuân theo công thức nào cả mà chịu ảnh hưởng đồng thời của nhiều yếu tố như giờ trong ngày, ngày làm việc và điều kiện thời tiết, đồng thời có thể thay đổi theo thời gian. Chính vì vậy, tập dữ liệu này phù hợp để đánh giá khả năng giải thích sai số dự đoán của phương pháp trong điều kiện thực tế, nơi nguồn gốc của sai số thường đến từ những vùng dữ liệu khó dự đoán thay vì nhiễu ngẫu nhiên có phân phối đã biết.
 
@@ -1052,7 +1056,7 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
 
 Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở mục *3.1* Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
 
-Mô hình hộp đen được sử dụng là Random Forest. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2; trong nội dung này chúng ta tập trung vào chế độ giải thích sai số bình phương.
+Mô hình hộp đen được sử dụng là Random Forest. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
 
 Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho ta Giá trị Shapley toàn cục:
 
@@ -1061,6 +1065,112 @@ $
 $ <math-synthetic-global-phi>
 
 theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra 4 tháng trong năm (tháng 1, 4, 8 và 12), tương ứng với 4 điểm dữ liệu $x$, và biểu diễn Giá trị Shapley riêng lẻ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $M$.
+
+=== 4.2.1. Giải thích dự đoán (predictions)
+
+@figure-bikeshare-predictions-selected-rf thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình Random Forest cho 4 điểm dữ liệu được chọn trong tập kiểm thử $cal(D)^"shapley test"$, tương ứng với 4 tháng 1, 4, 8 và 12, cụ thể $t = 50, 650, 1450, 2250$. Các biểu đồ ở giữa từ trái qua phải lần lượt là kết quả giải thích cho 4 điểm dữ liệu được chọn, mỗi biểu đồ vẽ Giá trị Shapley ước lượng cho mức độ quan trọng của 12 cụm dữ liệu dưới dạng biểu đồ cột; các biểu đồ ở hàng dưới cùng cho thấy Giá trị Shapley của từng cụm dữ liệu thay đổi khi số lần lặp $m$ tăng từ 1 đến $M = 150$.
+
+#figure(
+  image("figures/bikeshare_10_predictions_selected.png"),
+  caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare],
+) <figure-bikeshare-predictions-selected-rf>
+
+Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Kết quả cho thấy cụm dữ liệu của các tháng mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại hầu hết các điểm dữ liệu được chọn, tức là các cụm này đóng góp làm giảm dự đoán; ngược lại, các cụm dữ liệu của những tháng mùa ấm như $Q_5$, $Q_6$, $Q_9$ có Giá trị Shapley dương lớn, đóng góp làm tăng dự đoán. Kết quả này phù hợp với tính thời vụ của dữ liệu: số lượt thuê xe đạp thấp vào mùa đông và cao vào mùa ấm, nên việc bổ sung dữ liệu huấn luyện của các tháng ấm kéo dự đoán tăng lên, trong khi dữ liệu của các tháng lạnh kéo dự đoán giảm xuống. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-rf.
+
+#figure(
+  table(
+    columns: 5,
+    align: (left, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 650$*], [*$t = 1450$*], [*$t = 2250$*],
+
+    ..range(1, 13)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/bikeshare_01_predictions_phi_selected.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 650, 1450, 2250))
+          .map(row => round_3(float(row.at(k)))),
+      ))
+      .flatten(),
+  ),
+  caption: [
+    Giá trị Shapley cục bộ tại 4 điểm dữ liệu được chọn với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare
+  ],
+) <table-bikeshare-predictions-selected-rf>
+
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-predictions-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$; giá trị bắt đầu ổn định từ khoảng lần lặp $m = 100$ trở đi. Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-predictions-phi-global-rf: các cụm dữ liệu mùa đông $Q_1$, $Q_2$, $Q_3$ là duy nhất có Giá trị Shapley âm ($phi_1 = -5.520$, $phi_2 = -3.726$, $phi_3 = -3.456$), trong khi các cụm dữ liệu mùa ấm có Giá trị Shapley dương cao nhất ($phi_5 = 25.601$, $phi_9 = 25.256$, $phi_6 = 25.031$). Thứ tự này phản ánh đúng tính thời vụ theo tháng của nhu cầu sử dụng xe đạp, một tín hiệu mà chúng ta không thể kiểm chứng trước với dữ liệu thực tế, qua đó cho thấy lời giải thích của phương pháp là hợp lý.
+
+#figure(
+  image("figures/bikeshare_09_predictions_number_iterations.png"),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu theo số lần lặp $m$ từ 1 đến $M = 150$ trên tập dữ liệu Bikeshare với mô hình huấn luyện *Random Forest*],
+) <figure-bikeshare-predictions-number-iterations-rf>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+
+    ..csv("results/bikeshare_00_predictions_phi_global.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
+) <table-bikeshare-predictions-phi-global-rf>
+
+=== 4.2.2. Giải thích sai số bình phương (squared error)
+
+Tương tự với mục *4.1.3*, @figure-bikeshare-squared-error-selected-rf trình bày các kết quả giải thích sai số bình phương (squared error) của dự đoán, theo công thức đã trình bày ở mục *3.1*, cho 4 điểm dữ liệu $t = 50, 650, 1450, 2250$. Lưu ý rằng kết quả này đòi hỏi biết trước giá trị thực tế $y$ (hindsight) tương ứng của mỗi điểm. Vì tập kiểm thử $cal(D)^"shapley test"$ là tập riêng biệt với tập huấn luyện $cal(D)^"shapley train"$, Giá trị Shapley tại đây không còn âm ở mọi cụm như dữ liệu tạo sinh, mà phản ánh mức độ hữu ích của từng cụm dữ liệu huấn luyện khi dự đoán cho các điểm dữ liệu chưa từng thấy.
+
+#figure(
+  image("figures/bikeshare_13_squared_error_selected.png"),
+  caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare],
+) <figure-bikeshare-squared-error-selected-rf>
+
+Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-rf. Nhận thấy tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở xa có thể đóng góp làm tăng sai số. Ví dụ tại điểm dữ liệu $t = 2250$ (tháng 12), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$, $Q_{11}$ (các tháng mùa đông lân cận) đều có Giá trị Shapley âm, cho thấy dữ liệu của những tháng có điều kiện thời tiết tương tự giúp mô hình dự đoán tốt hơn cho tháng 12.
+
+#figure(
+  table(
+    columns: 5,
+    align: (left, center, center, center, center),
+    [*Cụm dữ liệu $Q_k$*], [*$t = 50$*], [*$t = 650$*], [*$t = 1450$*], [*$t = 2250$*],
+
+    ..range(1, 13)
+      .map(k => (
+        [Cụm dữ liệu $Q_#k$],
+        ..csv("results/bikeshare_07_squared_error_phi_selected.csv")
+          .slice(1)
+          .filter(row => int(row.first()) in (50, 650, 1450, 2250))
+          .map(row => round_3(float(row.at(k)))),
+      ))
+      .flatten(),
+  ),
+  caption: [
+    Giá trị Shapley cục bộ tại 4 điểm dữ liệu được chọn cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare
+  ],
+) <table-bikeshare-squared-error-selected-rf>
+
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đáng chú ý, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương: vì các cụm tương ứng với các tháng khác nhau trong năm, mỗi cụm đều mang thông tin riêng về tính thời vụ giúp dự đoán các điểm kiểm thử. Trong đó, các cụm có Giá trị Shapley âm mạnh nhất là $Q_{12}$ ($phi_{12} = -3816.853$), $Q_6$ ($phi_6 = -3734.777$) và $Q_5$ ($phi_5 = -3503.750$) — những tháng có nhu cầu thuê xe cao và biến động mạnh nên dữ liệu huấn luyện của chúng đóng góp nhiều nhất vào việc giảm sai số; ngược lại, cụm $Q_3$ có Giá trị Shapley âm yếu nhất ($phi_3 = -1386.153$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-rf.
+
+#figure(
+  image("figures/bikeshare_12_squared_error_number_iterations.png"),
+  caption: [Sự hội tụ của Giá trị Shapley toàn cục của từng cụm theo số lần lặp $m$ từ 1 đến $M = 150$ cho trò chơi sai số bình phương trên tập dữ liệu Bikeshare với mô hình huấn luyện *Random Forest*],
+) <figure-bikeshare-squared-error-number-iterations-rf>
+
+#figure(
+  table(
+    columns: 2,
+    align: (left, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+
+    ..csv("results/bikeshare_06_squared_error_phi_global.csv")
+      .slice(1)
+      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
+) <table-bikeshare-squared-error-phi-global-rf>
 
 Từ kết quả Giá trị Shapley toàn cục $macron(phi)_k$, chúng ta xây dựng 2 chiến lược thu thập dữ liệu huấn luyện nhằm so sánh hiệu quả. Chiến lược thứ 1 là *equal* (cơ sở): lấy mẫu một số lượng bằng nhau cho mỗi cụm, cụ thể với tổng số $N^"strategy" = 4800$ điểm thì mỗi cụm được lấy $N^"strategy" \/ K = 400$ điểm. Chiến lược thứ 2 là *max* (đề xuất): lấy mẫu nhiều hơn ở những cụm có đóng góp làm giảm sai số dự đoán. Gán trọng số cho từng cụm:
 
