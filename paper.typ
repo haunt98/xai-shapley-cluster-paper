@@ -1172,7 +1172,16 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
 ) <table-bikeshare-squared-error-phi-global-rf>
 
-Từ kết quả Giá trị Shapley toàn cục $macron(phi)_k$, chúng ta xây dựng 2 chiến lược thu thập dữ liệu huấn luyện nhằm so sánh hiệu quả. Chiến lược thứ 1 là *equal* (cơ sở): lấy mẫu một số lượng bằng nhau cho mỗi cụm, cụ thể với tổng số $N^"strategy" = 4800$ điểm thì mỗi cụm được lấy $N^"strategy" \/ K = 400$ điểm. Chiến lược thứ 2 là *max* (đề xuất): lấy mẫu nhiều hơn ở những cụm có đóng góp làm giảm sai số dự đoán. Gán trọng số cho từng cụm:
+=== 4.2.3. Chiến lược thu thập dữ liệu huấn luyện
+
+Mục tiêu của giai đoạn này là xây dựng một tập dữ liệu huấn luyện $X^"train"$ sao cho độ chính xác dự đoán của mô hình được cải thiện trên một tập dữ liệu kiểm thử chưa từng thấy $X^"test"$, với giả định rằng số lượng quan sát trong $X^"train"$ bị giới hạn ở $N^"strategy"$. Điều này có nghĩa là tập huấn luyện không được tăng kích thước: nếu muốn đưa thêm dữ liệu của một cụm vào, chúng ta phải bớt đi một lượng dữ liệu tương ứng ở cụm khác. Nói cách khác, bài toán là bài toán *phân bổ ngân sách dữ liệu* giữa các cụm. Với bài toán này, có thể sử dụng nhiều chiến lược thu thập dữ liệu khác nhau. Chúng ta trình bày 2 chiến lược, trong đó chiến lược *max* là chiến lược đề xuất dựa trên Giá trị Shapley, còn chiến lược *equal* được dùng làm cơ sở so sánh:
+
+- *equal*: lấy ngẫu nhiên một số lượng điểm dữ liệu bằng nhau từ mỗi cụm dữ liệu,
+- *max*: lấy ngẫu nhiên điểm dữ liệu từ nhiều cụm khác nhau, với số lượng giữa các cụm được xác định bởi Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương: những cụm có Giá trị Shapley nhỏ hơn (đóng góp mạnh hơn vào việc làm giảm sai số) được lấy nhiều dữ liệu hơn.
+
+Cả 2 chiến lược đều sinh ra tập huấn luyện gồm $N^"strategy" = 4800$ điểm, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều. Các điểm dữ liệu được lấy ngẫu nhiên từ phần quan sát còn lại của mỗi cụm sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập đánh giá hoàn toàn chưa từng thấy đối với cả 2 mô hình. Điều đáng chú ý là điểm khác biệt duy nhất giữa 2 chiến lược nằm ở *cách phân bổ số điểm giữa các cụm*, chứ không phải ở nguồn dữ liệu hay mô hình, nhờ đó mọi chênh lệch về hiệu năng có thể quy trực tiếp về chất lượng của chiến lược phân bổ.
+
+Để thực hiện chiến lược *max*, chúng ta cần biết trước Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương — đại lượng mà trong thực tế không có sẵn. Tương tự cách tiếp cận của nghiên cứu gốc, vốn giả định tồn tại một tập dữ liệu ban đầu $cal(Z)$ dùng để quyết định chiến lược thu thập dữ liệu trước khi bắt đầu, ở đây chúng ta sử dụng chính kết quả của thí nghiệm ở mục *4.2.2*: các Giá trị Shapley toàn cục $macron(phi)_k$ tính trên tập $cal(D)^"shapley train"$ và $cal(D)^"shapley test"$ đóng vai trò là tri thức tiên nghiệm (prior knowledge) về mức độ hữu ích của từng cụm dữ liệu. Gán trọng số cho từng cụm:
 
 $
   w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
@@ -1184,7 +1193,7 @@ $
   "quota"_k = N^"strategy" w_k / sum_(j=1)^K w_j
 $
 
-Việc phân bổ được thực hiện sao cho tổng số điểm đúng bằng $N^"strategy"$, đồng thời đảm bảo mỗi cụm nhận tối thiểu $floor(N^"strategy" \/ (2K))$ điểm và không vượt quá số điểm còn lại của cụm sau khi đã loại bỏ tập $cal(D)^"eval"$. Với chiến lược *equal*, số điểm được chia đều; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
+Do mỗi cụm chỉ có một số hữu hạn quan sát còn lại sau khi loại bỏ tập $cal(D)^"eval"$, hạn ngạch $"quota"_k$ được cắt trên (capped) tại kích thước phần còn lại đó: $n_k = min(max(floor("quota"_k), floor(N^"strategy" \/ (2K))), "pool"_k)$, trong đó $"pool"_k$ là số quan sát còn lại của cụm $k$. Ràng buộc dưới $floor(N^"strategy" \/ (2K)) = 200$ đảm bảo không có cụm nào bị bỏ hoàn toàn, tránh trường hợp mô hình mất tri thức về một tháng trong năm; ràng buộc trên đảm bảo tính khả thi của việc lấy mẫu. Sau khi cắt trên, nếu tổng số điểm chưa đủ $N^"strategy"$, điểm còn thiếu được bổ sung lần lượt cho cụm có phần thiếu hụt so với hạn ngạch lớn nhất mà vẫn còn dư sức chứa; ngược lại nếu vượt quá, điểm thừa được cắt bớt từ cụm vượt hạn ngạch nhiều nhất, nhưng không bao giờ cắt xuống dưới mức tối thiểu. Quy trình này đảm bảo $sum_k n_k = N^"strategy"$ đúng bằng ngân sách cho phép. Tóm lại, với chiến lược *equal*, $n_k = 400$ với mọi $k$; với chiến lược *max*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
 
 Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
 
@@ -1193,6 +1202,43 @@ $
 $
 
 trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của 2 chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
+
+=== 4.2.4. Kết quả và thảo luận
+
+Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình Random Forest và k-NN ($k = 10$), trên cả 2 trò chơi giải thích dự đoán và giải thích sai số bình phương, được trình bày trong @table-bikeshare-strategy-mse-global. Khác với nghiên cứu gốc, nơi chiến lược *max* vượt trội hơn hẳn các chiến lược cơ sở trên mọi cấu hình, kết quả của chúng ta trên tập Bikeshare cho thấy bức tranh tinh tế hơn: chiến lược *max* chỉ mang lại cải thiện khi Giá trị Shapley được tính cho trò chơi *sai số bình phương* với mô hình *Random Forest*, cụ thể MSE toàn cục giảm từ 9135.502 xuống 8824.615, tương ứng mức giảm khoảng 3.4%. Ở 3 cấu hình còn lại — Random Forest với trò chơi dự đoán (+4.6%), k-NN với trò chơi dự đoán (+3.0%) và k-NN với trò chơi sai số bình phương (+5.7%) — chiến lược *max* lại cho kết quả kém hơn chiến lược *equal*.
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto),
+    align: (left, right, right, right),
+    [*Mô hình*], [*Trò chơi giải thích*], [*MSE equal*], [*MSE max*],
+
+    ..range(0, 3)
+      .map(i => {
+        let configs = (
+          ("results/bikeshare_03_predictions_mse_global.csv", "Random Forest", "dự đoán"),
+          ("results/bikeshare_09_squared_error_mse_global.csv", "Random Forest", "sai số bình phương"),
+          ("results/bikeshare_15_predictions_mse_global_knn10.csv", "k-NN ($k = 10$)", "dự đoán"),
+          ("results/bikeshare_21_squared_error_mse_global_knn10.csv", "k-NN ($k = 10$)", "sai số bình phương"),
+        )
+        let values = csv(configs.at(i).first()).slice(1).map(row => round_3(float(row.at(1))))
+        return (configs.at(i).at(1), configs.at(i).at(2), values.at(0), values.at(1))
+      })
+      .flatten(),
+  ),
+  caption: [MSE toàn cục trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max*, theo mô hình và trò chơi giải thích],
+) <table-bikeshare-strategy-mse-global>
+
+#figure(
+  image("figures/bikeshare_14_squared_error_strategy_mse.png"),
+  caption: [MSE theo từng tháng trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max* với mô hình *Random Forest*, trò chơi giải thích sai số bình phương],
+) <figure-bikeshare-strategy-mse-per-cluster-rf>
+
+@figure-bikeshare-strategy-mse-per-cluster-rf trình bày MSE theo từng tháng trên tập $cal(D)^"eval"$ cho cấu hình khả quan nhất (Random Forest, trò chơi sai số bình phương). Chiến lược *max* tốt hơn *equal* ở 6 trên 12 tháng: cụ thể giảm mạnh ở tháng 1 (3723.089 xuống 2175.705, giảm khoảng 42%), tháng 2 (2767.514 xuống 2195.773) và tháng 3 (4644.523 xuống 4271.516) — đúng những cụm nhận nhiều dữ liệu hơn theo phân bổ của chiến lược *max*; ngược lại, *max* kém hơn ở các tháng 6, 8, 9, 10 và 11, đáng chú ý nhất là tháng 6 (23116.269 lên 26314.418). Kết quả này hợp lý theo cơ chế của chiến lược: việc lấy bớt dữ liệu ở một cụm để cấp thêm cho cụm khác là một sự đánh đổi, và phần dữ liệu bị cắt ở các tháng giữa năm dường như chứa thông tin có giá trị cho việc dự đoán chính các tháng đó.
+
+Đáng chú ý, chiến lược *max* với trò chơi dự đoán phân bổ ngược chiều so với trò chơi sai số bình phương: các cụm mùa đông $Q_1$, $Q_2$, $Q_3$ (có Giá trị Shapley dự đoán âm) nhận nhiều nhất (658, 619, 662 điểm) trong khi các cụm mùa ấm chỉ nhận khoảng 240–250 điểm. Sự phân bổ này tối ưu cho *giá trị dự đoán* trung bình nhưng không tối ưu cho *sai số dự đoán*, vì dữ liệu mùa đông (biên độ dự đoán thấp) ít giúp giảm sai số bình phương so với dữ liệu mùa có nhu cầu cao và biến động mạnh. Điều này lý giải vì sao cùng một chiến lược *max* có thể tốt hơn hoặc tệ hơn *equal* tùy thuộc vào trò chơi Shapley được sử dụng, đồng thời khẳng định rằng lời giải thích đúng đắn cho bài toán giảm sai số phải đến từ trò chơi giải thích sai số bình phương, không phải trò chơi giải thích dự đoán.
+
+Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu — đúng hơn là Giá trị Shapley của *sai số bình phương* — có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán, nhưng hiệu quả phụ thuộc vào mô hình và trò chơi giải thích được sử dụng, và không đảm bảo cải thiện trên mọi cấu hình. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần chọn đúng trò chơi giải thích tương ứng với đại lượng cần tối ưu (sai số), và cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
