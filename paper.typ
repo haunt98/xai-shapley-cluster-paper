@@ -32,7 +32,7 @@
   [XAI], [Explainable AI], [Trí tuệ nhân tạo giải thích được],
   [MSE], [Mean Squared Error], [Sai số bình phương trung bình],
   [KNN], [K-Nearest Neighbors], [K láng giềng gần nhất],
-  [*AAKR*], [Auto-Associative Kernel Regression], [Phân loại bất thường],
+  [AAKR], [Auto-Associative Kernel Regression], [Phân loại bất thường],
   [TP], [True Positive], [Dương tính thật],
   [FP], [False Positive], [Dương tính giả],
   [TN], [True Negative], [Âm tính thật],
