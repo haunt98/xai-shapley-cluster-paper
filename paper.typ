@@ -1279,24 +1279,26 @@ Mục tiêu của việc này là xây dựng một tập dữ liệu huấn luy
 - Chiến lược *đều*: lấy ngẫu nhiên một số lượng điểm dữ liệu bằng nhau từ mỗi cụm dữ liệu,
 - Chiến lược *tối đa*: lấy ngẫu nhiên điểm dữ liệu từ nhiều cụm khác nhau, với số lượng giữa các cụm được xác định bởi Giá trị Shapley toàn cục cho độ quan trọng của cụm dữ liệu đối với sai số bình phương. Cụ thể những cụm có Giá trị Shapley nhỏ hơn, đóng góp mạnh hơn vào việc làm giảm sai số sẽ được lấy nhiều điểm dữ liệu hơn.
 
-Cả 2 chiến lược đều sinh ra tập huấn luyện chứa $N^"strategy" = 4800$ điểm dữ liệu, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều với $K = 12$. Các điểm dữ liệu được lấy ngẫu nhiên sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập kiểm thử và tập huấn luyện không trùng nhau.
+Cụ thể chúng ta cài đặt cả 2 chiến lược đều sinh ra tập huấn luyện chứa $N^"strategy" = 4800$ điểm dữ liệu, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều với $K = 12$. Các điểm dữ liệu được lấy ngẫu nhiên sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập kiểm thử và tập huấn luyện không trùng nhau.
 
 Để thực hiện chiến lược *tối đa*, chúng ta sẽ tái sử dụng Giá trị Shapley toàn cục của trò chơi giải thích sai số bình phương với mô hình *Random Forest* đã tính ở mục *4.2.2*.
-Sau đó chúng ta sẽ tính trọng số $w_k$ cho từng cụm theo Giá trị Shapley này với công thức như sau:
+Chúng ta sẽ tính trọng số $w_k$ cho từng cụm theo Giá trị Shapley, sau đó sẽ tính số lượng điểm dữ liệu cần lấy từ từng cụm $N_k$ dựa trên công thức Softmax [TODO]:
 
 $
-  w_k = exp(-macron(phi)_k / tau), quad tau = max(2.5 dot "sd"(macron(phi)), 10^(-6))
+  N_k = N^"strategy" w_k / (sum_(j=1)^K w_j)
+$ <math-bikeshare-weight-strategy>
+
+@math-bikeshare-weight-strategy đảm bảo tổng số điểm dữ liệu được lấy từ tất cả các cụm bằng đúng $N^"strategy"$. Với các số lượng $N_k$ không phải là số nguyên, chúng ta sẽ làm tròn xuống (floor). Sau khi làm tròn và tính tổng lại mà vẫn còn thừa, chúng ta sẽ chia phần này cho các cụm có Giá trị Shapley lớn nhất theo thứ tự.
+
+Để tính trọng số $w_k$, chúng ta sử dụng công thức sau:
+
+$
+  w_k = upright(e)^(frac(phi_k, tau)), quad tau = 3 dot sigma_(phi)
 $ <math-bikeshare-weight-strategy-max>
 
-trong đó $tau$ tỷ lệ với độ lệch chuẩn của toàn bộ Giá trị Shapley toàn cục. Hạn ngạch (quota) cho mỗi cụm được tính theo tỷ lệ trọng số:
+Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với Softmax, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại.
 
-$
-  "quota"_k = N^"strategy" w_k / sum_(j=1)^K w_j
-$
-
-Do mỗi cụm chỉ có một số hữu hạn quan sát còn lại sau khi loại bỏ tập $cal(D)^"eval"$, hạn ngạch $"quota"_k$ được cắt trên (capped) tại kích thước phần còn lại đó: $n_k = min(max(floor("quota"_k), floor(N^"strategy" \/ (2K))), "pool"_k)$, trong đó $"pool"_k$ là số quan sát còn lại của cụm $k$. Ràng buộc dưới $floor(N^"strategy" \/ (2K)) = 200$ đảm bảo không có cụm nào bị bỏ hoàn toàn, tránh trường hợp mô hình mất tri thức về một tháng trong năm; ràng buộc trên đảm bảo tính khả thi của việc lấy mẫu. Sau khi cắt trên, nếu tổng số điểm chưa đủ $N^"strategy"$, điểm còn thiếu được bổ sung lần lượt cho cụm có phần thiếu hụt so với hạn ngạch lớn nhất mà vẫn còn dư sức chứa; ngược lại nếu vượt quá, điểm thừa được cắt bớt từ cụm vượt hạn ngạch nhiều nhất, nhưng không bao giờ cắt xuống dưới mức tối thiểu. Quy trình này đảm bảo $sum_k n_k = N^"strategy"$ đúng bằng ngân sách cho phép. Tóm lại, với chiến lược *đều (equal)*, $n_k = 400$ với mọi $k$; với chiến lược *tối đa (max)*, các cụm có Giá trị Shapley toàn cục nhỏ hơn (đóng góp làm giảm sai số) sẽ nhận được nhiều điểm hơn.
-
-Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng sai số bình phương trung bình (MSE) cho từng cụm:
+Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng MSE cho từng cụm:
 
 $
   "MSE"_k = 1/(n_k) sum_(t: x_t in cal(Q)_k) (y_t - f(x_t))^2
