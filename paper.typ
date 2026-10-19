@@ -751,7 +751,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..csv("results/synthetic_00_predictions_phi_global.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
@@ -802,7 +802,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..csv("results/synthetic_03_predictions_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *KNN-10* tại lần lặp cuối $M = 250$],
@@ -857,7 +857,7 @@ Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với đi
 
     ..csv("results/synthetic_06_squared_error_phi_global.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
@@ -908,7 +908,7 @@ Tương tự với mô hình *Random Forest*, Giá trị Shapley của từng c�
 
     ..csv("results/synthetic_09_squared_error_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* tại lần lặp cuối $M = 250$],
@@ -978,7 +978,7 @@ $ <math-accuracy-classification>
 
     ..csv("results/synthetic_12_classification_phi_global.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích độ chính xác phân loại tại lần lặp cuối $M = 250$],
@@ -1113,7 +1113,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..csv("results/bikeshare_00_predictions_phi_global.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1162,7 +1162,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..csv("results/bikeshare_12_predictions_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1215,7 +1215,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
 
     ..csv("results/bikeshare_06_squared_error_phi_global.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1264,7 +1264,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
 
     ..csv("results/bikeshare_18_squared_error_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1281,24 +1281,24 @@ Mục tiêu của việc này là xây dựng một tập dữ liệu huấn luy
 
 Cụ thể chúng ta cài đặt cả 2 chiến lược đều sinh ra tập huấn luyện chứa $N^"strategy" = 4800$ điểm dữ liệu, tương ứng với $N^"strategy" \/ K = 400$ điểm mỗi cụm nếu chia đều với $K = 12$. Các điểm dữ liệu được lấy ngẫu nhiên sau khi đã loại bỏ tập đánh giá $cal(D)^"eval"$, nhằm đảm bảo tập kiểm thử và tập huấn luyện không trùng nhau.
 
-Để thực hiện chiến lược *tối đa*, chúng ta sẽ tái sử dụng Giá trị Shapley toàn cục của trò chơi giải thích sai số bình phương với mô hình *Random Forest* đã tính ở mục *4.2.2*.
+Để thực hiện chiến lược *tối đa*, chúng ta sẽ tái sử dụng Giá trị Shapley toàn cục của trò chơi giải thích sai số bình phương với mô hình *Random Forest* đã tính ở @table-bikeshare-squared-error-phi-global-rf.
 Chúng ta sẽ tính trọng số $w_k$ cho từng cụm theo Giá trị Shapley, sau đó sẽ tính số lượng điểm dữ liệu cần lấy từ từng cụm $N_k$ dựa trên công thức Softmax [TODO]:
 
 $
   N_k = N^"strategy" w_k / (sum_(j=1)^K w_j)
-$ <math-bikeshare-weight-strategy>
+$ <math-bikeshare-strategy-max>
 
-@math-bikeshare-weight-strategy đảm bảo tổng số điểm dữ liệu được lấy từ tất cả các cụm bằng đúng $N^"strategy"$. Với các số lượng $N_k$ không phải là số nguyên, chúng ta sẽ làm tròn xuống (floor). Sau khi làm tròn và tính tổng lại mà vẫn còn thừa, chúng ta sẽ chia phần này cho các cụm có Giá trị Shapley lớn nhất theo thứ tự.
+@math-bikeshare-strategy-max đảm bảo tổng số điểm dữ liệu được lấy từ tất cả các cụm bằng đúng $N^"strategy"$. Với các số lượng $N_k$ không phải là số nguyên, chúng ta sẽ làm tròn xuống (floor). Sau khi làm tròn và tính tổng lại mà vẫn còn thừa, chúng ta sẽ chia phần này cho các cụm có Giá trị Shapley lớn nhất theo thứ tự.
 
 Để tính trọng số $w_k$, chúng ta sử dụng công thức sau:
 
 $
-  w_k = upright(e)^(frac(phi_k, tau)), quad tau = 3 dot sigma_(phi)
+  w_k = upright(e)^(frac(phi_k, tau)), quad tau = 4 dot sigma_(phi)
 $ <math-bikeshare-weight-strategy-max>
 
 Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với Softmax, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại.
 
-Bảng @table-bikeshare-squared-error-strategy-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm với $N^"strategy" = 4800$. Có thể thấy các cụm có Giá trị Shapley lớn hơn (đóng góp mạnh hơn vào việc làm giảm sai số, ví dụ cụm 3 với $phi_3 = -1386.153$) được phân bổ nhiều điểm dữ liệu hơn, trong khi các cụm có Giá trị Shapley nhỏ hơn (ví dụ cụm 12 với $phi_(12) = -3816.853$) được phân bổ ít điểm dữ liệu hơn, tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ việc chọn nhiệt độ $tau$ phù hợp.
+@table-bikeshare-squared-error-strategy-max-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm sau khi tính bằng @math-bikeshare-strategy-max. Chúng ta thấy rằng các cụm có Giá trị Shapley lớn, ví dụ cụm 3 với $phi_3 = -1386.153$ và cụm 2 với $phi_2 = -1517.504$, được phân bổ nhiều điểm dữ liệu hơn, $N_3 = 559, N_2 = 538$. Trong khi các cụm có Giá trị Shapley nhỏ hơn, cụm 12 với $phi_(12) = -3816.853$ và cụm 6 với $phi_6 = -3734.777$, được phân bổ ít điểm dữ liệu hơn, $N_12 = 275, N_6 = 282$. Tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ vào việc chọn nhiệt độ $tau$ phù hợp.
 
 #figure(
   table(
@@ -1308,11 +1308,11 @@ Bảng @table-bikeshare-squared-error-strategy-allocation thể hiện Giá tr�
 
     ..csv("results/bikeshare_11_squared_error_strategy_allocation.csv")
       .slice(1)
-      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1))), round_3(float(row.at(5)))))
+      .map(row => ([$Q_#int(row.first().slice(8))$], round_3(float(row.at(1))), round_3(float(row.at(5)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục và số lượng điểm dữ liệu được phân bổ cho từng cụm với chiến lược *tối đa*, trò chơi giải thích sai số bình phương, mô hình *Random Forest*, tập dữ liệu Bikeshare],
-) <table-bikeshare-squared-error-strategy-allocation>
+) <table-bikeshare-squared-error-strategy-max-allocation>
 
 Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng MSE cho từng cụm, và toàn bộ tập đánh giá:
 
@@ -1324,30 +1324,22 @@ $
   "MSE" = 1/(sum_(k=1)^K N_k) sum_(k=1)^K sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
 $
 
-trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của 2 chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
-
-Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình *Random Forest* và k-NN ($k = 10$), trên cả 2 trò chơi giải thích dự đoán và giải thích sai số bình phương, được trình bày trong @table-bikeshare-strategy-mse-global. Khác với nghiên cứu gốc, nơi chiến lược *max* vượt trội hơn hẳn các chiến lược cơ sở trên mọi cấu hình, kết quả của chúng ta trên tập Bikeshare cho thấy bức tranh tinh tế hơn: chiến lược *max* chỉ mang lại cải thiện khi Giá trị Shapley được tính cho trò chơi *sai số bình phương* với mô hình *Random Forest*, cụ thể MSE toàn cục giảm từ 9135.502 xuống 8824.615, tương ứng mức giảm khoảng 3.4%. Ở 3 cấu hình còn lại, gồm mô hình *Random Forest* với trò chơi dự đoán (+4.6%), k-NN với trò chơi dự đoán (+3.0%) và k-NN với trò chơi sai số bình phương (+5.7%), chiến lược *max* lại cho kết quả kém hơn chiến lược *equal*.
+Bảng tổng hợp kết quả toàn cục cho mô hình *Random Forest* được trình bày trong @table-bikeshare-strategy-mse-global. Kết quả của chúng ta trên tập Bikeshare cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 9069.603 thấp hơn so với chiến lược đều là 9458.751.
 
 #figure(
   table(
-    columns: (auto, auto, auto, auto),
-    align: (left, right, right, right),
-    [*Mô hình*], [*Trò chơi giải thích*], [*MSE equal*], [*MSE max*],
+    columns: (auto, auto),
+    align: (left, right),
+    [*MSE chiến lực đều*], [*MSE chiến lực tối đa*],
 
-    ..range(0, 3)
-      .map(i => {
-        let configs = (
-          ("results/bikeshare_03_predictions_mse_global.csv", "mô hình *Random Forest*", "dự đoán"),
-          ("results/bikeshare_09_squared_error_mse_global.csv", "mô hình *Random Forest*", "sai số bình phương"),
-          ("results/bikeshare_15_predictions_mse_global_knn10.csv", "k-NN ($k = 10$)", "dự đoán"),
-          ("results/bikeshare_21_squared_error_mse_global_knn10.csv", "k-NN ($k = 10$)", "sai số bình phương"),
-        )
-        let values = csv(configs.at(i).first()).slice(1).map(row => round_3(float(row.at(1))))
-        return (configs.at(i).at(1), configs.at(i).at(2), values.at(0), values.at(1))
-      })
-      .flatten(),
+    ..{
+      let values = csv("results/bikeshare_09_squared_error_mse_global.csv")
+        .slice(1)
+        .map(row => round_3(float(row.at(1))))
+      (values.at(0), values.at(1))
+    },
   ),
-  caption: [MSE toàn cục trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max*, theo mô hình và trò chơi giải thích],
+  caption: [MSE toàn cục trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max* với trò chơi giải thích sai số bình phương, mô hình *Random Forest*],
 ) <table-bikeshare-strategy-mse-global>
 
 #figure(
@@ -1357,9 +1349,7 @@ Bảng tổng hợp kết quả toàn cục cho cả 2 mô hình *Random Forest*
 
 @figure-bikeshare-strategy-mse-per-cluster-rf trình bày MSE theo từng tháng trên tập $cal(D)^"eval"$ cho cấu hình khả quan nhất (mô hình *Random Forest*, trò chơi sai số bình phương). Chiến lược *max* tốt hơn *equal* ở 6 trên 12 tháng: cụ thể giảm mạnh ở tháng 1 (3723.089 xuống 2175.705, giảm khoảng 42%), tháng 2 (2767.514 xuống 2195.773) và tháng 3 (4644.523 xuống 4271.516), đúng những cụm nhận nhiều dữ liệu hơn theo phân bổ của chiến lược *max*; ngược lại, *max* kém hơn ở các tháng 6, 8, 9, 10 và 11, đáng chú ý nhất là tháng 6 (23116.269 lên 26314.418). Kết quả này hợp lý theo cơ chế của chiến lược: việc lấy bớt dữ liệu ở một cụm để cấp thêm cho cụm khác là một sự đánh đổi, và phần dữ liệu bị cắt ở các tháng giữa năm dường như chứa thông tin có giá trị cho việc dự đoán chính các tháng đó.
 
-Đáng chú ý, chiến lược *max* với trò chơi dự đoán phân bổ ngược chiều so với trò chơi sai số bình phương: các cụm mùa đông $Q_1$, $Q_2$, $Q_3$ (có Giá trị Shapley dự đoán âm) nhận nhiều nhất (658, 619, 662 điểm) trong khi các cụm mùa hè chỉ nhận khoảng 240–250 điểm. Sự phân bổ này tối ưu cho *giá trị dự đoán* trung bình nhưng không tối ưu cho *sai số dự đoán*, vì dữ liệu mùa đông (biên độ dự đoán thấp) ít giúp giảm sai số bình phương so với dữ liệu mùa có nhu cầu cao và biến động mạnh. Điều này lý giải vì sao cùng một chiến lược *max* có thể tốt hơn hoặc tệ hơn *equal* tùy thuộc vào trò chơi Shapley được sử dụng, đồng thời khẳng định rằng lời giải thích đúng đắn cho bài toán giảm sai số phải đến từ trò chơi giải thích sai số bình phương, không phải trò chơi giải thích dự đoán.
-
-Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu, đặc biệt là Giá trị Shapley của *sai số bình phương*, có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán, nhưng hiệu quả phụ thuộc vào mô hình và trò chơi giải thích được sử dụng, và không đảm bảo cải thiện trên mọi cấu hình. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần chọn đúng trò chơi giải thích tương ứng với đại lượng cần tối ưu (sai số), và cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
+Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu, đặc biệt là Giá trị Shapley của *sai số bình phương*, có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
