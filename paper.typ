@@ -723,7 +723,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..range(1, 6)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/synthetic_01_predictions_phi_selected.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
@@ -747,11 +747,11 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/synthetic_00_predictions_phi_global.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
@@ -774,7 +774,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..range(1, 6)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/synthetic_04_predictions_phi_selected_knn10.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
@@ -798,11 +798,11 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/synthetic_03_predictions_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *KNN-10* tại lần lặp cuối $M = 250$],
@@ -829,7 +829,7 @@ Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với đi
 
     ..range(1, 6)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/synthetic_07_squared_error_phi_selected.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
@@ -853,11 +853,11 @@ Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với đi
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/synthetic_06_squared_error_phi_global.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* tại lần lặp cuối $M = 250$],
@@ -880,7 +880,7 @@ Tương tự với mô hình *Random Forest*, Giá trị Shapley của từng c�
 
     ..range(1, 6)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/synthetic_10_squared_error_phi_selected_knn10.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 150, 250, 350, 450))
@@ -904,11 +904,11 @@ Tương tự với mô hình *Random Forest*, Giá trị Shapley của từng c�
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/synthetic_09_squared_error_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* tại lần lặp cuối $M = 250$],
@@ -974,11 +974,11 @@ $ <math-accuracy-classification>
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/synthetic_12_classification_phi_global.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích độ chính xác phân loại tại lần lặp cuối $M = 250$],
@@ -1085,7 +1085,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..range(1, 13)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/bikeshare_01_predictions_phi_selected.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 650, 1450, 2250))
@@ -1109,11 +1109,11 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/bikeshare_00_predictions_phi_global.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1134,7 +1134,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
     ..range(1, 13)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/bikeshare_13_predictions_phi_selected_knn10.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 650, 1450, 2250))
@@ -1158,11 +1158,11 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/bikeshare_12_predictions_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1187,7 +1187,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
 
     ..range(1, 13)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/bikeshare_07_squared_error_phi_selected.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 650, 1450, 2250))
@@ -1211,11 +1211,11 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/bikeshare_06_squared_error_phi_global.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *Random Forest* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1236,7 +1236,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
 
     ..range(1, 13)
       .map(k => (
-        [Cụm dữ liệu $Q_#k$],
+        [$Q_#k$],
         ..csv("results/bikeshare_19_squared_error_phi_selected_knn10.csv")
           .slice(1)
           .filter(row => int(row.first()) in (50, 650, 1450, 2250))
@@ -1260,11 +1260,11 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   table(
     columns: 2,
     align: (left, right),
-    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley toàn cục $phi_k$*],
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*],
 
     ..csv("results/bikeshare_18_squared_error_phi_global_knn10.csv")
       .slice(1)
-      .map(row => ([Cụm dữ liệu $Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1)))))
       .flatten(),
   ),
   caption: [Giá trị Shapley toàn cục của từng cụm dữ liệu cho trò chơi giải thích sai số bình phương với mô hình huấn luyện *KNN-10* trên tập dữ liệu Bikeshare tại lần lặp cuối $M = 150$],
@@ -1298,10 +1298,30 @@ $ <math-bikeshare-weight-strategy-max>
 
 Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với Softmax, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại.
 
-Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng MSE cho từng cụm:
+Bảng @table-bikeshare-squared-error-strategy-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm với $N^"strategy" = 4800$. Có thể thấy các cụm có Giá trị Shapley lớn hơn (đóng góp mạnh hơn vào việc làm giảm sai số, ví dụ cụm 3 với $phi_3 = -1386.153$) được phân bổ nhiều điểm dữ liệu hơn, trong khi các cụm có Giá trị Shapley nhỏ hơn (ví dụ cụm 12 với $phi_(12) = -3816.853$) được phân bổ ít điểm dữ liệu hơn, tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ việc chọn nhiệt độ $tau$ phù hợp.
+
+#figure(
+  table(
+    columns: 3,
+    align: (left, right, right),
+    [*Cụm dữ liệu $Q_k$*], [*Giá trị Shapley $phi_k$*], [*Phân bổ $N_k$*],
+
+    ..csv("results/bikeshare_11_squared_error_strategy_allocation.csv")
+      .slice(1)
+      .map(row => ([$Q_#int(row.first().slice(-1))$], round_3(float(row.at(1))), round_3(float(row.at(5)))))
+      .flatten(),
+  ),
+  caption: [Giá trị Shapley toàn cục và số lượng điểm dữ liệu được phân bổ cho từng cụm với chiến lược *tối đa*, trò chơi giải thích sai số bình phương, mô hình *Random Forest*, tập dữ liệu Bikeshare],
+) <table-bikeshare-squared-error-strategy-allocation>
+
+Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng MSE cho từng cụm, và toàn bộ tập đánh giá:
 
 $
-  "MSE"_k = 1/(n_k) sum_(t: x_t in cal(Q)_k) (y_t - f(x_t))^2
+  "MSE"_k = 1/(N_k) sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
+$ <math-bikeshare-mse-per-cluster>
+
+$
+  "MSE" = 1/(sum_(k=1)^K N_k) sum_(k=1)^K sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
 $
 
 trong đó $n_k = 30$ là số điểm đánh giá của cụm $k$. Kết quả MSE theo từng tháng cho phép so sánh trực tiếp hiệu quả của 2 chiến lược, từ đó kiểm chứng liệu việc sử dụng Giá trị Shapley cho cụm dữ liệu để định hướng thu thập dữ liệu huấn luyện có giúp cải thiện độ chính xác dự đoán của mô hình hay không.
