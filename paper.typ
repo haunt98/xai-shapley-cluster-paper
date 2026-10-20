@@ -1324,7 +1324,7 @@ $
   "MSE" = 1/(sum_(k=1)^K N_k) sum_(k=1)^K sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
 $
 
-Bảng tổng hợp kết quả toàn cục cho mô hình *Random Forest* được trình bày trong @table-bikeshare-strategy-mse-global. Kết quả của chúng ta trên tập Bikeshare cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 9069.603 thấp hơn so với chiến lược đều là 9458.751.
+@table-bikeshare-strategy-mse-global trình bày kết quả MSE toàn bộ tập đánh giá cho cả 2 chiến lược. Kết quả cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 9069.603 thấp hơn so với chiến lược đều là 9458.751. @table-bikeshare-strategy-mse-per-cluster thì trình bày kết quả MSE theo từng cụm dữ liệu $Q_k$. Kết quả cho thấy chiến lược tối đa tốt hơn chiến lược đều ở cả 12 trên 12 cụm dữ liệu. Trong đó đáng chú ý là cụm $Q_1$ giảm mạnh từ 4033.048 xuống 2975.657 và cụm $Q_12$ giảm từ 3403.897 xuống 2603.128. Ở các cụm còn lại, mức chênh lệch nhỏ hơn, chẳng hạn cụm $Q_6$ giảm từ 24518.910 xuống 24417.143 và cụm $Q_9$ giảm từ 12990.997 xuống 12871.300. @figure-bikeshare-strategy-mse-per-cluster-rf minh hoạ lại @table-bikeshare-strategy-mse-per-cluster theo biểu đồ. Trong đó màu tím nét liền thể hiện chiến lược đều, màu xanh nét đứt thể hiện chiến lược tối đa.
 
 #figure(
   table(
@@ -1339,17 +1339,29 @@ Bảng tổng hợp kết quả toàn cục cho mô hình *Random Forest* đư�
       (values.at(0), values.at(1))
     },
   ),
-  caption: [MSE toàn cục trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max* với trò chơi giải thích sai số bình phương, mô hình *Random Forest*],
+  caption: [MSE toàn cục trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *đều* (equal) và *tối đa* (max) với trò chơi giải thích sai số bình phương, mô hình *Random Forest*],
 ) <table-bikeshare-strategy-mse-global>
 
 #figure(
+  table(
+    columns: (auto, auto, auto),
+    align: (center, right, right),
+    [*Cụm dữ liệu $Q_k$*], [*MSE chiến lược đều*], [*MSE chiến lược tối đa*],
+
+    ..{
+      csv("results/bikeshare_10_squared_error_mse_per_cluster.csv")
+        .slice(1)
+        .map(row => ([$Q_#int(row.first())$], round_3(float(row.at(1))), round_3(float(row.at(2)))))
+        .flatten()
+    },
+  ),
+  caption: [MSE theo từng cụm trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *đều* và *tối đa* với trò chơi giải thích sai số bình phương, mô hình *Random Forest*],
+) <table-bikeshare-strategy-mse-per-cluster>
+
+#figure(
   image("figures/bikeshare_14_squared_error_strategy_mse.png"),
-  caption: [MSE theo từng tháng trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *equal* và *max* với mô hình *Random Forest*, trò chơi giải thích sai số bình phương],
+  caption: [MSE theo từng tháng trên tập đánh giá $cal(D)^"eval"$ của 2 chiến lược *đều* và *tối đa* với mô hình *Random Forest*, trò chơi giải thích sai số bình phương],
 ) <figure-bikeshare-strategy-mse-per-cluster-rf>
-
-@figure-bikeshare-strategy-mse-per-cluster-rf trình bày MSE theo từng tháng trên tập $cal(D)^"eval"$ cho cấu hình khả quan nhất (mô hình *Random Forest*, trò chơi sai số bình phương). Chiến lược *max* tốt hơn *equal* ở 6 trên 12 tháng: cụ thể giảm mạnh ở tháng 1 (3723.089 xuống 2175.705, giảm khoảng 42%), tháng 2 (2767.514 xuống 2195.773) và tháng 3 (4644.523 xuống 4271.516), đúng những cụm nhận nhiều dữ liệu hơn theo phân bổ của chiến lược *max*; ngược lại, *max* kém hơn ở các tháng 6, 8, 9, 10 và 11, đáng chú ý nhất là tháng 6 (23116.269 lên 26314.418). Kết quả này hợp lý theo cơ chế của chiến lược: việc lấy bớt dữ liệu ở một cụm để cấp thêm cho cụm khác là một sự đánh đổi, và phần dữ liệu bị cắt ở các tháng giữa năm dường như chứa thông tin có giá trị cho việc dự đoán chính các tháng đó.
-
-Tổng kết, kết quả thực nghiệm trên tập Bikeshare chỉ khẳng định một phần giả thuyết của nghiên cứu gốc: việc sử dụng Giá trị Shapley cho độ quan trọng của cụm dữ liệu, đặc biệt là Giá trị Shapley của *sai số bình phương*, có thể giúp định hướng thu thập dữ liệu huấn luyện và cải thiện độ chính xác dự đoán. Đây cũng là một kết quả có giá trị thực tiễn: nó cho thấy khi áp dụng phương pháp, người dùng cần kiểm chứng trên dữ liệu của mình trước khi tin tưởng hoàn toàn vào chiến lược đề xuất.
 
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
