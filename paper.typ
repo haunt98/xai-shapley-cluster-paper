@@ -2,7 +2,8 @@
 #import "@preview/lovelace:0.3.1": *
 
 #set text(lang: "vi")
-#set text(font: "New Computer Modern")
+#set text(font: "Times New Roman")
+#show math.equation: set text(font: "New Computer Modern Math")
 #set text(size: 11pt)
 
 #set page(numbering: "1")
