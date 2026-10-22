@@ -349,15 +349,15 @@ với $tau(x, z, S) = (u_1, ..., u_J)$ với điều kiện $u_j = x_j$ nếu $j
 Do đó công thức tính Giá trị Shapley cho đặc trưng $j$ là:
 
 $
-  phi_j(x) = frac(1, J!) sum_(cal(O) in pi(J)) sum_(z in A) p(z) [f(tau(x, z, "Pre"^j (cal(O) union {j}))) - f(tau(x, z, "Pre"^j (cal(O))))]
+  phi_j(x) = frac(1, J!) sum_(cal(O) in pi(J)) sum_(z in A) p(z) [f(tau(x, z, "Pre"^j (cal(O)) union {j})) - f(tau(x, z, "Pre"^j (cal(O))))]
 $ <math-shapley-value-feature-1>
 
-với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc trưng, $"Pre"^j (cal(O))$ là tập hợp tất cả các đặc trưng có vị trí ở trước đặc trưng $j$ khi sắp xếp trong hoán vị $cal(O) in pi(J)$. Và vì $f(z)$ đều xuất hiện trong công thức $v("Pre"^j (cal(O) union {j}))$ và $v("Pre"^j (cal(O)))$, nên chúng bị triệt tiêu, không xuất hiện trong @math-shapley-value-feature-1. Để đơn giản chúng ta giả sử tập $cal(A)$ là rời rạc.
+với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc trưng, $"Pre"^j (cal(O))$ là tập hợp tất cả các đặc trưng có vị trí ở trước đặc trưng $j$ khi sắp xếp trong hoán vị $cal(O) in pi(J)$. Và vì $f(z)$ đều xuất hiện trong công thức $v("Pre"^j (cal(O)) union {j})$ và $v("Pre"^j (cal(O)))$, nên chúng bị triệt tiêu, không xuất hiện trong @math-shapley-value-feature-1. Để đơn giản chúng ta giả sử tập $cal(A)$ là rời rạc.
 
 Tuy nhiên thông thường chúng ta không biết được phân phối $p(z)$, và số các liên minh của $N$ đặc trưng là $2^(|N|)$ khi số đặc trưng tăng lên thì số các liên minh cũng tăng lên rất nhanh, nên việc tính chính xác $v(S)$ gần như là không thể. Để đơn giản hơn, [TODO] đề xuất sử dụng phân phối mẫu ngẫu nhiên (random sampling) và thuật toán xấp xỉ để viết lại Giá trị Shapley xấp xỉ như sau:
 
 $
-  hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m union {j}))) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
+  hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m) union {j})) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
 $ <math-shapley-value-feature-2>
 
 @math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$. Vì $p$ không biết nên khi tính toán chúng ta lấy mẫu theo tập dữ liệu [TODO].
@@ -380,7 +380,7 @@ trong đó $f_S (x)$ là hàm dự đoán được huấn luyện từ hợp c�
 Giá trị Shapley cho cụm dữ liệu $k$ được định nghĩa như sau:
 
 $
-  phi_k(x) = frac(1, K!) sum_(cal(O) in pi(K)) (f_("Pre"^k (cal(O) union {k}))(x) - f_("Pre"^k (cal(O)))(x))
+  phi_k(x) = frac(1, K!) sum_(cal(O) in pi(K)) (f_("Pre"^k (cal(O)) union {k})(x) - f_("Pre"^k (cal(O)))(x))
 $ <math-shapley-value-cluster-1>
 
 trong đó $pi(K)$ là tập hợp tất cả các hoán vị của tập $K$ cụm dữ liệu, $"Pre"^k (cal(O))$ là tập hợp tất cả các cụm dữ liệu có vị trí ở trước cụm dữ liệu $k$ khi sắp xếp trong hoán vị $cal(O) in pi(K)$.
@@ -388,7 +388,7 @@ trong đó $pi(K)$ là tập hợp tất cả các hoán vị của tập $K$ c�
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, chúng ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
 $
-  hat(phi)_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m union {k}))(x) - f_("Pre"^k (cal(O)^m))(x))
+  hat(phi)_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m) union {k})(x) - f_("Pre"^k (cal(O)^m))(x))
 $
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
@@ -415,7 +415,7 @@ $ <math-shapley-value-hindsight-reward-1>
 trong đó $f_S$ là hàm dự đoán được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$. Hàm phần thưởng này dùng để tính sai số bình phương của dự đoán $f_S (x)$ so với giá trị thực tế $y$. Tương tự như @math-shapley-value-cluster-1, Giá trị Shapley cho cụm dữ liệu $k$ được định nghĩa như sau:
 
 $
-  phi_k (x) = frac(1, K!) sum_(cal(O) in pi(K)) [(y - f_("Pre"^k (cal(O) union {k}))(x))^2 - (y - f_("Pre"^k (cal(O)))(x))^2]
+  phi_k (x) = frac(1, K!) sum_(cal(O) in pi(K)) [(y - f_("Pre"^k (cal(O)) union {k})(x))^2 - (y - f_("Pre"^k (cal(O)))(x))^2]
 $ <math-shapley-value-hindsight-1>
 
 trong đó $pi(K)$ là tập tất cả các hoán vị của $K$ cụm dữ liệu, $"Pre"^k (cal(O))$ là tập hợp tất cả các cụm dữ liệu có vị trí ở trước cụm dữ liệu $k$ khi sắp xếp trong hoán vị $cal(O) in pi(K)$.
@@ -565,12 +565,12 @@ $
   v(S)(x) = (y - f_S (x))^2 - y^2
 $ <math-shapley-value-hindsight-reward-2>
 
-khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả 2 hàm phần thưởng $v("Pre"^k (cal(O) union {k}))$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của 2 hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
+khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả 2 hàm phần thưởng $v("Pre"^k (cal(O)) union {k})$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của 2 hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
 
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, chúng ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
 $
-  hat(phi)_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m union {k}))(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
+  hat(phi)_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m) union {k})(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
 $ <math-shapley-value-hindsight-local>
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
@@ -655,7 +655,7 @@ $
 trong đó $"TP"(S)$, $"TN"(S)$, $"FP"(S)$, $"FN"(S)$ là số lượng tương ứng khi phân loại toàn bộ tập kiểm thử bằng hàm phân loại $g_S$ được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$. Áp dụng cách xấp xỉ tương tự như @math-shapley-value-hindsight-local, Giá trị Shapley cho cụm dữ liệu $k$ trong bài toán phân loại được xấp xỉ như sau:
 
 $
-  hat(phi)_k = 1/M sum_(m=1)^M [h_("Pre"^k (cal(O)^m union {k})) - h_("Pre"^k (cal(O)^m))]
+  hat(phi)_k = 1/M sum_(m=1)^M [h_("Pre"^k (cal(O)^m) union {k}) - h_("Pre"^k (cal(O)^m))]
 $ <math-shapley-value-hindsight-classification>
 
 #pagebreak()
@@ -1333,7 +1333,7 @@ $
   "MSE" = 1/(sum_(k=1)^K N_k) sum_(k=1)^K sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
 $
 
-@table-bikeshare-strategy-mse-global trình bày kết quả MSE toàn bộ tập đánh giá cho cả 2 chiến lược. Kết quả cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 8845.389 thấp hơn so với chiến lược đều là 8894.368. @table-bikeshare-strategy-mse-per-cluster thì trình bày kết quả MSE theo từng cụm dữ liệu $Q_k$. Kết quả cho thấy chiến lược tối đa tốt hơn chiến lược đều ở 5 trên 12 cụm dữ liệu, bao gồm $Q_5$, $Q_6$, $Q_7$, $Q_8$ và $Q_12$. Trong đó đáng chú ý là cụm $Q_6$ giảm mạnh từ 22662.900 xuống 20720.315, cụm được phân bổ nhiều điểm dữ liệu nhất ($N_6 = 536$), và cụm $Q_8$ giảm từ 16141.455 xuống 15240.652. Ở các cụm còn lại, chiến lược tối đa cho kết quả kém hơn chiến lược đều, chẳng hạn cụm $Q_1$ tăng từ 3669.444 lên 4136.906 và cụm $Q_10$ tăng từ 9870.172 lên 10572.240, có thể giải thích do các cụm này được phân bổ ít điểm dữ liệu hơn (lần lượt $N_1 = 315$ và $N_10 = 324$). Mặc dù không tốt hơn ở mọi cụm, mức giảm mạnh tại các cụm được ưu tiên dữ liệu giúp MSE toàn cục của chiến lược tối đa vẫn thấp hơn chiến lược đều. @figure-bikeshare-strategy-mse-per-cluster-rf minh hoạ lại @table-bikeshare-strategy-mse-per-cluster theo biểu đồ. Trong đó màu tím nét liền thể hiện chiến lược đều, màu xanh nét đứt thể hiện chiến lược tối đa.
+@table-bikeshare-strategy-mse-global trình bày kết quả MSE toàn bộ tập đánh giá cho cả 2 chiến lược. Kết quả cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 8845.389 thấp hơn so với chiến lược đều là 8894.368. @table-bikeshare-strategy-mse-per-cluster thì trình bày kết quả MSE theo từng cụm dữ liệu $Q_k$. Kết quả cho thấy chiến lược tối đa tốt hơn chiến lược đều ở 5 trên 12 cụm dữ liệu, bao gồm $Q_5$, $Q_6$, $Q_7$, $Q_8$ và $Q_12$. Trong đó đáng chú ý là cụm $Q_6$ giảm mạnh từ 22662.900 xuống 20720.315, và cụm $Q_8$ giảm từ 16141.455 xuống 15240.652. Ở các cụm còn lại, chiến lược tối đa cho kết quả kém hơn chiến lược đều, chẳng hạn cụm $Q_1$ tăng từ 3669.444 lên 4136.906 và cụm $Q_10$ tăng từ 9870.172 lên 10572.240, có thể giải thích do các cụm này được phân bổ ít điểm dữ liệu (lần lượt $N_1 = 315$ và $N_10 = 324$) nên dự đoán không còn chính xác. Mặc dù không tốt hơn toàn bộ các cụm, mức giảm mạnh tại các cụm được ưu tiên dữ liệu giúp MSE toàn cục của chiến lược tối đa vẫn thấp hơn chiến lược đều. @figure-bikeshare-strategy-mse-per-cluster-rf minh hoạ lại @table-bikeshare-strategy-mse-per-cluster theo biểu đồ. Trong đó màu tím nét liền thể hiện chiến lược đều, màu xanh nét đứt thể hiện chiến lược tối đa.
 
 #figure(
   table(
