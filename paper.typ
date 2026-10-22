@@ -244,8 +244,8 @@ cho mọi $i in N$. Bên cạnh đó, với mọi số thực $a$, chúng ta cũ
 
 cho mọi $i in N$.
 
-- *Người chơi zero* (Null player): Người chơi zero là người chơi có đóng góp bằng 0 $phi_i = v(zero.slashed)$, nghĩa là
-$v({i}) = v(zero.slashed)$  và $v(S union i) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(zero.slashed) = 0$.
+- *Người chơi zero* (Null player): Người chơi zero là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là
+$v({i}) = v(emptyset)$ và $v(S union {i}) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(emptyset) = 0$.
 
 Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A$, $B$, $C$. @demo-fish-1 thể hiện phần thưởng cho toàn bộ liên minh có thể xảy ra. Có thể thấy nếu cả 3 người chơi đều tham gia thì phần thưởng là lớn nhất. Bên cạnh đó người chơi $B$ và người chơi $C$ đều có đóng góp như nhau vì $v({A, B}) = v({A, C})$, nên theo tính đối xứng thì Giá trị Shapley của $B$ và $C$ là giống nhau.
 
@@ -393,7 +393,7 @@ $
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
 
-Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = zero.slashed$, chúng ta định nghĩa dự đoán bằng $0$, tương đương với $f_zero.slashed (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi zero trong Giá trị Shapley $v(zero.slashed) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
+Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = emptyset$, chúng ta định nghĩa dự đoán bằng $0$, tương đương với $f_emptyset (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi zero trong Giá trị Shapley $v(emptyset) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
 
 #pagebreak()
 
@@ -557,7 +557,7 @@ trong đó $pi(K)$ là tập tất cả các hoán vị của $K$ cụm dữ li�
 
 @diagram-idea-individual minh hoạ cách giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể. Từ đó, chúng ta có thể xác định được cụm dữ liệu huấn luyện nào đóng góp nhiều nhất vào sai số dự đoán tại điểm dữ liệu $x$.
 
-Có một vấn đề là tính chất *Người chơi zero* không còn đúng nữa vì với $f_zero.slashed (x) = 0$ thì $v(zero.slashed) = (y - 0)^2 = y^2$ chứ không phải bằng 0 theo @math-shapley-value-hindsight-reward-1.
+Có một vấn đề là tính chất *Người chơi zero* không còn đúng nữa vì với $f_emptyset (x) = 0$ thì $v(emptyset) = (y - 0)^2 = y^2$ chứ không phải bằng 0 theo @math-shapley-value-hindsight-reward-1.
 
 Để giải quyết vấn đề này, chúng ta có thể định nghĩa lại hàm phần thưởng $v$ như sau:
 
