@@ -326,7 +326,7 @@ Kiểm tra lại tính hiệu quả $phi_A + phi_B + phi_C = 100$ đúng với @
 
 == 2.3. Giá trị Shapley đối với sự quan trọng của đặc trưng
 
-Nếu thay đổi trò chơi thành bài toán hồi quy, cụ thể là dự đoán kết quả từ các đặc trưng, chúng ta vẫn có thể áp dụng Giá trị Shapley để giải thích. Xét một bài toán máy học tiêu chuẩn: có tập huấn luyện $cal(D)^("train")$ với $J$ đặc trưng $x_1, ..., x_J$ và giá trị $y$ là kết quả cần dự đoán, dùng để huấn luyện mô hình $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Các đặc trưng đóng vai như người chơi trong trò chơi dự đoán kết quả này, mục đích là để tìm mức độ đóng góp của từng đặc trưng ảnh hưởng đến kết quả dự đoán tại một điểm dữ liệu cụ thể $x$.
+Nếu thay đổi trò chơi thành bài toán hồi quy, cụ thể là dự đoán kết quả từ các đặc trưng, chúng ta vẫn có thể áp dụng Giá trị Shapley để giải thích. Xét một bài toán máy học tiêu chuẩn: có tập huấn luyện $cal(D)^("train")$ với $J$ đặc trưng $x_1, ..., x_J$ và giá trị $y$ là kết quả cần dự đoán, dùng để huấn luyện mô hình $f : cal(A) arrow.r RR$ với $cal(A) = cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Các đặc trưng đóng vai như người chơi trong trò chơi dự đoán kết quả này, mục đích là để tìm mức độ đóng góp của từng đặc trưng ảnh hưởng đến kết quả dự đoán tại một điểm dữ liệu cụ thể $x$.
 
 Công thức tính phần thưởng cũng như là mức độ đóng góp của đặc trưng được định nghĩa như sau:
 
@@ -357,7 +357,7 @@ $ <math-shapley-value-feature-2>
 
 Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, bài báo *Shapley values for cluster importance* [TODO] đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện, để nhằm giải thích dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
 
-Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) in cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán. Ví dụ có thể chia thành các cụm theo thời gian, cụ thể là 12 tháng trong năm. Hoặc lấy riêng từng điểm dữ liệu làm từng cụm cụ thể, lúc này thay vì trả lời cho câu hỏi cụm dữ liệu nào ảnh hưởng đến kết quả dự đoán thì sẽ trả lời cho câu hỏi điểm dữ liệu cụ thể nào ảnh hưởng đến kết quả dự đoán nhất.
+Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) = cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán. Ví dụ có thể chia thành các cụm theo thời gian, cụ thể là 12 tháng trong năm. Hoặc lấy riêng từng điểm dữ liệu làm từng cụm cụ thể, lúc này thay vì trả lời cho câu hỏi cụm dữ liệu nào ảnh hưởng đến kết quả dự đoán thì sẽ trả lời cho câu hỏi điểm dữ liệu cụ thể nào ảnh hưởng đến kết quả dự đoán nhất.
 
 Trở lại với trò chơi liên minh, các cụm $cal(Q)_k$ là người chơi và hàm phần thưởng được định nghĩa như sau:
 
