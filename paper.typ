@@ -33,7 +33,7 @@
   [XAI], [Explainable AI], [Trí tuệ nhân tạo giải thích được],
   [MSE], [Mean Squared Error], [Sai số bình phương trung bình],
   [KNN], [K-Nearest Neighbors], [K láng giềng gần nhất],
-  [AAKR], [Auto-Associative Kernel Regression], [Phân loại bất thường],
+  [AAKR], [Auto-Associative Kernel Regression], [Hồi quy hạt nhân tự liên kết],
   [TP], [True Positive], [Dương tính thật],
   [FP], [False Positive], [Dương tính giả],
   [TN], [True Negative], [Âm tính thật],
@@ -89,11 +89,11 @@ Phương pháp này mới là vì chưa có công trình nghiên cứu nào gi�
 
 == 1.5. Đối tượng và Phạm vi nghiên cứu
 
-Đối tượng nghiên cứu chính: Phương pháp XAI độc lập với mô hình dựa trên Lý thuyết trò chơi liên minh với Giá trị Shapley. Trong đó bao gồm mức độ đóng góp của các cụm dữ liệu huấn luyện đối với sai số dự đoán cục bộ, cụ thể là MSE trong bài toán hồi quy tuyến tính (Linear Regression) và độ chính xác (Accuracy) trong bài toán phân loại (Classification), với bối cảnh là biết trước giá trị thực tế.
+Đối tượng nghiên cứu chính: Phương pháp XAI độc lập với mô hình dựa trên Lý thuyết trò chơi liên minh với Giá trị Shapley. Trong đó bao gồm mức độ đóng góp của các cụm dữ liệu huấn luyện đối với sai số dự đoán cục bộ, cụ thể là MSE trong bài toán hồi quy (Regression) và độ chính xác (Accuracy) trong bài toán phân loại (Classification), với bối cảnh là biết trước giá trị thực tế.
 
 Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đóng góp của cụm dữ liệu huấn luyện trong bài toán:
 
-- Hồi quy tuyến tính với sai số MSE sử dụng mô hình *Random Forest* và *KNN-10*.
+- Bài toán hồi quy (Regression) với sai số MSE sử dụng mô hình *Random Forest* và *KNN-10*.
 - Phân loại với độ chính xác (accuracy) sử dụng mô hình *AAKR*.
 
 Tập dữ liệu thực nghiệm bao gồm:
@@ -244,7 +244,7 @@ cho mọi $i in N$. Bên cạnh đó, với mọi số thực $a$, chúng ta cũ
 
 cho mọi $i in N$.
 
-- *Người chơi zero* (Null player): Người chơi zero là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là
+- *Người chơi rỗng* (Null player): Người chơi rỗng là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là
 $v({i}) = v(emptyset)$ và $v(S union {i}) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(emptyset) = 0$.
 
 Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A$, $B$, $C$. @demo-fish-1 thể hiện phần thưởng cho toàn bộ liên minh có thể xảy ra. Có thể thấy nếu cả 3 người chơi đều tham gia thì phần thưởng là lớn nhất. Bên cạnh đó người chơi $B$ và người chơi $C$ đều có đóng góp như nhau vì $v({A, B}) = v({A, C})$, nên theo tính đối xứng thì Giá trị Shapley của $B$ và $C$ là giống nhau.
@@ -383,7 +383,7 @@ $
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
 
-Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = emptyset$, chúng ta định nghĩa dự đoán bằng $0$, tương đương với $f_emptyset (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi zero trong Giá trị Shapley $v(emptyset) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
+Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = emptyset$, chúng ta định nghĩa dự đoán bằng $0$, tương đương với $f_emptyset (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi rỗng trong Giá trị Shapley $v(emptyset) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
 
 #pagebreak()
 
@@ -547,7 +547,7 @@ trong đó $pi(K)$ là tập tất cả các hoán vị của $K$ cụm dữ li�
 
 @diagram-idea-individual minh hoạ cách giải thích cục bộ cho từng dự đoán riêng lẻ tại từng thời điểm cụ thể. Từ đó, chúng ta có thể xác định được cụm dữ liệu huấn luyện nào đóng góp nhiều nhất vào sai số dự đoán tại điểm dữ liệu $x$.
 
-Có một vấn đề là tính chất *Người chơi zero* không còn đúng nữa vì với $f_emptyset (x) = 0$ thì $v(emptyset) = (y - 0)^2 = y^2$ chứ không phải bằng 0 theo @math-shapley-value-hindsight-reward-1.
+Có một vấn đề là tính chất *Người chơi rỗng* không còn đúng nữa vì với $f_emptyset (x) = 0$ thì $v(emptyset) = (y - 0)^2 = y^2$ chứ không phải bằng 0 theo @math-shapley-value-hindsight-reward-1.
 
 Để giải quyết vấn đề này, chúng ta có thể định nghĩa lại hàm phần thưởng $v$ như sau:
 
@@ -555,7 +555,7 @@ $
   v(S)(x) = (y - f_S (x))^2 - y^2
 $ <math-shapley-value-hindsight-reward-2>
 
-khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi zero*. Và vì $y^2$ là cố định trong cả 2 hàm phần thưởng $v("Pre"^k (cal(O)) union {k})$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của 2 hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
+khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với tính chất *Người chơi rỗng*. Và vì $y^2$ là cố định trong cả 2 hàm phần thưởng $v("Pre"^k (cal(O)) union {k})$ và $v("Pre"^k (cal(O)))$, nên chúng bị triệt tiêu trong @math-shapley-value-hindsight-1. Do đó Giá trị Shapley của 2 hàm phần thưởng @math-shapley-value-hindsight-reward-1 và @math-shapley-value-hindsight-reward-2 là giống nhau.
 
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, chúng ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
@@ -677,11 +677,11 @@ $ <math-synthetic-y>
 trong đó:
 
 - $x_j$ là các biến có thể giải thích được (explanatory variables)
-- Biến gây nhiễu $epsilon(t)$ tuân theo phân phối độc lập cùng phân phối (i.i.d.) với $cal(N)(0, 0.1)$
+- Biến gây nhiễu $epsilon(t)$ độc lập và có cùng phân phối (i.i.d.) với $cal(N)(0, 0.1)$
 
 Khác với dữ liệu thực tế, ở đây chúng ta biết chính xác rằng $y$ chỉ được sinh từ hàm phi tuyến $x_1 dot x_2 + x_3 dot x_4$ kết hợp 2 cặp đặc trưng $(x_1, x_2)$ và $(x_3, x_4)$; do đó mọi sai số dự đoán của mô hình so với $y$ đều bắt nguồn từ 2 nguồn: nhiễu $epsilon$ và những vùng dữ liệu mà mô hình học chưa tốt. Dữ liệu tạo sinh này sẽ dùng để huấn luyện 2 mô hình:
 
-- Mô hình *Random Forest*, với 100 cây và số lượng nút tối đa mỗi cây là 30.
+- Mô hình *Random Forest*, với 100 cây và số lượng nút lá tối đa mỗi cây là 30.
 - Mô hình *KNN* với $k = 10$ (*KNN-10*).
 
 Khi giải thích các dự đoán, chúng ta sẽ không đưa mô hình đã huấn luyện vào trong lời giải thích (mô hình *Random Forest* hay *KNN*) vì chúng ta xem các mô hình này là những hộp đen. Bên cạnh đó, chúng ta sẽ không can thiệp hoặc kiểm tra mô hình được dùng để tạo ra các dự đoán đó mà chỉ sử dụng để huấn luyện lại với tập dữ liệu mới, kể cả việc không chỉnh sửa các siêu tham số (hyper-parameter) trong mô hình.
@@ -818,7 +818,7 @@ Tương tự với mục *4.1.2*, @figure-synthetic-squared-error-selected-rf tr
 
 Tương tự với mục *4.1.2*, chúng ta chọn tập kiểm thử trùng với tập huấn luyện $cal(D)^"test" = cal(D)^"train"$. Đối với mô hình *Random Forest*, kết quả dự đoán sẽ tốt hơn nếu dữ liệu kiểm thử trùng với dữ liệu huấn luyện. Vì vậy có thể diễn giải rằng với bất kỳ điểm dữ liệu $x$ thuộc cụm $Q_k$ nào đó, việc đưa cụm $Q_k$ vào tập huấn luyện sẽ làm giảm sai số dự đoán, làm cho sai số tiến về 0, và do đó Giá trị Shapley của cụm $Q_k$, $phi_k$ sẽ là số *âm*.
 
-Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với điểm dữ liệu $t = 150$ thuộc cụm $Q_2$, khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử, Giá trị Shapley của cụm dữ liệu $Q_2$ là số âm. Điều này đúng như kỳ vọng vì cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Tiếp theo có thể thấy kết quả giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp làm tăng sai số bình phương, và do đó làm giảm khả năng dự đoán. Điều này là đúng với kỳ vọng bởi vì $t = 350$ và $t = 450$ thuộc cụm dữ liệu $Q_4$ và $Q_5$ không hề liên quan đến cụm dữ liệu $Q_3$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Cụ thể, Giá trị Shapley của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
+Ví dụ ở trong @figure-synthetic-squared-error-selected-rf, đối với điểm dữ liệu $t = 150$ thuộc cụm $Q_2$, khi tính sai số bình phương của điểm $t = 150$ trong tập kiểm thử, Giá trị Shapley của cụm dữ liệu $Q_2$ là số âm. Điều này đúng như kỳ vọng vì cụm dữ liệu $Q_2$ đóng góp làm giảm sai số bình phương. Tiếp theo có thể thấy kết quả giải thích tại thời điểm $t = 350$ và $t = 450$ cho thấy cụm dữ liệu $Q_3$ của tập huấn luyện đóng góp làm tăng sai số bình phương, và do đó làm giảm độ chính xác của dự đoán. Điều này là đúng với kỳ vọng bởi vì $t = 350$ và $t = 450$ thuộc cụm dữ liệu $Q_4$ và $Q_5$ không hề liên quan đến cụm dữ liệu $Q_3$. Giá trị Shapley tại điểm dữ liệu $t = 350$ và $t = 450$ cũng giống nhau, phù hợp với tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Cụ thể, Giá trị Shapley của từng điểm dữ liệu được trình bày trong @table-synthetic-squared-error-selected-rf.
 
 #figure(
   table(
@@ -1074,7 +1074,7 @@ theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đón
   caption: [Giải thích dự đoán cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình *Random Forest* trên tập dữ liệu Bikeshare],
 ) <figure-bikeshare-predictions-selected-rf>
 
-Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Kết quả cho thấy cụm dữ liệu của các tháng mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại hầu hết các điểm dữ liệu được chọn, nghĩa là các cụm này làm giảm khả năng dự đoán; ngược lại, các cụm dữ liệu của những tháng mùa hè như $Q_5$, $Q_6$, $Q_9$ có Giá trị Shapley dương lớn, đóng góp làm tăng khả năng dự đoán. Kết quả này phù hợp với tính thời vụ của dữ liệu: số lượt thuê xe đạp thấp vào mùa đông và cao vào mùa hè, nên việc bổ sung dữ liệu huấn luyện của các tháng mùa hè kéo dự đoán tăng lên, trong khi dữ liệu của các tháng lạnh kéo dự đoán giảm xuống. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-rf.
+Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụm dữ liệu huấn luyện đóng vai người chơi và dự đoán là phần thưởng. Do đó, chúng ta diễn giải Giá trị Shapley của một cụm dữ liệu là mức đóng góp của cụm đó vào dự đoán. Kết quả cho thấy cụm dữ liệu của các tháng mùa đông $Q_1$, $Q_2$, $Q_3$ có Giá trị Shapley âm tại hầu hết các điểm dữ liệu được chọn, nghĩa là các cụm này làm giảm giá trị dự đoán; ngược lại, các cụm dữ liệu của những tháng mùa hè như $Q_5$, $Q_6$, $Q_9$ có Giá trị Shapley dương lớn, đóng góp làm tăng giá trị dự đoán. Kết quả này phù hợp với tính thời vụ của dữ liệu: số lượt thuê xe đạp thấp vào mùa đông và cao vào mùa hè, nên việc bổ sung dữ liệu huấn luyện của các tháng mùa hè kéo dự đoán tăng lên, trong khi dữ liệu của các tháng lạnh kéo dự đoán giảm xuống. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-predictions-selected-rf.
 
 #figure(
   table(
@@ -1382,7 +1382,7 @@ Bên cạnh đó nghiên cứu cũng đề xuất một chiến lược thu th�
 
 Từ các kết quả đạt được, chúng ta có thể đề xuất một vài hướng có thể nghiên cứu tiếp tục trong tương lai:
 
-- *Mở rộng hàm phần thưởng:* Nghiên cứu này sử dụng MSE cùng giá trị thực tế $y$ biết trước để tính Giá trị Shapley, các nghiên cứu tiếp theo có thể sử dụng các hàm lỗi khác MSE như MAE, Huber loss, ... [TODO] thường được dùng trong các bài toán hồi quy tuyến tính. Đối với bài toán phân loại, có thể thay mô hình *AAKR* bằng các mô hình khác [TODO] có cùng chức năng dự đoán.
+- *Mở rộng hàm phần thưởng:* Nghiên cứu này sử dụng MSE cùng giá trị thực tế $y$ biết trước để tính Giá trị Shapley, các nghiên cứu tiếp theo có thể sử dụng các hàm lỗi khác MSE như MAE, Huber loss, ... [TODO] thường được dùng trong các bài toán hồi quy (Regression). Đối với bài toán phân loại, có thể thay mô hình *AAKR* bằng các mô hình khác [TODO] có cùng chức năng dự đoán.
 - *Thử nghiệm với nhiều mô hình khác:* Nghiên cứu này chỉ sử dụng mô hình *Random Forest*, *KNN-10* cho việc huấn luyện dữ liệu. Có thể thử nghiệm trên một vài mô hình khác như mô hình có kiến trúc học sâu (Deep Learning) [TODO].
 - *Tích hợp vào quy trình:* Đưa nghiên cứu này trở thành một phương pháp được chuẩn hoá, để khi gặp sự cố trong lúc vận hành một bài toán trong thực tế, có thể tự động hoá đánh giá biến cố này xảy ra đến từ nguyên nhân nào trong việc huấn luyện dữ liệu. Việc điều phối tỷ trọng dữ liệu huấn luyện trong các pipeline tái huấn luyện (continuous retraining), hướng đến các hệ thống AI tự hiệu chỉnh cho các lĩnh vực đòi hỏi độ tin cậy và an toàn cao.
 
