@@ -65,7 +65,7 @@ Nghiên cứu này tập trung vào một cách tiếp cận mới trong XAI đ�
 
 Lý do lựa chọn đề tài xuất phát từ 3 nội dung chính sau:
 
-- *Khoảng trống nghiên cứu về phương pháp XAI giải thích cục bộ (local) cho sai số của dự đoán*: Sự phát triển của mô hình AI đi kèm với sự phát triển các phương pháp XAI giải thích cục bộ như LIME @Ribeiro2016, ICE @Goldstein02012015, PredDiff [TODO]. Tuy nhiên điểm chung của các phương pháp này là đều giải thích giá trị dự đoán khi chưa biết trước kết quả thực tế. Bên cạnh đó các phương pháp XAI giải thích cho sai số dự đoán hầu hết đều mang tính toàn cục (global), giải thích trên toàn bộ tập dữ liệu, chứ không giải thích cho từng điểm dữ liệu riêng biệt. Cho nên hiện tại chưa có một phương pháp XAI nào giải thích cục bộ cho sai số dự đoán dựa trên tập dữ liệu mà không phụ thuộc vào mô hình (model agnostic).
+- *Khoảng trống nghiên cứu về phương pháp XAI giải thích cục bộ (local) cho sai số của dự đoán*: Sự phát triển của mô hình AI đi kèm với sự phát triển các phương pháp XAI giải thích cục bộ như LIME @Ribeiro2016, ICE @Goldstein02012015, PredDiff @BLUCHER2022103774. Tuy nhiên điểm chung của các phương pháp này là đều giải thích giá trị dự đoán khi chưa biết trước kết quả thực tế. Bên cạnh đó các phương pháp XAI giải thích cho sai số dự đoán hầu hết đều mang tính toàn cục (global), giải thích trên toàn bộ tập dữ liệu, chứ không giải thích cho từng điểm dữ liệu riêng biệt. Cho nên hiện tại chưa có một phương pháp XAI nào giải thích cục bộ cho sai số dự đoán dựa trên tập dữ liệu mà không phụ thuộc vào mô hình (model agnostic).
 - *Tiếp cận hướng dữ liệu:* Nhiều phương pháp XAI tập trung vào đo lường mức độ quan trọng của các đặc trưng (feature) trong dự đoán, nhưng lại bỏ qua tầm quan trọng của tập dữ liệu huấn luyện. Trong thực tế, tập dữ liệu huấn luyện có thể đóng vai trò quyết định đến kết quả dự đoán của mô hình. Nếu tập dữ liệu huấn luyện bị thiên lệch (bias) thì kết quả đầu ra của mô hình cũng sẽ bị thiên lệch theo. Một ví dụ tương tự có thể thấy trong môn bóng rổ: Chiều cao là một đặc trưng rất quan trọng ảnh hưởng đến hiệu suất thi đấu bóng rổ. Tuy nhiên, nếu xét riêng trong giải đấu NBA chuyên nghiệp, nơi mà hầu hết các vận động viên đều đã sở hữu chiều cao vượt trội so với người bình thường, thì chiều cao lại không còn là yếu tố quan trọng có thể giải thích được sự chênh lệch về hiệu suất giữa các cầu thủ nữa. Điều này cho thấy vai trò của một đặc trưng có được coi là *quan trọng* hay không phụ thuộc hoàn toàn vào tập dữ liệu huấn luyện mà mô hình được học. Do đó, việc giải thích mô hình dưới góc nhìn hướng dữ liệu, cụ thể trong nghiên cứu này là đánh giá ảnh hưởng của từng cụm dữ liệu huấn luyện, là cần thiết để hiểu rõ bản chất và cải thiện độ chính xác dự đoán.
 - *Nhu cầu thực tiễn trong phân tích sự cố*: Ở các hệ thống đòi hỏi tính an toàn cao, thách thức lớn nhất luôn nằm ở việc liệu các dự đoán của mô hình AI có thực sự chính xác và đáng tin cậy hay không. Câu hỏi tại sao mô hình đưa ra dự đoán như thế này không quan trọng bằng câu hỏi tại sao mô hình lại dự đoán lệch thực tế sau khi có mô hình AI dự báo sai dẫn đến sự cố nghiêm trọng. Hiểu được điều này sẽ giúp các nhà phát triển mô hình sửa chữa, cập nhật mô hình tốt hơn và phòng ngừa các dự đoán sai lệch dẫn đến sự cố trong tương lai.
 
@@ -100,7 +100,7 @@ Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đó
 Tập dữ liệu thực nghiệm bao gồm:
 
 - Dữ liệu tạo sinh (synthetic data) để kiểm chứng tính đúng đắn về mặt toán học của phương pháp.
-- Dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng tại thành phố [TODO].
+- Dữ liệu thực tế về nhu cầu sử dụng xe đạp công cộng tại thành phố @bike_sharing_275.
 
 Giới hạn của nghiên cứu:
 
@@ -136,19 +136,19 @@ XAI được sinh ra để cung cấp cho người dùng và nhà phát triển 
 
     table.cell(rowspan: 2)[*Toàn cục*],
     [Đặc trưng],
-    [SAGE [TODO] \
-      Permutation feature importance [TODO] \
-      ALEPlots [TODO]
+    [SAGE @NEURIPS2020_c7bf0b7c \
+      Permutation feature importance @fisher2019modelswrongusefullearning \
+      ALEPlots @Apley2020
     ],
 
     [Dữ liệu],
-    [Data Banzhaf [TODO] \
-      Cook’s distance [TODO]
+    [Data Banzhaf @wang2023databanzhafrobustdata \
+      Cook’s distance @Cook01031979
     ],
 
     table.cell(rowspan: 2)[*Cục bộ*],
     [Đặc trưng],
-    [Marginal Shapley values [TODO] \
+    [Marginal Shapley values @lundberg2017unifiedapproachinterpretingmodel \
       Conditional Shapley values [TODO] \
       PredDiff [TODO] \
       Anchors [TODO] \
