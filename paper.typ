@@ -319,7 +319,7 @@ $
 $
 
 $
-  phi_B = phi_C = (40 + 30 + 20 + 20 + 30 + 0)∕6 approx 23.3
+  phi_B = phi_C = (40 + 30 + 20 + 20 + 30 + 0)/6 approx 23.3
 $
 
 Kiểm tra lại tính hiệu quả $phi_A + phi_B + phi_C = 100$ đúng với @demo-fish-1.
@@ -339,7 +339,7 @@ với $tau(x, z, S) = (u_1, ..., u_J)$ với điều kiện $u_j = x_j$ nếu $j
 Do đó công thức tính Giá trị Shapley cho đặc trưng $j$ là:
 
 $
-  phi_j(x) = frac(1, J!) sum_(cal(O) in pi(J)) sum_(z in A) p(z) [f(tau(x, z, "Pre"^j (cal(O)) union {j})) - f(tau(x, z, "Pre"^j (cal(O))))]
+  phi_j(x) = frac(1, J!) sum_(cal(O) in pi(J)) sum_(z in cal(A)) p(z) [f(tau(x, z, "Pre"^j (cal(O)) union {j})) - f(tau(x, z, "Pre"^j (cal(O))))]
 $ <math-shapley-value-feature-1>
 
 với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc trưng, $"Pre"^j (cal(O))$ là tập hợp tất cả các đặc trưng có vị trí ở trước đặc trưng $j$ khi sắp xếp trong hoán vị $cal(O) in pi(J)$. Và vì $f(z)$ đều xuất hiện trong công thức $v("Pre"^j (cal(O)) union {j})$ và $v("Pre"^j (cal(O)))$, nên chúng bị triệt tiêu, không xuất hiện trong @math-shapley-value-feature-1. Để đơn giản chúng ta giả sử tập $cal(A)$ là rời rạc.
@@ -645,7 +645,7 @@ $
 trong đó $"TP"(S)$, $"TN"(S)$, $"FP"(S)$, $"FN"(S)$ là số lượng tương ứng khi phân loại toàn bộ tập kiểm thử bằng hàm phân loại $g_S$ được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$. Áp dụng cách xấp xỉ tương tự như @math-shapley-value-hindsight-local, Giá trị Shapley cho cụm dữ liệu $k$ trong bài toán phân loại được xấp xỉ như sau:
 
 $
-  hat(phi)_k = 1/M sum_(m=1)^M [h_("Pre"^k (cal(O)^m) union {k}) - h_("Pre"^k (cal(O)^m))]
+  hat(phi)_k = 1/M sum_(m=1)^M [h("Pre"^k (cal(O)^m) union {k}) - h("Pre"^k (cal(O)^m))]
 $ <math-shapley-value-hindsight-classification>
 
 #pagebreak()
@@ -676,7 +676,7 @@ $ <math-synthetic-y>
 
 trong đó:
 
-- $x_j$ là các biến có thể giải thích được (explanatory variables)
+- $x_j$ là các biến giải thích (explanatory variables)
 - Biến gây nhiễu $epsilon(t)$ độc lập và có cùng phân phối (i.i.d.) với $cal(N)(0, 0.1)$
 
 Khác với dữ liệu thực tế, ở đây chúng ta biết chính xác rằng $y$ chỉ được sinh từ hàm phi tuyến $x_1 dot x_2 + x_3 dot x_4$ kết hợp 2 cặp đặc trưng $(x_1, x_2)$ và $(x_3, x_4)$; do đó mọi sai số dự đoán của mô hình so với $y$ đều bắt nguồn từ 2 nguồn: nhiễu $epsilon$ và những vùng dữ liệu mà mô hình học chưa tốt. Dữ liệu tạo sinh này sẽ dùng để huấn luyện 2 mô hình:
@@ -1031,9 +1031,9 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
     [$cal(Q)_7$], [744],
     [$cal(Q)_8$], [731],
     [$cal(Q)_9$], [717],
-    [$cal(Q)_10$], [743],
-    [$cal(Q)_11$], [719],
-    [$cal(Q)_12$], [741],
+    [$cal(Q)_(10)$], [743],
+    [$cal(Q)_(11)$], [719],
+    [$cal(Q)_(12)$], [741],
   ),
   caption: [Số quan sát của từng cụm dữ liệu theo tháng trong tập Bikeshare],
 ) <table-bikeshare-cluster-sizes>
@@ -1176,7 +1176,7 @@ Tương tự với mục *4.1.3*, @figure-bikeshare-squared-error-selected-rf tr
   caption: [Giải thích sai số bình phương cho các điểm dữ liệu $t = 50, 650, 1450, 2250$ bằng Giá trị Shapley cho độ quan trọng của cụm dữ liệu với mô hình *Random Forest* trên tập dữ liệu Bikeshare],
 ) <figure-bikeshare-squared-error-selected-rf>
 
-Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-rf. Nhận thấy tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian với $t$ có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở thời gian xa hơn $t$ có xu hướng đóng góp làm tăng sai số. Ví dụ tại điểm dữ liệu $t = 50$ (tháng 1), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$ (các tháng mùa đông) có Giá trị Shapley âm mạnh nhất, trong khi các cụm dữ liệu mùa hè như $Q_7$, $Q_8$, $Q_9$ có Giá trị Shapley dương lớn. Tiếp theo, tại điểm dữ liệu $t = 650$ (tháng 4), cụm dữ liệu $Q_4$ (cùng tháng với điểm dữ liệu) cùng các cụm mùa đông lân cận $Q_1$, $Q_3$ đóng góp làm giảm sai số, trong khi các cụm ở xa về thời gian như $Q_5$, $Q_9$, $Q_12$ đóng góp làm tăng sai số. Ở điểm dữ liệu $t = 1450$ (tháng 8), cụm $Q_4$ và các cụm lân cận $Q_3$, $Q_6$ giúp giảm sai số bình phương, nhưng các cụm ở xa về thời gian như $Q_5$, $Q_9$, $Q_10$ lại làm tăng sai số. Cuối cùng, tại điểm dữ liệu $t = 2250$ (tháng 12), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$, $Q_11$ các tháng lân cận đều có Giá trị Shapley âm, cho thấy dữ liệu của những tháng có điều kiện thời tiết tương tự giúp mô hình dự đoán tốt hơn cho tháng 12.
+Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-bikeshare-squared-error-selected-rf. Nhận thấy tại mỗi điểm dữ liệu, các cụm dữ liệu lân cận về thời gian với $t$ có xu hướng đóng góp làm giảm sai số bình phương, trong khi một số cụm ở thời gian xa hơn $t$ có xu hướng đóng góp làm tăng sai số. Ví dụ tại điểm dữ liệu $t = 50$ (tháng 1), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$ (các tháng mùa đông) có Giá trị Shapley âm mạnh nhất, trong khi các cụm dữ liệu mùa hè như $Q_7$, $Q_8$, $Q_9$ có Giá trị Shapley dương lớn. Tiếp theo, tại điểm dữ liệu $t = 650$ (tháng 4), cụm dữ liệu $Q_4$ (cùng tháng với điểm dữ liệu) cùng các cụm mùa đông lân cận $Q_1$, $Q_3$ đóng góp làm giảm sai số, trong khi các cụm ở xa về thời gian như $Q_5$, $Q_9$, $Q_(12)$ đóng góp làm tăng sai số. Ở điểm dữ liệu $t = 1450$ (tháng 8), cụm $Q_4$ và các cụm lân cận $Q_3$, $Q_6$ giúp giảm sai số bình phương, nhưng các cụm ở xa về thời gian như $Q_5$, $Q_9$, $Q_(10)$ lại làm tăng sai số. Cuối cùng, tại điểm dữ liệu $t = 2250$ (tháng 12), các cụm dữ liệu $Q_1$, $Q_2$, $Q_3$, $Q_(11)$ các tháng lân cận đều có Giá trị Shapley âm, cho thấy dữ liệu của những tháng có điều kiện thời tiết tương tự giúp mô hình dự đoán tốt hơn cho tháng 12.
 
 #figure(
   table(
@@ -1199,7 +1199,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   ],
 ) <table-bikeshare-squared-error-selected-rf>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đáng chú ý, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm lớn nhất là $Q_12$ ($phi_12 = -3816.853$), $Q_6$ ($phi_6 = -3734.777$) và $Q_5$ ($phi_5 = -3503.750$), có thể giải thích rằng dữ liệu huấn luyện của những tháng này mang lại nhiều thông tin giúp mô hình dự đoán tốt hơn: $Q_5$, $Q_6$ là những tháng có nhu cầu thuê xe cao, riêng $Q_12$ (tháng 12) tuy là tháng mùa đông nhưng vẫn có mức đóng góp lớn nhất, cho thấy mức đóng góp của cụm dữ liệu không chỉ phụ thuộc vào nhu cầu thuê xe theo mùa. Ngược lại, cụm $Q_3$ có Giá trị Shapley âm nhỏ nhất ($phi_3 = -1386.153$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-rf.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu. @figure-bikeshare-squared-error-number-iterations-rf trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Đáng chú ý, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm lớn nhất là $Q_(12)$ ($phi_(12) = -3816.853$), $Q_6$ ($phi_6 = -3734.777$) và $Q_5$ ($phi_5 = -3503.750$), có thể giải thích rằng dữ liệu huấn luyện của những tháng này mang lại nhiều thông tin giúp mô hình dự đoán tốt hơn: $Q_5$, $Q_6$ là những tháng có nhu cầu thuê xe cao, riêng $Q_(12)$ (tháng 12) tuy là tháng mùa đông nhưng vẫn có mức đóng góp lớn nhất, cho thấy mức đóng góp của cụm dữ liệu không chỉ phụ thuộc vào nhu cầu thuê xe theo mùa. Ngược lại, cụm $Q_3$ có Giá trị Shapley âm nhỏ nhất ($phi_3 = -1386.153$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-rf.
 
 #figure(
   image("figures/bikeshare_12_squared_error_number_iterations.png"),
@@ -1248,7 +1248,7 @@ Giá trị cụ thể của từng điểm dữ liệu được trình bày tron
   ],
 ) <table-bikeshare-squared-error-selected-knn10>
 
-Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình *KNN-10*. @figure-bikeshare-squared-error-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với mô hình *Random Forest*, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm mạnh nhất là $Q_10$ ($phi_10 = -3280.943$), $Q_8$ ($phi_8 = -3143.653$) và $Q_2$ ($phi_2 = -3030.729$). Ngược lại, cụm $Q_3$ có Giá trị Shapley âm yếu nhất ($phi_3 = -1811.782$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-knn10.
+Áp dụng mục *3.2* để tính Giá trị Shapley toàn cục cho từng cụm dữ liệu cho trò chơi sai số bình phương với mô hình *KNN-10*. @figure-bikeshare-squared-error-number-iterations-knn10 trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$. Tương tự như với mô hình *Random Forest*, toàn bộ 12 cụm dữ liệu đều có Giá trị Shapley âm, tức là mọi cụm đều đóng góp làm giảm sai số bình phương. Trong đó, các cụm có Giá trị Shapley âm mạnh nhất là $Q_(10)$ ($phi_(10) = -3280.943$), $Q_8$ ($phi_8 = -3143.653$) và $Q_2$ ($phi_2 = -3030.729$). Ngược lại, cụm $Q_3$ có Giá trị Shapley âm yếu nhất ($phi_3 = -1811.782$). Giá trị cụ thể của từng cụm dữ liệu được trình bày trong @table-bikeshare-squared-error-phi-global-knn10.
 
 #figure(
   image("figures/bikeshare_18_squared_error_number_iterations_knn10.png"),
@@ -1297,7 +1297,7 @@ $ <math-bikeshare-weight-strategy-max>
 
 Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với Softmax, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại. Giá trị Shapley càng nhỏ, tức là đóng góp càng mạnh vào việc làm giảm sai số MSE, thì trọng số $w_k$ phải càng lớn, và do đó số lượng điểm dữ liệu được lấy từ cụm đó càng nhiều.
 
-@table-bikeshare-squared-error-strategy-max-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm sau khi tính bằng @math-bikeshare-strategy-max. Chúng ta thấy rằng các cụm có Giá trị Shapley nhỏ, ví dụ cụm 12 với $phi_12 = -3816.853$ và cụm 6 với $phi_6 = -3734.777$, được phân bổ nhiều điểm dữ liệu hơn, $N_12 = 549, N_6 = 536$. Trong khi các cụm có Giá trị Shapley lớn hơn, cụm 3 với $phi_3 = -1386.153$ và cụm 2 với $phi_2 = -1517.504$, được phân bổ ít điểm dữ liệu hơn, $N_3 = 270, N_2 = 281$. Tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ vào việc chọn nhiệt độ $tau$ phù hợp.
+@table-bikeshare-squared-error-strategy-max-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm sau khi tính bằng @math-bikeshare-strategy-max. Chúng ta thấy rằng các cụm có Giá trị Shapley nhỏ, ví dụ cụm 12 với $phi_(12) = -3816.853$ và cụm 6 với $phi_6 = -3734.777$, được phân bổ nhiều điểm dữ liệu hơn, $N_(12) = 549, N_6 = 536$. Trong khi các cụm có Giá trị Shapley lớn hơn, cụm 3 với $phi_3 = -1386.153$ và cụm 2 với $phi_2 = -1517.504$, được phân bổ ít điểm dữ liệu hơn, $N_3 = 270, N_2 = 281$. Tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ vào việc chọn nhiệt độ $tau$ phù hợp.
 
 #figure(
   table(
@@ -1316,14 +1316,16 @@ Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với 
 Cuối cùng, chúng ta huấn luyện 2 mô hình trên 2 tập dữ liệu tương ứng với 2 chiến lược và đánh giá trên tập $cal(D)^"eval"$ bằng MSE cho từng cụm, và toàn bộ tập đánh giá:
 
 $
-  "MSE"_k = 1/(N_k) sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
+  "MSE"_k = 1/(|cal(D)^"eval" inter cal(Q)_k|) sum_(x_t in cal(D)^"eval" inter cal(Q)_k) (y_t - f(x_t))^2
 $ <math-bikeshare-mse-per-cluster>
 
 $
-  "MSE" = 1/(sum_(k=1)^K N_k) sum_(k=1)^K sum_(x_t in cal(Q)_k) (y_t - f(x_t))^2
+  "MSE" = 1/(|cal(D)^"eval"|) sum_(k=1)^K sum_(x_t in cal(D)^"eval" inter cal(Q)_k) (y_t - f(x_t))^2
 $
 
-@table-bikeshare-strategy-mse-global trình bày kết quả MSE toàn bộ tập đánh giá cho cả 2 chiến lược. Kết quả cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 8845.389 thấp hơn so với chiến lược đều là 8894.368. @table-bikeshare-strategy-mse-per-cluster thì trình bày kết quả MSE theo từng cụm dữ liệu $Q_k$. Kết quả cho thấy chiến lược tối đa tốt hơn chiến lược đều ở 5 trên 12 cụm dữ liệu, bao gồm $Q_5$, $Q_6$, $Q_7$, $Q_8$ và $Q_12$. Trong đó đáng chú ý là cụm $Q_6$ giảm mạnh từ 22662.900 xuống 20720.315, và cụm $Q_8$ giảm từ 16141.455 xuống 15240.652. Ở các cụm còn lại, chiến lược tối đa cho kết quả kém hơn chiến lược đều, chẳng hạn cụm $Q_1$ tăng từ 3669.444 lên 4136.906 và cụm $Q_10$ tăng từ 9870.172 lên 10572.240, có thể giải thích do các cụm này được phân bổ ít điểm dữ liệu (lần lượt $N_1 = 315$ và $N_10 = 324$) nên dự đoán không còn chính xác. Mặc dù không tốt hơn toàn bộ các cụm, mức giảm mạnh tại các cụm được ưu tiên dữ liệu giúp MSE toàn cục của chiến lược tối đa vẫn thấp hơn chiến lược đều. @figure-bikeshare-strategy-mse-per-cluster-rf minh hoạ lại @table-bikeshare-strategy-mse-per-cluster theo biểu đồ. Trong đó màu tím nét liền thể hiện chiến lược đều, màu xanh nét đứt thể hiện chiến lược tối đa.
+trong đó $|cal(D)^"eval" inter cal(Q)_k| = 30$ là số điểm đánh giá của cụm $k$, và $|cal(D)^"eval"| = 360$ là tổng số điểm của tập đánh giá.
+
+@table-bikeshare-strategy-mse-global trình bày kết quả MSE toàn bộ tập đánh giá cho cả 2 chiến lược. Kết quả cho thấy có sự cải thiện: MSE toàn cục của chiến lược tối đa là 8845.389 thấp hơn so với chiến lược đều là 8894.368. @table-bikeshare-strategy-mse-per-cluster thì trình bày kết quả MSE theo từng cụm dữ liệu $Q_k$. Kết quả cho thấy chiến lược tối đa tốt hơn chiến lược đều ở 5 trên 12 cụm dữ liệu, bao gồm $Q_5$, $Q_6$, $Q_7$, $Q_8$ và $Q_(12)$. Trong đó đáng chú ý là cụm $Q_6$ giảm mạnh từ 22662.900 xuống 20720.315, và cụm $Q_8$ giảm từ 16141.455 xuống 15240.652. Ở các cụm còn lại, chiến lược tối đa cho kết quả kém hơn chiến lược đều, chẳng hạn cụm $Q_1$ tăng từ 3669.444 lên 4136.906 và cụm $Q_(10)$ tăng từ 9870.172 lên 10572.240, có thể giải thích do các cụm này được phân bổ ít điểm dữ liệu (lần lượt $N_1 = 315$ và $N_(10) = 324$) nên dự đoán không còn chính xác. Mặc dù không tốt hơn toàn bộ các cụm, mức giảm mạnh tại các cụm được ưu tiên dữ liệu giúp MSE toàn cục của chiến lược tối đa vẫn thấp hơn chiến lược đều. @figure-bikeshare-strategy-mse-per-cluster-rf minh hoạ lại @table-bikeshare-strategy-mse-per-cluster theo biểu đồ. Trong đó màu tím nét liền thể hiện chiến lược đều, màu xanh nét đứt thể hiện chiến lược tối đa.
 
 #figure(
   table(
@@ -1368,13 +1370,13 @@ Dựa vào kết quả thu thập được, chúng ta có thể nhận xét chi�
 
 == 5.1. Kết luận
 
-Như đã trình bày ở những mục trước, nghiên cứu này đã thể hiện và minh hoạ một hướng tiếp cận mới trong lĩnh vực XAI, dùng để tính Giá trị Shapley cho các cụm dữ liệu huấn luyện. Điểm khác biệt nằm ở chỗ nghiên cứu này sử dụng giá trị $y$ là kết quả thực tế thay vì chỉ sử dụng dự đoán $f(x)$. Nghiên cứu thay câu hỏi "từng cụm dữ liệu đóng góp bao nhiêu vào dự đoán $f(x)$" bằng câu hỏi mới "từng cụm dữ liệu đóng góp bao nhiêu làm giảm sai số MSE $(y - f(x))^2$". Phương pháp này còn có tính chất độc lập với mô hình (model-agnostic), không thay đổi cấu hình, tham số của mô hình ban đầu.
+Như đã trình bày ở những mục trước, nghiên cứu này đã thể hiện và minh hoạ một hướng tiếp cận mới trong lĩnh vực XAI, dùng để tính Giá trị Shapley cho các cụm dữ liệu huấn luyện. Điểm khác biệt nằm ở chỗ nghiên cứu này sử dụng giá trị $y$ là kết quả thực tế thay vì chỉ sử dụng dự đoán $f(x)$. Nghiên cứu thay câu hỏi "từng cụm dữ liệu đóng góp bao nhiêu vào dự đoán $f(x)$" bằng câu hỏi mới "từng cụm dữ liệu đóng góp bao nhiêu làm giảm sai số bình phương $(y - f(x))^2$, và trung bình trên tập dữ liệu là MSE". Phương pháp này còn có tính chất độc lập với mô hình (model-agnostic), không thay đổi cấu hình, tham số của mô hình ban đầu.
 
 Về mặt lý thuyết, nghiên cứu được phát triển dựa trên 2 nghiên cứu là Giá trị Shapley thể hiện độ quan trọng của đặc trưng (feature) [TODO] và Giá trị Shapley thể hiện độ quan trọng của từng cụm dữ liệu (cluster) trong dự đoán $f(x)$ [TODO]. Đóng góp của nghiên cứu này thể hiện ở việc không chỉ dựa trên dự đoán mà còn trong bối cảnh giá trị thực tế đã biết được trình bày ở mục *3.1* nhờ vào sử dụng MSE. Nghiên cứu cũng đưa ra công thức hàm phần thưởng dựa trên MSE ở @math-shapley-value-hindsight-reward-2, công thức xấp xỉ Giá trị Shapley cục bộ ở @math-shapley-value-hindsight-local kèm @algorithm-shapley-value-hindsight để có thể tính được xấp xỉ Giá trị Shapley trong thời gian có hạn với chi phí tính toán được kiểm soát qua số lần lặp $M$, Giá trị Shapley toàn cục được tính bởi @math-shapley-value-hindsight-global. Cuối cùng là đề xuất mở rộng cho bài toán phân loại ở mục *3.3* bằng cách thay hàm phần thưởng bằng mô hình *AAKR* trong @math-shapley-value-hindsight-classification.
 
 Kết quả thực nghiệm trên dữ liệu tạo sinh ở mục *4.1* thể hiện tính đúng đắn của phương pháp. Bởi vì tập huấn luyện và tập kiểm thử là tương đối giống nhau, chúng ta đặt giả thuyết điểm dữ liệu nằm ở cụm nào thì cụm dữ liệu đó đóng góp lớn nhất vào việc làm giảm MSE, và kết quả kiểm chứng cho thấy Giá trị Shapley của các cụm dữ liệu tương ứng với từng điểm dữ liệu kiểm thử đều phản ánh chính xác điều này.
 
-Đối với kết quả thực nghiệm trên dữ liệu thực tế Bikeshare ở mục *4.2*, nghiên cứu đã cho thấy được tính khả thi của phương pháp, khi mà toàn bộ 12 cụm dữ liệu đều đóng góp làm giảm MSE, trong đó các cụm dữ liệu mùa hè như $Q_5$, $Q_6$, $Q_9$ có mức đóng góp lớn, phù hợp với giả thuyết rằng nhu cầu thuê xe đạp công cộng có tính thay đổi theo mùa; riêng cụm $Q_12$ (tháng 12) tuy thuộc mùa đông nhưng có mức đóng góp lớn nhất, cho thấy mức đóng góp của cụm dữ liệu không chỉ phụ thuộc vào mùa.
+Đối với kết quả thực nghiệm trên dữ liệu thực tế Bikeshare ở mục *4.2*, nghiên cứu đã cho thấy được tính khả thi của phương pháp, khi mà toàn bộ 12 cụm dữ liệu đều đóng góp làm giảm MSE, trong đó các cụm dữ liệu mùa hè như $Q_5$, $Q_6$, $Q_9$ có mức đóng góp lớn, phù hợp với giả thuyết rằng nhu cầu thuê xe đạp công cộng có tính thay đổi theo mùa; riêng cụm $Q_(12)$ (tháng 12) tuy thuộc mùa đông nhưng có mức đóng góp lớn nhất, cho thấy mức đóng góp của cụm dữ liệu không chỉ phụ thuộc vào mùa.
 
 Bên cạnh đó nghiên cứu cũng đề xuất một chiến lược thu thập dữ liệu huấn luyện mới dựa trên Giá trị Shapley toàn cục cho từng cụm dữ liệu đã được tính trước gọi là chiến lược *tối đa*. Chiến lược này xây dựng trên giả thuyết rằng nếu chúng ta biết cụm nào đóng góp nhiều vào việc làm giảm sai số MSE thì chúng ta sẽ đưa thêm nhiều điểm dữ liệu thuộc cụm dữ liệu vào tập dữ liệu huấn luyện, và ngược lại đối với cụm dữ liệu nào làm tăng MSE, thì chúng ta sẽ lấy bớt điểm dữ liệu thuộc cụm đó ra khỏi tập dữ liệu huấn luyện. Thử nghiệm trên tập dữ liệu Bikeshare ở mục *4.2.3*, chiến lược *tối đa* đạt MSE thấp hơn chiến lược *đều*. Kết quả này thể hiện tính khả thi của chiến lược trong việc cải thiện độ chính xác dự đoán của mô hình.
 
