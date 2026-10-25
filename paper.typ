@@ -149,18 +149,18 @@ XAI được sinh ra để cung cấp cho người dùng và nhà phát triển 
     table.cell(rowspan: 2)[*Cục bộ*],
     [Đặc trưng],
     [Marginal Shapley values @lundberg2017unifiedapproachinterpretingmodel \
-      Conditional Shapley values [TODO] \
-      PredDiff [TODO] \
-      Anchors [TODO] \
-      Counterfactual explanations [TODO] \
-      LIME [TODO] \
-      ICE [TODO]
+      Conditional Shapley values @aas2020explainingindividualpredictionsfeatures \
+      PredDiff @BLUCHER2022103774 \
+      Anchors @Ribeiro2018 \
+      Counterfactual explanations @wachter2018counterfactualexplanationsopeningblack \
+      LIME @Ribeiro2016 \
+      ICE @Goldstein02012015
     ],
 
     [Dữ liệu],
-    [Influence functions for perturbing training data [TODO] \
-      Case-based explanations [TODO] \
-      Shapley values for cluster importance [TODO]
+    [Influence functions for perturbing training data @pmlr-v70-koh17a \
+      Case-based explanations @Nugent2009 \
+      Shapley values for cluster importance @Brandsaeter2022
     ],
   ),
   caption: [Phân loại các phương pháp XAI theo phạm vi và đối tượng giải thích],
@@ -169,7 +169,7 @@ XAI được sinh ra để cung cấp cho người dùng và nhà phát triển 
 
 @table-overview tổng hợp các phương pháp XAI được phân loại theo 2 tiêu chí: phạm vi giải thích (toàn cục hay cục bộ) và đối tượng giải thích (đặc trưng hay dữ liệu huấn luyện). Một số phương pháp XAI cung cấp giải thích toàn cục, nghĩa là giải thích toàn bộ mô hình AI, từng thành phần của mô hình đóng góp đến toàn bộ dự đoán như thế nào. Trong khi các phương pháp khác cung cấp giải thích cục bộ, nghĩa là giải thích từng dự đoán riêng lẻ của mô hình tại từng thời điểm cụ thể. Một khác biệt quan trọng nữa giữa các phương pháp XAI là giải thích dựa trên đặc trưng hay là dữ liệu huấn luyện. Các phương pháp XAI toàn cục có thể chia làm 2 nhóm là phân tích ảnh hưởng của các đặc trưng khác nhau ví dụ như: *SAGE* [TODO], *Permutation feature importance* [TODO] và *ALEPlots* [TODO] hoặc đánh giá sử dụng dữ liệu huấn luyện ví dụ như: *Data Banzhaf* [TODO].
 
-Bên cạnh hướng giải thích toàn cục là hướng cục bộ, để giải thích từng dự đoán đơn lẻ tại từng thời điểm cục bộ, chúng ta cũng có thể chia thành 2 nhóm phương pháp XAI dựa trên mức độ quan trọng của đặc trưng hoặc dựa trên mức độ ảnh hưởng của cụm dữ liệu huấn luyện đến dự đoán. Nhóm thứ 1 có thể kể đến như Marginal Shapley values [TODO], Conditional Shapley values [TODO], PredDiff [TODO], Anchors [TODO], Counterfactual explanations [TODO], LIME [TODO] và ICE [TODO]. Nhóm thứ 2 có thể kể đến như Influence functions for perturbing training data [TODO], Case-based explanations [TODO] và Shapley values for cluster importance [TODO]. Nhóm thứ 1 chứa các phương pháp XAI phổ biến và được trích dẫn nhiều nhất trong các công trình nghiên cứu khác. Nhóm thứ 2, tập trung vào dữ liệu, thì lại ít phương pháp hơn. Có 3 phương pháp có thể kể đến là:
+Bên cạnh hướng giải thích toàn cục là hướng cục bộ, để giải thích từng dự đoán đơn lẻ tại từng thời điểm cục bộ, chúng ta cũng có thể chia thành 2 nhóm phương pháp XAI dựa trên mức độ quan trọng của đặc trưng hoặc dựa trên mức độ ảnh hưởng của cụm dữ liệu huấn luyện đến dự đoán. Nhóm thứ 1 có thể kể đến như Marginal Shapley values [TODO], Conditional Shapley values [TODO], PredDiff @BLUCHER2022103774, Anchors [TODO], Counterfactual explanations [TODO], LIME [TODO] và ICE [TODO]. Nhóm thứ 2 có thể kể đến như Influence functions for perturbing training data [TODO], Case-based explanations [TODO] và Shapley values for cluster importance [TODO]. Nhóm thứ 1 chứa các phương pháp XAI phổ biến và được trích dẫn nhiều nhất trong các công trình nghiên cứu khác. Nhóm thứ 2, tập trung vào dữ liệu, thì lại ít phương pháp hơn. Có 3 phương pháp có thể kể đến là:
 
 - *Influence functions for perturbing training data* [TODO] để khảo sát mức độ nhạy cảm của dự đoán đối với các nhiễu loạn nhỏ trong tập dữ liệu huấn luyện.
 - *Case-based explanations* [TODO] mục đích là để dùng các ví dụ dự đoán trong quá khứ để kiểm tra và giải thích cho các ví dụ trong tương lai.
