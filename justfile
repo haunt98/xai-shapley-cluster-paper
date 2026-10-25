@@ -2,7 +2,7 @@ all: format build
 
 format:
     typstyle -l=120 -i .
-    bibtex-tidy --v2 -m refs.bib
+    bibtex-tidy -m refs.bib
 
 build:
     typst compile --root .. ./paper.typ ./out.pdf
