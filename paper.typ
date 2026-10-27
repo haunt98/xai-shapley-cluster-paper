@@ -94,8 +94,8 @@ Phương pháp này mới là vì chưa có công trình nghiên cứu nào gi�
 
 Phạm vi nghiên cứu: Nghiên cứu tập trung vào giải thích độ đóng góp của cụm dữ liệu huấn luyện trong bài toán:
 
-- Bài toán hồi quy (Regression) với sai số MSE sử dụng mô hình *Random Forest* và *KNN-10*.
-- Phân loại với độ chính xác (accuracy) sử dụng mô hình *AAKR*.
+- Bài toán hồi quy (Regression) với sai số MSE.
+- Phân loại với độ chính xác (accuracy).
 
 Tập dữ liệu thực nghiệm bao gồm:
 
@@ -344,7 +344,7 @@ với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc 
 Tuy nhiên thông thường chúng ta không biết được phân phối $p(z)$, và số các liên minh của $N$ đặc trưng là $2^(|N|)$ khi số đặc trưng tăng lên thì số các liên minh cũng tăng lên rất nhanh, nên việc tính chính xác $v(S)$ gần như là không thể. Để đơn giản hơn, chúng ta có thể sử dụng phân phối mẫu ngẫu nhiên (random sampling) và thuật toán xấp xỉ @aas2020explainingindividualpredictionsfeatures @lundberg2017unifiedapproachinterpretingmodel @Strumbelj2010 @Strumbelj2011 để viết lại Giá trị Shapley xấp xỉ như sau:
 
 $
-  hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m) union {j})) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
+  phi_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m) union {j})) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
 $ <math-shapley-value-feature-2>
 
 @math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$. Vì $p$ thường là không biết trước nên khi tính toán chúng ta lấy mẫu theo tập dữ liệu @Strumbelj2010.
@@ -374,7 +374,7 @@ trong đó $pi(K)$ là tập hợp tất cả các hoán vị của tập $K$ c�
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, chúng ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
 $
-  hat(phi)_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m) union {k})(x) - f_("Pre"^k (cal(O)^m))(x))
+  phi_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m) union {k})(x) - f_("Pre"^k (cal(O)^m))(x))
 $
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối đều (uniform).
@@ -555,7 +555,7 @@ khi đó nếu $f_S (x) = 0$ thì $v(S)(x) = (y - 0)^2 - y^2 = 0$ đúng với t
 Áp dụng cách xấp xỉ tương tự như @math-shapley-value-feature-2, chúng ta có thể viết lại công thức Giá trị Shapley cho cụm dữ liệu $k$ một cách xấp xỉ như sau:
 
 $
-  hat(phi)_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m) union {k})(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
+  phi_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m) union {k})(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
 $ <math-shapley-value-hindsight-local>
 
 Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối đều (uniform).
@@ -640,7 +640,7 @@ $
 trong đó $"TP"(S)$, $"TN"(S)$, $"FP"(S)$, $"FN"(S)$ là số lượng tương ứng khi phân loại toàn bộ tập kiểm thử bằng hàm phân loại $g_S$ được huấn luyện từ hợp của các $cal(Q)_k$ với $k in S subset.eq N$. Áp dụng cách xấp xỉ tương tự như @math-shapley-value-hindsight-local, Giá trị Shapley cho cụm dữ liệu $k$ trong bài toán phân loại được xấp xỉ như sau:
 
 $
-  hat(phi)_k = 1/M sum_(m=1)^M [h("Pre"^k (cal(O)^m) union {k}) - h("Pre"^k (cal(O)^m))]
+  phi_k = 1/M sum_(m=1)^M [h("Pre"^k (cal(O)^m) union {k}) - h("Pre"^k (cal(O)^m))]
 $ <math-shapley-value-hindsight-classification>
 
 #pagebreak()
@@ -753,7 +753,7 @@ Như đã trình bày từ trước, trong trò chơi của chúng ta, các cụ
 
 Để minh chứng tính độc lập với mô hình (model agnostic), chúng ta lặp lại thí nghiệm giải thích dự đoán ở trên với một mô hình hộp đen hoàn toàn khác là *KNN-10*. Toàn bộ cấu hình: dữ liệu huấn luyện, cách phân cụm, và số lần lặp tối đa $M = 250$ được giữ nguyên.
 
-@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *KNN-10* cho cùng 5 điểm dữ liệu được chọn. Tương tự như với mô hình *Random Forest*, cụm dữ liệu $cal(Q)_(1)$ đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên, trong khi các cụm còn lại đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm dữ liệu $cal(Q)_(2)$ và $cal(Q)_(3)$ tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
+@figure-synthetic-predictions-selected-knn10 thể hiện Giá trị Shapley của từng cụm dữ liệu huấn luyện đối với dự đoán của mô hình *KNN-10* cho cùng 5 điểm dữ liệu được chọn. Tương tự như với mô hình *Random Forest*, cụm dữ liệu $cal(Q)_(1)$ đóng góp làm tăng dự đoán tại điểm dữ liệu đầu tiên $t = 50$, trong khi $cal(Q)_(2)$ và $cal(Q)_(3)$ đóng góp làm giảm dự đoán. Dự đoán tại 2 điểm dữ liệu $t = 150$ và $t = 250$ bị giảm đáng kể bởi cụm dữ liệu $cal(Q)_(2)$ và $cal(Q)_(3)$ tương ứng. Tại 2 điểm dữ liệu cuối có Giá trị Shapley giống hệt nhau, minh hoạ tính chất đối xứng của Giá trị Shapley ở @math-shapley-value-symmetry. Giá trị cụ thể của từng điểm dữ liệu được trình bày trong @table-synthetic-predictions-selected-knn10.
 
 #figure(
   image("figures/synthetic_04_predictions_selected_knn10.png"),
@@ -941,9 +941,9 @@ Như vậy, tổng cộng có 100 điểm dữ liệu bị thay đổi (với $t
 - FP: Điểm bình thường được phát hiện là điểm bất thường.
 
 Định nghĩa hàm phân loại $g(t)$ là dự đoán có hay không điểm bất thường tại thời điểm $t$ trong tập kiểm thử. Để làm điều đó, chúng ta áp dụng một phương pháp thuộc loại tái tạo tín hiệu đa biến kết hợp với phân tích phần dư (multivariate signal reconstruction followed by residuals
-analysis), cụ thể là *AAKR* @Jung2021. Tổng quan thì phương pháp này so sánh tín hiệu gốc với một bản tái tạo (reconstruction): nếu bản tái tạo có sự khác biệt với tín hiệu gốc, và giá trị khác biệt đủ lớn (vượt quá một ngưỡng $L$ cho trước), điểm dữ liệu được phân loại là bất thường; ngược lại nếu nhỏ hơn ngưỡng thì điểm dữ liệu được phân loại là bình thường.
+analysis), cụ thể là *AAKR* @Jung2021 @BRANDSAETER2019418. Tổng quan thì phương pháp này so sánh tín hiệu gốc với một bản tái tạo (reconstruction): nếu bản tái tạo có sự khác biệt với tín hiệu gốc, và giá trị khác biệt đủ lớn (vượt quá một ngưỡng $L$ cho trước), điểm dữ liệu được phân loại là bất thường; ngược lại nếu nhỏ hơn ngưỡng thì điểm dữ liệu được phân loại là bình thường.
 
-Cụ thể, cách hoạt động của *AAKR* là so sánh độ tương đồng giữa dữ liệu kiểm thử với dữ liệu huấn luyện, dữ liệu mẫu nào càng giống thì càng được gán trọng số cao để tính ra giá trị ước lượng [TODO explain]. *AAKR* có tham số băng thông (bandwidth) $h$ dùng để kiểm soát trọng số. Có nhiều kỹ thuật để tinh chỉnh và tối ưu hóa tham số này, nhưng vì mục tiêu của nghiên cứu là thử nghiệm minh họa Giá trị Shapley chứ không đào sâu vào cải tiến hay thử nghiệm thuật toán của mô hình nên chúng ta chọn $h = 0.2$ và ngưỡng giới hạn $L = 0.5$ làm ranh giới để phân loại giữa trạng thái bình thường và bất thường [TODO explain]. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập huấn luyện và tập kiểm thử, tín hiệu tái tạo bởi *AAKR* được vẽ bằng màu vàng.
+Cụ thể, cách hoạt động của *AAKR* là so sánh độ tương đồng giữa dữ liệu kiểm thử với dữ liệu huấn luyện, dữ liệu mẫu nào càng giống thì càng được gán trọng số cao để tính ra giá trị ước lượng [TODO explain]. *AAKR* có tham số băng thông (bandwidth) $h$ dùng để kiểm soát trọng số. Có nhiều kỹ thuật để tinh chỉnh và tối ưu hóa tham số này, nhưng vì mục tiêu của nghiên cứu là thử nghiệm minh họa Giá trị Shapley chứ không đào sâu vào cải tiến hay thử nghiệm thuật toán của mô hình nên chúng ta chọn $h = 0.2$ và ngưỡng giới hạn $L = 0.5$ làm ranh giới để phân loại giữa trạng thái bình thường và bất thường theo @BRANDSAETER2019418. @figure-synthetic-classification-compare-train-aakr và @figure-synthetic-classification-compare-test-aakr minh hoạ tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập huấn luyện và tập kiểm thử, tín hiệu tái tạo bởi *AAKR* được vẽ bằng màu vàng.
 
 #figure(
   image("figures/synthetic_10_classification_compare_train_aakr.png"),
@@ -955,11 +955,7 @@ Cụ thể, cách hoạt động của *AAKR* là so sánh độ tương đồng
   caption: [So sánh tập kiểm thử với tín hiệu ước lượng được tái tạo bởi *AAKR* trên tập dữ liệu tạo sinh],
 ) <figure-synthetic-classification-compare-test-aakr>
 
-Sau khi tất cả các điểm dữ liệu trong tập kiểm thử được phân loại là bình thường hoặc bất thường bởi hàm phân loại $g(t)$, chúng ta sẽ so sánh với giá trị thực tế của chúng. Ví dụ, nếu $g$ phân loại điểm dữ liệu tại $t = 225$ là bất thường, đây là một TP, vì điểm này đã bị chúng ta thay đổi bởi @math-anomaly-x1 nên trạng thái thực tế của nó chính là bất thường. Dựa trên số lượng TP, TN, FP, FN, chúng ta có thể tính được độ chính xác $h$ theo @math-accuracy:
-
-$
-  h = frac("TP" + "TN", "TP" + "TN" + "FP" + "FN")
-$ <math-accuracy-classification>
+Sau khi tất cả các điểm dữ liệu trong tập kiểm thử được phân loại là bình thường hoặc bất thường bởi hàm phân loại $g(t)$, chúng ta sẽ so sánh với giá trị thực tế của chúng. Ví dụ, nếu $g$ phân loại điểm dữ liệu tại $t = 225$ là bất thường, đây là một TP, vì điểm này đã bị chúng ta thay đổi bởi @math-anomaly-x1 nên trạng thái thực tế của nó chính là bất thường. Dựa trên số lượng TP, TN, FP, FN, chúng ta có thể tính được độ chính xác $h$ theo @math-accuracy.
 
 Để tính được mức độ đóng góp của 5 cụm dữ liệu vào độ chính xác, chúng ta sử dụng công thức @math-shapley-value-hindsight-classification được trình bày ở mục *3.3*. Vì tập kiểm thử và tập huấn luyện gần như giống hệt nhau, ngoại trừ 100 điểm bất thường nằm trong cụm dữ liệu $cal(Q)_(3)$ và $cal(Q)_(4)$, do đó chúng ta kỳ vọng cụm dữ liệu $cal(Q)_(1)$ và $cal(Q)_(2)$ đóng góp nhiều hơn cụm dữ liệu $cal(Q)_(3)$ vào việc tăng độ chính xác; bên cạnh đó vì cụm dữ liệu $cal(Q)_(4)$ và $cal(Q)_(5)$ có dữ liệu giống nhau, Giá trị Shapley của chúng phải bằng nhau theo tính chất đối xứng ở @math-shapley-value-symmetry. Kết quả thực tế ở @table-synthetic-classification-phi-global cho thấy cụm dữ liệu $cal(Q)_(1)$ và $cal(Q)_(2)$ có Giá trị Shapley cao nhất ($phi_(1) = 0.235$ và $phi_(2) = 0.223$), tiếp theo là cụm dữ liệu $cal(Q)_(4)$ và $cal(Q)_(5)$ với Giá trị Shapley gần như bằng nhau ($phi_(4) = 0.165$ và $phi_(5) = 0.159$), và cuối cùng cụm dữ liệu $cal(Q)_(3)$ có Giá trị Shapley thấp nhất ($phi_(3) = 0.099$).
 @figure-synthetic-classification-number-iterations trình bày sự hội tụ của Giá trị Shapley toàn cục cho từng cụm theo số lần lặp $m$.
@@ -1048,14 +1044,14 @@ Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu theo
   caption: [Phân chia dữ liệu Bikeshare cho từng cụm],
 ) <table-bikeshare-split>
 
-Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $hat(phi)_k (x)$ theo thuật toán xấp xỉ đã trình bày ở mục *3.1*. Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
+Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện để phục vụ việc tính Giá trị Shapley, nghĩa là với mỗi hoán vị $cal(O)$ trong thuật toán xấp xỉ, mô hình $f_S$ được huấn luyện lại từ hợp các cụm $cal(Q)_k$ với $k in S$. Tập $cal(D)^"shapley test"$ gồm các điểm dữ liệu $x$ mà tại đó chúng ta tính Giá trị Shapley cục bộ $phi_k (x)$ theo thuật toán xấp xỉ đã trình bày ở mục *3.1*. Cuối cùng, tập $cal(D)^"eval"$ hoàn toàn tách biệt và chỉ được dùng để đánh giá cuối cùng, nhằm tránh rò rỉ dữ liệu (data leakage) giữa quá trình giải thích và quá trình đánh giá.
 
 Mô hình hộp đen được sử dụng là mô hình *Random Forest*. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
 
-Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối đều (uniform). Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
+Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối đều (uniform). Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $phi_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
 
 $
-  macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
+  macron(phi)_k = 1/T sum_(t=1)^T phi_k (x_t)
 $ <math-bikeshare-global-phi>
 
 theo *Mệnh đề 1*. Giá trị $macron(phi)_k$ thể hiện mức độ đóng góp trung bình của cụm dữ liệu $k$ vào sai số dự đoán của mô hình. Bên cạnh đó, để minh hoạ tính cục bộ của phương pháp, chúng ta chọn ra 4 tháng trong năm (tháng 1, 4, 8 và 12), tương ứng với 4 điểm dữ liệu $x$, và biểu diễn Giá trị Shapley cục bộ của từng cụm cho từng điểm dữ liệu này, cùng với đồ thị hội tụ của chúng theo số lần lặp $m$.
@@ -1290,7 +1286,7 @@ $
   w_k = upright(e)^(-frac(phi_k, tau)), quad tau = 4 dot sigma_(phi)
 $ <math-bikeshare-weight-strategy-max>
 
-Trong đó $tau$ là nhiệt độ (temperature) thường được dùng với Softmax, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại. Giá trị Shapley càng nhỏ, tức là đóng góp càng mạnh vào việc làm giảm sai số MSE, thì trọng số $w_k$ phải càng lớn, và do đó số lượng điểm dữ liệu được lấy từ cụm đó càng nhiều.
+Trong đó $tau$ là nhiệt độ (temperature) thường được dùng trong hàm Softmax để tính $w_k$, được tính dựa trên độ lệch chuẩn $sigma_(phi)$ của toàn bộ Giá trị Shapley toàn cục. Lý do chọn $4 dot sigma_(phi)$ là vì dựa trên thí nghiệm để việc phân bổ dữ liệu giữa các cụm không quá lệch nhau, tránh trường hợp một cụm có Giá trị Shapley quá lớn sẽ chiếm gần như toàn bộ dữ liệu huấn luyện, dẫn đến việc mô hình không học được gì từ các cụm còn lại. Giá trị Shapley càng nhỏ, tức là đóng góp càng mạnh vào việc làm giảm sai số MSE, thì trọng số $w_k$ phải càng lớn, và do đó số lượng điểm dữ liệu được lấy từ cụm đó càng nhiều.
 
 @table-bikeshare-squared-error-strategy-max-allocation thể hiện Giá trị Shapley toàn cục $phi_k$ và số lượng điểm dữ liệu được phân bổ cho từng cụm sau khi tính bằng @math-bikeshare-strategy-max. Chúng ta thấy rằng các cụm có Giá trị Shapley nhỏ, ví dụ cụm 12 với $phi_(12) = -3816.853$ và cụm 6 với $phi_(6) = -3734.777$, được phân bổ nhiều điểm dữ liệu hơn, $N_(12) = 549, N_(6) = 536$. Trong khi các cụm có Giá trị Shapley lớn hơn, cụm 3 với $phi_(3) = -1386.153$ và cụm 2 với $phi_(2) = -1517.504$, được phân bổ ít điểm dữ liệu hơn, $N_(3) = 270, N_(2) = 281$. Tuy nhiên sự chênh lệch giữa các cụm không quá lớn nhờ vào việc chọn nhiệt độ $tau$ phù hợp.
 
