@@ -179,11 +179,11 @@ Nghiên cứu này sẽ dựa trên phương pháp *Shapley values for cluster i
 
 == 2.2. Giá trị Shapley trong Trò chơi liên minh
 
-Giá trị Shapley được phát triển bởi [TODO] trong lĩnh vực Lý thuyết trò chơi liên minh để giải quyết bài toán chia lợi ích công bằng giữa các người chơi trong một trò chơi liên minh. Giả sử có một trò chơi với liên minh $N$ người chơi. Sau khi chơi xong, liên minh sẽ được nhận phần thưởng là $v(N)$. Lấy ví dụ trò chơi câu cá, người chơi là những người đi câu cá, và phần thưởng là số cá câu được.
+Giá trị Shapley @Shapley1953 được sử dụng trong lĩnh vực Lý thuyết trò chơi liên minh để giải quyết bài toán chia lợi ích công bằng giữa các người chơi trong một trò chơi liên minh. Giả sử có một trò chơi với liên minh $N$ người chơi. Sau khi chơi xong, liên minh sẽ được nhận phần thưởng là $v(N)$. Lấy ví dụ trò chơi câu cá, người chơi là những người đi câu cá, và phần thưởng là số cá câu được.
 
 Bài toán đặt ra là làm thế nào để chia phần thưởng công bằng cho từng người chơi. Nếu toàn bộ người chơi cùng tham gia thì tổng phần thưởng là $v(N)$, nếu mỗi lần chơi chỉ có một tập con $S subset N$ người chơi tham gia, thì phần thưởng nhận được là $v(S)$. Chúng ta định nghĩa hàm tính phần thưởng $v$ là một ánh xạ từ liên minh $S$ và ra phần thưởng là số thực $v : 2^(|N|) arrow.r RR$. Một người chơi $i$, có thể tham gia nhiều liên minh $S$ khác nhau. Dựa vào đóng góp của người chơi trong toàn bộ các liên minh mà tính ra được phần thưởng mà người chơi xứng đáng được nhận.
 
-Có nhiều cách để tính phần thưởng cho người chơi, trong nội dung nghiên cứu này sẽ sử dụng Giá trị Shapley, công thức được tham khảo từ [TODO] như sau:
+Có nhiều cách để tính phần thưởng cho người chơi, trong nội dung nghiên cứu này sẽ sử dụng Giá trị Shapley, công thức được tham khảo từ @Brandsaeter2022 như sau:
 
 #figure(
   $
@@ -193,7 +193,7 @@ Có nhiều cách để tính phần thưởng cho người chơi, trong nội d
 
 @math-shapley-value-1 chính là giá trị trung bình toàn bộ phần chênh lệch giữa phần thưởng tất cả các liên minh có người chơi $i$ tham gia $S union {i}$ và phần thưởng tất cả các liên minh còn lại không có người chơi $i$. Với trò chơi câu cá, chúng ta so sánh toàn bộ số cá câu được khi có người chơi $i$ tham gia và không có người chơi $i$ tham gia trong toàn bộ liên minh có thể lập ra để tính ra phần thưởng của người chơi.
 
-Từ công thức @math-shapley-value-1, có thể hiểu Giá trị Shapley của người chơi $i$ là trung bình giá trị đóng góp (marginal contribution) theo hoán vị tương ứng của các liên minh. Do đó có thể viết lại công thức Giá trị Shapley tương đương như sau:
+Từ công thức @math-shapley-value-1, có thể hiểu Giá trị Shapley của người chơi $i$ là trung bình giá trị đóng góp (marginal contribution) theo hoán vị tương ứng của các liên minh. Do đó có thể viết lại công thức Giá trị Shapley tương đương @Brandsaeter2022 như sau:
 
 #figure(
   $
@@ -206,7 +206,7 @@ Trong đó:
 - $pi(|N|)$ là tập hợp tất cả các hoán vị của $N$ người chơi.
 - $"Pre"^i (cal(O))$ là tập hợp tất cả người chơi có vị trí ở trước người chơi $i$ khi sắp xếp trong hoán vị $cal(O) in pi(|N|)$.
 
-Giá trị Shapley có 4 tính chất cơ bản sau:
+Giá trị Shapley @Shapley1953 có 4 tính chất cơ bản sau:
 
 - Tính *hiệu quả* (Efficiency): Toàn bộ phần thưởng đều được chia hết cho từng người chơi (sau khi chia xong thì không còn phần thưởng nào).
 
@@ -245,8 +245,7 @@ cho mọi $i in N$. Bên cạnh đó, với mọi số thực $a$, chúng ta cũ
 
 cho mọi $i in N$.
 
-- *Người chơi rỗng* (Null player): Người chơi rỗng là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là
-$v({i}) = v(emptyset)$ và $v(S union {i}) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(emptyset) = 0$.
+- *Người chơi rỗng* (Null player): Người chơi rỗng là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là $v({i}) = v(emptyset)$ và $v(S union {i}) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(emptyset) = 0$.
 
 Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A$, $B$, $C$. @demo-fish-1 thể hiện phần thưởng cho toàn bộ liên minh có thể xảy ra. Có thể thấy nếu cả 3 người chơi đều tham gia thì phần thưởng là lớn nhất. Bên cạnh đó người chơi $B$ và người chơi $C$ đều có đóng góp như nhau vì $v({A, B}) = v({A, C})$, nên theo tính đối xứng thì Giá trị Shapley của $B$ và $C$ là giống nhau.
 
@@ -345,18 +344,17 @@ $ <math-shapley-value-feature-1>
 
 với $pi(J)$ là tập hợp tất cả các hoán vị của tập $J$ đặc trưng, $"Pre"^j (cal(O))$ là tập hợp tất cả các đặc trưng có vị trí ở trước đặc trưng $j$ khi sắp xếp trong hoán vị $cal(O) in pi(J)$. Và vì $f(z)$ đều xuất hiện trong công thức $v("Pre"^j (cal(O)) union {j})$ và $v("Pre"^j (cal(O)))$, nên chúng bị triệt tiêu, không xuất hiện trong @math-shapley-value-feature-1. Để đơn giản chúng ta giả sử tập $cal(A)$ là rời rạc.
 
-Tuy nhiên thông thường chúng ta không biết được phân phối $p(z)$, và số các liên minh của $N$ đặc trưng là $2^(|N|)$ khi số đặc trưng tăng lên thì số các liên minh cũng tăng lên rất nhanh, nên việc tính chính xác $v(S)$ gần như là không thể. Để đơn giản hơn, [TODO] đề xuất sử dụng phân phối mẫu ngẫu nhiên (random sampling) và thuật toán xấp xỉ để viết lại Giá trị Shapley xấp xỉ như sau:
+Tuy nhiên thông thường chúng ta không biết được phân phối $p(z)$, và số các liên minh của $N$ đặc trưng là $2^(|N|)$ khi số đặc trưng tăng lên thì số các liên minh cũng tăng lên rất nhanh, nên việc tính chính xác $v(S)$ gần như là không thể. Để đơn giản hơn, chúng ta có thể sử dụng phân phối mẫu ngẫu nhiên (random sampling) và thuật toán xấp xỉ @aas2020explainingindividualpredictionsfeatures @lundberg2017unifiedapproachinterpretingmodel @Strumbelj2010 @Strumbelj2011 để viết lại Giá trị Shapley xấp xỉ như sau:
 
 $
   hat(phi)_j (x) = 1/M sum_(m=1)^M [f(tau(x, z^m, "Pre"^j (cal(O)^m) union {j})) - f(tau(x, z^m, "Pre"^j (cal(O)^m)))]
 $ <math-shapley-value-feature-2>
 
-@math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$. Vì $p$ không biết nên khi tính toán chúng ta lấy mẫu theo tập dữ liệu [TODO].
-
+@math-shapley-value-feature-2 thay vì tìm toàn bộ hoán vị của toàn bộ liên minh, thay vào đó chỉ lấy $M$ mẫu ngẫu nhiên. Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(J)$ và điểm dữ liệu $z^m in cal(A)$ theo phân phối $p$. Vì $p$ thường là không biết trước nên khi tính toán chúng ta lấy mẫu theo tập dữ liệu @Strumbelj2010.
 
 == 2.4. Giá trị Shapley đối với sự quan trọng của cụm dữ liệu
 
-Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, bài báo *Shapley values for cluster importance* [TODO] đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện, để nhằm giải thích dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
+Dựa trên Giá trị Shapley đối với sự quan trọng của đặc trưng, @Brandsaeter2022 đề xuất phương pháp XAI mới để giải thích mức độ quan trọng của từng cụm dữ liệu trong tập dữ liệu huấn luyện thay vì đặc trưng trong dự đoán. Trò chơi và phần thưởng vẫn được định nghĩa tương tự, chúng ta thay đổi định nghĩa người chơi trở thành các tập con trong tập dữ liệu huấn luyện, để nhằm giải thích dự đoán bị ảnh hưởng bởi các cụm dữ liệu huấn luyện như thế nào.
 
 Như ở chương trước, chúng ta vẫn sẽ sử dụng hàm hồi quy để minh hoạ $f : cal(A) arrow.r RR$ với $cal(A) = cal(A)_1 times cal(A)_2 times ... times cal(A)_J$. Tập dữ liệu huấn luyện được chia thành $K$ cụm dữ liệu $cal(Q)_k$ không giao nhau, sao cho $cal(Q)_1 union ... union cal(Q)_K$ chính là toàn bộ tập dữ liệu huấn luyện $cal(D)^("train")$. Cách chia cụm dữ liệu huấn luyện ảnh hưởng trực tiếp đến việc giải thích dự đoán. Ví dụ có thể chia thành các cụm theo thời gian, cụ thể là 12 tháng trong năm. Hoặc lấy riêng từng điểm dữ liệu làm từng cụm cụ thể, lúc này thay vì trả lời cho câu hỏi cụm dữ liệu nào ảnh hưởng đến kết quả dự đoán thì sẽ trả lời cho câu hỏi điểm dữ liệu cụ thể nào ảnh hưởng đến kết quả dự đoán nhất.
 
@@ -1058,7 +1056,7 @@ Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện đ
 
 Mô hình hộp đen được sử dụng là mô hình *Random Forest*. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
 
-Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
+Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối đều uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
 
 $
   macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
@@ -1367,6 +1365,8 @@ trong đó $|cal(D)^"eval" inter cal(Q)_k| = 30$ là số điểm đánh giá c�
 
 Dựa vào kết quả thu thập được, chúng ta có thể nhận xét chiến lược thu thập dữ liệu huấn luyện dựa trên Giá trị Shapley đối với dữ liệu Bikeshare cho thấy sự cải thiện so với chiến lược cơ sở là phân bổ *đều*. Cho thấy sự hợp lý của giả thuyết rằng đối với các cụm dữ liệu đóng góp lớn trong việc làm giảm sai số, thì việc thu thập thêm dữ liệu từ các cụm này sẽ giúp mô hình học tốt hơn và cải thiện độ chính xác và làm giảm sai số dự đoán.
 
+#pagebreak()
+
 = Chương 5. KẾT LUẬN VÀ KIẾN NGHỊ
 
 == 5.1. Kết luận
@@ -1389,11 +1389,11 @@ Từ các kết quả đạt được, chúng ta có thể đề xuất một v�
 - *Thử nghiệm với nhiều mô hình khác:* Nghiên cứu này chỉ sử dụng mô hình *Random Forest*, *KNN-10* cho việc huấn luyện dữ liệu. Có thể thử nghiệm trên một vài mô hình khác như mô hình có kiến trúc học sâu (Deep Learning) [TODO].
 - *Tích hợp vào quy trình:* Đưa nghiên cứu này trở thành một phương pháp được chuẩn hoá, để khi gặp sự cố trong lúc vận hành một bài toán trong thực tế, có thể tự động hoá đánh giá biến cố này xảy ra đến từ nguyên nhân nào trong việc huấn luyện dữ liệu. Điều này hỗ trợ việc điều phối tỷ trọng dữ liệu huấn luyện trong các quy trình tái huấn luyện liên tục (continuous retraining), hướng đến các hệ thống AI tự hiệu chỉnh cho các lĩnh vực đòi hỏi độ tin cậy và an toàn cao.
 
+#pagebreak()
+
 = DANH MỤC TÀI LIỆU THAM KHẢO
 
 #bibliography(
   "refs.bib",
   title: none,
 )
-
-#pagebreak()
