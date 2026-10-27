@@ -226,7 +226,6 @@ Giá trị Shapley @Shapley1953 có 4 tính chất cơ bản sau:
 
 mà mọi liên minh $S subset.eq N$ đều không chứa $i$ và $j$, thì phần thưởng của 2 người chơi này phải bằng nhau $phi_i = phi_j$.
 
-
 - Tính *tuyến tính* (Linearity): Nếu chúng ta có 2 trò chơi với 2 hàm phần thưởng khác nhau $v$ và $w$, thì phần thưởng của người chơi trong trò chơi tổng hợp sẽ bằng tổng phần thưởng của người chơi trong từng trò chơi riêng lẻ.
 
 #figure(
@@ -248,7 +247,6 @@ cho mọi $i in N$.
 - *Người chơi rỗng* (Null player): Người chơi rỗng là người chơi có đóng góp bằng 0, $phi_i = 0$, nghĩa là $v({i}) = v(emptyset)$ và $v(S union {i}) = v(S)$ cho toàn bộ liên minh $S subset.eq N$. Thông thường chúng ta ngầm hiểu rằng $v(emptyset) = 0$.
 
 Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A$, $B$, $C$. @demo-fish-1 thể hiện phần thưởng cho toàn bộ liên minh có thể xảy ra. Có thể thấy nếu cả 3 người chơi đều tham gia thì phần thưởng là lớn nhất. Bên cạnh đó người chơi $B$ và người chơi $C$ đều có đóng góp như nhau vì $v({A, B}) = v({A, C})$, nên theo tính đối xứng thì Giá trị Shapley của $B$ và $C$ là giống nhau.
-
 
 #figure(
   table(
@@ -272,7 +270,6 @@ Quay lại ví dụ về trò chơi câu cá, giả sử có 3 người chơi $A
 )<demo-fish-1>
 
 Để tính Giá trị Shapley, chúng ta cần tính toàn bộ phần chênh lệch đóng góp theo toàn bộ hoán vị có thể có cho từng người chơi. @demo-fish-2 tính cho người chơi $A$, @demo-fish-3 tính cho người chơi $B$ và người chơi $C$ vì $B$ và $C$ có Giá trị Shapley giống nhau.
-
 
 #figure(
   table(
@@ -391,7 +388,6 @@ Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) 
 // PHƯƠNG PHÁP NGHIÊN CỨU: cơ sở lý thuyết, lý luận, cách tiếp cận vấn đề nghiên cứu;
 
 Nghiên cứu này sử dụng cách tiếp cận Giá trị Shapley đối với sự quan trọng của cụm dữ liệu, nhưng thay vì giải thích dự đoán, nghiên cứu này sẽ giải thích sai số dự đoán. Đối với bài toán hồi quy, chỉ số đánh giá cho sai số dự đoán thường là sai số tuyệt đối (absolute error) hoặc sai số bình phương (squared error). @math-shapley-value-feature-reward và @math-shapley-value-cluster-reward đều có thể chỉnh sửa để sử dụng các loại chỉ số này để đánh giá. Nghiên cứu này chọn sai số bình phương để đánh giá sai số dự đoán.
-
 
 == 3.1. Giải thích cục bộ
 
