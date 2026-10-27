@@ -380,7 +380,7 @@ $
   hat(phi)_k (x) = 1/M sum_(m=1)^M (f_("Pre"^k (cal(O)^m) union {k})(x) - f_("Pre"^k (cal(O)^m))(x))
 $
 
-Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
+Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối đều (uniform).
 
 Đối với trường hợp chúng ta không có dữ liệu, tương đương với $S = emptyset$, chúng ta định nghĩa dự đoán bằng $0$, tương đương với $f_emptyset (x) = 0$ với mọi $x in cal(A)$. Điều này tương đương với tính chất người chơi rỗng trong Giá trị Shapley $v(emptyset) = 0$, nghĩa là nếu không có dữ liệu huấn luyện thì dự đoán sẽ bằng 0.
 
@@ -562,7 +562,7 @@ $
   hat(phi)_k (x) = 1/M sum_(m=1)^M [(y - f_("Pre"^k (cal(O)^m) union {k})(x))^2 - (y - f_("Pre"^k (cal(O)^m))(x))^2]
 $ <math-shapley-value-hindsight-local>
 
-Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối uniform [TODO].
+Với từng mẫu ngẫu nhiên $m$, chúng ta có được hoán vị $cal(O) in pi(K)$ lấy ngẫu nhiên theo phân phối đều (uniform).
 
 Thuật toán để tính xấp xỉ Giá trị Shapley cục bộ cho từng cụm dữ liệu $k$ tại điểm dữ liệu $x$ được trình bày như sau:
 
@@ -1056,7 +1056,7 @@ Tập $cal(D)^"shapley train"$ được dùng làm dữ liệu huấn luyện đ
 
 Mô hình hộp đen được sử dụng là mô hình *Random Forest*. Tương tự như mục *4.1*, chúng ta giả định không có hiểu biết gì về thuật toán bên trong mô hình, nhưng được phép huấn luyện lại mô hình trong quá trình tính Giá trị Shapley. Các thực nghiệm được thực hiện trên cả 2 chế độ: giải thích trực tiếp giá trị dự đoán $f_S (x)$ và giải thích sai số bình phương của dự đoán theo @math-shapley-value-hindsight-reward-2.
 
-Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối đều uniform. Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
+Đối với giai đoạn tính Giá trị Shapley, chúng ta sử dụng $M = 150$ hoán vị ngẫu nhiên theo phân phối đều (uniform). Với mỗi cụm $k$, tập hợp toàn bộ Giá trị Shapley cục bộ $hat(phi)_k (x_t)$ trên $T = 2400$ điểm của tập $cal(D)^"shapley test"$ cho chúng ta Giá trị Shapley toàn cục:
 
 $
   macron(phi)_k = 1/T sum_(t=1)^T hat(phi)_k (x_t)
